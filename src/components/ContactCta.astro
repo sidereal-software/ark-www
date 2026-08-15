@@ -1,0 +1,64 @@
+---
+import Icon from "./Icon.astro";
+import { CONTACT_HREF, SITE } from "../consts";
+
+/*
+ * FORM SEAM - read before replacing the mailto.
+ *
+ * Today this is a mailto, on purpose: there is no signup, no demo environment,
+ * and no backend for this site, and a contact form that posts nowhere loses
+ * whatever somebody took the trouble to type.
+ *
+ * When there is somewhere for it to go, the house pattern in this organization
+ * is Formspree (`@formspree/react` is already in use on the main Sidereal
+ * site). Swapping it in here means:
+ *
+ *   1. Create the form in Formspree and take its endpoint id. Do NOT invent
+ *      one; a wrong id fails silently, which is the exact failure this seam
+ *      exists to avoid.
+ *   2. Either post a plain <form action="https://formspree.io/f/<id>"
+ *      method="POST"> - which needs no JavaScript at all and is the better fit
+ *      for this site - or, if inline validation is wanted, add @astrojs/react
+ *      plus @formspree/react and mount a single island with client:visible.
+ *      Nothing else on this site is hydrated, so that island would be the
+ *      first JavaScript the page ships. It should earn it.
+ *   3. Keep the mailto visible underneath either way. Some of the people this
+ *      product is for are on a phone in a barn with one bar of signal, and a
+ *      form submission that fails there should not be the end of the road.
+ *   4. Label every field, keep the honeypot server-side rather than as a
+ *      hidden input that a screen reader will read out, and keep the success
+ *      state on the page rather than on a redirect.
+ */
+---
+
+<section
+  id="contact"
+  class="on-ink scroll-mt-20 bg-ink px-5 py-20 text-ink-foreground sm:px-8 sm:py-24 lg:py-32"
+>
+  <div class="mx-auto max-w-3xl text-center">
+    <p class="eyebrow">Get in touch</p>
+    <div class="rule-center mx-auto mt-3 mb-7 w-24"></div>
+
+    <h2 class="text-3xl text-balance sm:text-4xl">
+      There is no signup button yet, and we are not going to fake one.
+    </h2>
+
+    <p class="mx-auto mt-6 max-w-2xl text-lg text-pretty text-ink-muted">
+      ARK is not open for self-serve signup, and there is no demo environment to click through. If
+      you run a facility and any of this sounded like your Tuesday, write to us. Tell us what you
+      keep records in today and roughly how many animals are in your care, and we will tell you
+      straight whether ARK is ready to be useful to you yet.
+    </p>
+
+    <div class="mt-10 flex flex-col items-center gap-4">
+      <a
+        href={CONTACT_HREF}
+        class="inline-flex items-center gap-2.5 rounded-xl bg-ink-foreground px-7 py-4 text-lg font-semibold text-ink shadow-lg transition-[transform,box-shadow] hover:shadow-xl active:translate-y-px"
+      >
+        {SITE.contactEmail}
+        <Icon name="arrow-right" class="size-5" />
+      </a>
+      <p class="text-sm text-ink-muted">A person reads it. You will not be added to a sequence.</p>
+    </div>
+  </div>
+</section>

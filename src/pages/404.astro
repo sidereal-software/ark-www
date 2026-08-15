@@ -1,0 +1,37 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Icon from "../components/Icon.astro";
+import { CONTACT_HREF } from "../consts";
+---
+
+<BaseLayout
+  title="Page not found"
+  description="That page does not exist on the ARK site."
+  noindex={true}
+>
+  <section class="px-5 py-24 sm:px-8 lg:py-36">
+    <div class="mx-auto max-w-2xl text-center">
+      <p class="eyebrow">404</p>
+      <h1 class="mt-5 text-4xl text-balance sm:text-5xl">This page is not in the record.</h1>
+      <p class="mt-6 text-lg text-pretty text-muted-foreground">
+        Which is unusual for us. Everything else here is written down.
+      </p>
+
+      <div class="mt-10 flex flex-wrap justify-center gap-3">
+        <a
+          href="/"
+          class="inline-flex items-center gap-2 rounded-xl bg-primary px-6 py-3.5 font-semibold text-primary-foreground shadow-md transition-[transform,box-shadow] hover:shadow-lg active:translate-y-px"
+        >
+          Back to the start
+          <Icon name="arrow-right" class="size-4" />
+        </a>
+        <a
+          href={CONTACT_HREF}
+          class="inline-flex items-center gap-2 rounded-xl border border-border bg-card px-6 py-3.5 font-semibold text-foreground shadow-sm transition-colors hover:bg-muted"
+        >
+          Tell us what you were looking for
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

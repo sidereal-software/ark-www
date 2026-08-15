@@ -1,0 +1,34 @@
+---
+/**
+ * The site's whole icon set. It is three glyphs on purpose: the design leans on
+ * typography and specimen-label numbering rather than an icon per feature, so
+ * pulling in an icon library would buy nothing but a dependency.
+ */
+type Name = "check" | "cross" | "arrow-right";
+
+interface Props {
+  name: Name;
+  class?: string;
+}
+
+const { name, class: className = "size-4" } = Astro.props;
+
+const paths: Record<Name, string> = {
+  check: "M4 12.5 9 17.5 20 6.5",
+  cross: "M6 6 18 18 M18 6 6 18",
+  "arrow-right": "M4 12h15 M13 6l6 6-6 6",
+};
+---
+
+<svg
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class={className}
+  aria-hidden="true"
+>
+  <path d={paths[name]}></path>
+</svg>

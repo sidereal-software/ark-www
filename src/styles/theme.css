@@ -1,0 +1,287 @@
+/* ARK marketing token layer.
+ *
+ * Derived from the ARK app's own token layer (frontend/src/index.css) so the
+ * site and the product read as one company. Three things are deliberately
+ * NOT inherited, each recorded where it happens:
+ *
+ *   1. --primary is darkened. The app ships oklch(0.6333 0.0309 154.9039),
+ *      which measures 3.40:1 against white - large-text and UI only, a fail
+ *      for the small white button labels a marketing page is full of. See the
+ *      contrast block at the bottom of this file for every measured pair.
+ *   2. --spacing and the type scale are marketing-sized. A keeper reading a
+ *      dense list and a visitor reading a hero want opposite densities; the
+ *      app's 0.23rem base and compact scale would make this page feel cramped.
+ *   3. Dark mode follows the operating system rather than a class toggle.
+ *      The app has a user-facing theme switch because it is a workspace; a
+ *      one-page site does not earn the inline script, the storage key, and
+ *      the flash-of-wrong-theme guard that a switch requires.
+ *
+ * Colour, typeface and radius are shared verbatim.
+ */
+
+/* Only the latin and latin-ext subsets are declared. Fontsource's index.css
+   also ships cyrillic, greek and vietnamese cuts; browsers would never fetch
+   them for this copy, but they would still be written into dist/. */
+@font-face {
+  font-family: "Fraunces Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("@fontsource-variable/fraunces/files/fraunces-latin-wght-normal.woff2")
+    format("woff2-variations");
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Fraunces Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("@fontsource-variable/fraunces/files/fraunces-latin-ext-wght-normal.woff2")
+    format("woff2-variations");
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
+    U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
+    U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "Plus Jakarta Sans Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200 800;
+  src: url("@fontsource-variable/plus-jakarta-sans/files/plus-jakarta-sans-latin-wght-normal.woff2")
+    format("woff2-variations");
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Plus Jakarta Sans Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200 800;
+  src: url("@fontsource-variable/plus-jakarta-sans/files/plus-jakarta-sans-latin-ext-wght-normal.woff2")
+    format("woff2-variations");
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
+    U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
+    U+A720-A7FF;
+}
+
+:root {
+  color-scheme: light;
+
+  /* Shared with the app, unchanged. */
+  --background: oklch(0.9761 0.0041 91.4461);
+  --foreground: oklch(0.2417 0.0298 269.8827);
+  --card: oklch(1 0 0);
+  --secondary: oklch(0.8596 0.0291 119.9919);
+  --secondary-foreground: oklch(0.2417 0.0298 269.8827);
+  --muted: oklch(0.9251 0.0071 88.645);
+  --accent: oklch(0.8242 0.0221 136.6092);
+  --accent-foreground: oklch(0.2417 0.0298 269.8827);
+  --destructive: oklch(0.5624 0.1743 26.1433);
+
+  /* Darkened from the app's oklch(0.6333 0.0309 154.9039). Same sage hue,
+     same family; white-on-primary goes 3.40:1 -> 5.82:1. */
+  --primary: oklch(0.5 0.06 155);
+  --primary-foreground: oklch(1 0 0);
+
+  /* Darkened from the app's oklch(0.551 0.0234 264.3637), which sits at
+     exactly 4.51:1 on the cream background and fails at 3.88:1 on --muted.
+     This page puts secondary text on both surfaces, so it needs the headroom. */
+  --muted-foreground: oklch(0.5 0.023 264);
+
+  /* Ink band: the dark surface the problem section and the closing CTA sit on.
+     It is the app's --foreground used as a background, which is why the two
+     read as the same ink. */
+  --ink: oklch(0.2417 0.0298 269.8827);
+  --ink-foreground: oklch(0.9761 0.0041 91.4461);
+  --ink-muted: oklch(0.78 0.018 265);
+  --ink-primary: oklch(0.74 0.055 155);
+  --ink-border: oklch(0.34 0.026 268);
+
+  --border: oklch(0.8879 0.0086 89);
+  --ring: oklch(0.5 0.06 155);
+
+  --font-sans: "Plus Jakarta Sans Variable", "Plus Jakarta Sans", sans-serif;
+  --font-serif: "Fraunces Variable", Georgia, "Times New Roman", serif;
+
+  --radius: 0.35rem;
+
+  --shadow-sm:
+    0px 1px 2px 0px hsl(225 27.7778% 14.1176% / 0.04),
+    0px 1px 2px -1px hsl(225 27.7778% 14.1176% / 0.04);
+  --shadow-md:
+    0px 1px 2px 0px hsl(225 27.7778% 14.1176% / 0.04),
+    0px 2px 4px -1px hsl(225 27.7778% 14.1176% / 0.04);
+  --shadow-lg:
+    0px 1px 2px 0px hsl(225 27.7778% 14.1176% / 0.05),
+    0px 4px 6px -1px hsl(225 27.7778% 14.1176% / 0.05);
+  --shadow-xl:
+    0px 1px 2px 0px hsl(225 27.7778% 14.1176% / 0.05),
+    0px 12px 24px -8px hsl(225 27.7778% 14.1176% / 0.08);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+
+    /* The app's dark surfaces are pure neutral. Here they carry a trace of the
+       brand's blue-slate (chroma 0.009) so the page does not read as dead grey
+       under a warm sage accent. Everything else is the same relationship. */
+    --background: oklch(0.185 0.008 265);
+    --foreground: oklch(0.955 0.004 91);
+    --card: oklch(0.225 0.009 265);
+    --secondary: oklch(0.272 0.009 265);
+    --secondary-foreground: oklch(0.955 0.004 91);
+    --muted: oklch(0.272 0.009 265);
+    --muted-foreground: oklch(0.745 0.014 265);
+    --accent: oklch(0.315 0.028 154);
+    --accent-foreground: oklch(0.955 0.004 91);
+    --destructive: oklch(0.7 0.17 25.3);
+
+    /* Lightened so it reads on a dark surface and can carry dark label text. */
+    --primary: oklch(0.745 0.058 155);
+    --primary-foreground: oklch(0.17 0.02 265);
+
+    /* The ink band inverts: on a dark page it lifts rather than drops. */
+    --ink: oklch(0.253 0.011 265);
+    --ink-foreground: oklch(0.955 0.004 91);
+    --ink-muted: oklch(0.745 0.014 265);
+    --ink-primary: oklch(0.745 0.058 155);
+    --ink-border: oklch(0.35 0.012 265);
+
+    --border: oklch(0.32 0.01 265);
+    --ring: oklch(0.745 0.058 155);
+
+    --shadow-sm: 0px 1px 2px 0px hsl(0 0% 0% / 0.3), 0px 1px 2px -1px hsl(0 0% 0% / 0.3);
+    --shadow-md: 0px 1px 2px 0px hsl(0 0% 0% / 0.3), 0px 2px 4px -1px hsl(0 0% 0% / 0.3);
+    --shadow-lg: 0px 1px 2px 0px hsl(0 0% 0% / 0.35), 0px 4px 6px -1px hsl(0 0% 0% / 0.35);
+    --shadow-xl: 0px 1px 2px 0px hsl(0 0% 0% / 0.4), 0px 12px 24px -8px hsl(0 0% 0% / 0.45);
+  }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+
+  --color-ink: var(--ink);
+  --color-ink-foreground: var(--ink-foreground);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-primary: var(--ink-primary);
+  --color-ink-border: var(--ink-border);
+
+  --font-sans: var(--font-sans);
+  --font-serif: var(--font-serif);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+  --shadow-xl: var(--shadow-xl);
+
+  /* Marketing spacing base. The app uses 0.23rem to fit dense record lists on
+     a phone; this page is reading matter and takes Tailwind's own 0.25rem. */
+  --spacing: 0.25rem;
+
+  /* Marketing type scale: a larger body size than the app's, and display
+     sizes with the tight leading a headline needs and a list must never have. */
+  --text-xs: 0.8125rem;
+  --text-xs--line-height: 1.5;
+  --text-sm: 0.9375rem;
+  --text-sm--line-height: 1.6;
+  --text-base: 1.0625rem;
+  --text-base--line-height: 1.7;
+  --text-lg: 1.1875rem;
+  --text-lg--line-height: 1.65;
+  --text-xl: 1.375rem;
+  --text-xl--line-height: 1.55;
+  --text-2xl: 1.625rem;
+  --text-2xl--line-height: 1.35;
+  --text-3xl: 2rem;
+  --text-3xl--line-height: 1.25;
+  --text-4xl: 2.5rem;
+  --text-4xl--line-height: 1.15;
+  --text-5xl: 3.125rem;
+  --text-5xl--line-height: 1.08;
+  --text-6xl: 3.875rem;
+  --text-6xl--line-height: 1.04;
+  --text-7xl: 4.75rem;
+  --text-7xl--line-height: 1;
+
+  --tracking-tighter: -0.045em;
+  --tracking-tight: -0.022em;
+  --tracking-normal: 0em;
+  --tracking-wide: 0.025em;
+  --tracking-wider: 0.06em;
+  --tracking-widest: 0.14em;
+}
+
+/* ---------------------------------------------------------------------------
+ * Measured contrast, WCAG 2.1 relative luminance, computed from the oklch
+ * values above rather than judged by eye. AA needs 4.5:1 for normal text and
+ * 3:1 for large text and non-text UI.
+ *
+ * Light
+ *   foreground / background ............................ 15.32:1
+ *   foreground / card .................................. 16.41:1
+ *   foreground / muted ................................. 13.16:1
+ *   foreground / secondary ............................. 10.78:1
+ *   foreground / accent ................................. 9.60:1
+ *   muted-foreground / background ....................... 5.60:1
+ *   muted-foreground / card ............................. 6.00:1
+ *   muted-foreground / muted ............................ 4.81:1
+ *   primary / background ................................ 5.43:1
+ *   primary / card ...................................... 5.82:1
+ *   primary-foreground / primary ........................ 5.82:1
+ *   destructive / background ............................ 4.69:1
+ *   ink-foreground / ink ............................... 15.32:1
+ *   ink-muted / ink ..................................... 8.20:1
+ *   ink-primary / ink ................................... 7.28:1
+ *
+ * Dark
+ *   foreground / background ............................ 16.35:1
+ *   foreground / card .................................. 15.01:1
+ *   foreground / muted ................................. 13.14:1
+ *   muted-foreground / background ....................... 8.23:1
+ *   muted-foreground / card ............................. 7.55:1
+ *   muted-foreground / muted ............................ 6.61:1
+ *   primary / background ................................ 8.43:1
+ *   primary / card ...................................... 7.74:1
+ *   primary-foreground / primary ........................ 8.66:1
+ *   foreground / accent ................................ 11.20:1
+ *   destructive / background ............................ 6.47:1
+ *   ink-foreground / ink ............................... 13.92:1
+ *   ink-muted / ink ..................................... 7.00:1
+ *   ink-primary / ink ................................... 7.18:1
+ *
+ * One pairing is measured and then forbidden: --primary as text on --accent is
+ * 3.41:1 in light mode. Text on the accent fill is always --accent-foreground.
+ * --border is decorative separation between two surfaces, not a control
+ * boundary, so its 1.31:1 is fine there; the focus ring carries the 3:1 duty
+ * and uses --ring, which is --primary at 5.43:1 on the page background.
+ * ------------------------------------------------------------------------ */

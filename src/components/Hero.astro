@@ -1,0 +1,112 @@
+---
+import { CONTACT_HREF } from "../consts";
+import Icon from "./Icon.astro";
+import ScreenshotPlaceholder from "./ScreenshotPlaceholder.astro";
+
+// Contour lines, the way a survey map or a field guide's terrain inset draws
+// them. This is the site's one piece of decoration and it is generated rather
+// than drawn, so it stays regular.
+const contours = Array.from({ length: 8 }, (_, i) => {
+  const y = 60 + i * 44;
+  return `M-60 ${y} C 130 ${y - 34}, 260 ${y + 38}, 450 ${y - 14} S 760 ${y + 30}, 980 ${y - 8}`;
+});
+
+const facts = [
+  "Unlimited users on every plan",
+  "30-day free trial, Pro features",
+  "Capture with no signal",
+  "Export your data on any plan",
+];
+---
+
+<section
+  class="relative isolate overflow-hidden px-5 pt-16 pb-20 sm:px-8 sm:pt-24 lg:pt-28 lg:pb-28"
+>
+  <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+    <svg
+      viewBox="0 0 920 420"
+      preserveAspectRatio="xMidYMid slice"
+      class="h-full w-full text-primary opacity-[0.075]"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.25"
+    >
+      {contours.map((d) => <path d={d} />)}
+    </svg>
+    <div
+      class="absolute inset-0 bg-[radial-gradient(60rem_32rem_at_18%_-10%,color-mix(in_oklab,var(--accent)_38%,transparent),transparent)]"
+    >
+    </div>
+  </div>
+
+  <div
+    class="mx-auto grid max-w-6xl items-center gap-14 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-20"
+  >
+    <div>
+      <p class="hero-in eyebrow">
+        Zoos &middot; Rehabilitation &middot; Sanctuaries &middot; Rescues
+      </p>
+
+      <h1
+        class="hero-in hero-in-delay-1 mt-5 text-[clamp(2.35rem,6.2vw,4.25rem)] leading-[1.04] font-semibold text-balance"
+      >
+        Animal records that get written at the enclosure.
+      </h1>
+
+      <p
+        class="hero-in hero-in-delay-2 mt-6 max-w-xl text-lg text-pretty text-muted-foreground sm:text-xl"
+      >
+        A keeper finds the animal, taps a category, adds a note and a photo, and saves. About thirty
+        seconds, standing where the animal is - with or without a signal. Everything else in ARK
+        exists to serve that half minute.
+      </p>
+
+      {
+        /* Full-width buttons below sm: at 320px "Talk to us about your facility"
+          wraps, and a wrapped label inside a shrink-wrapped button leaves the
+          arrow stranded against the right edge. */
+      }
+      <div class="hero-in hero-in-delay-3 mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+        <a
+          href={CONTACT_HREF}
+          class="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3.5 text-center font-semibold text-primary-foreground shadow-md transition-[transform,box-shadow] hover:shadow-lg active:translate-y-px"
+        >
+          Talk to us about your facility
+          <Icon name="arrow-right" class="size-4 shrink-0" />
+        </a>
+        <a
+          href="#how"
+          class="inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-card px-6 py-3.5 text-center font-semibold text-foreground shadow-sm transition-colors hover:bg-muted"
+        >
+          See how it works
+        </a>
+      </div>
+
+      {
+        /* Two columns rather than a wrapping row, so the fourth fact never lands
+          alone on a second line at an awkward width. */
+      }
+      <ul
+        class="hero-in hero-in-delay-3 mt-9 grid max-w-xl gap-x-6 gap-y-2.5 text-sm text-muted-foreground sm:grid-cols-2"
+      >
+        {
+          facts.map((fact) => (
+            <li class="flex items-center gap-2">
+              <Icon name="check" class="size-4 shrink-0 text-primary" />
+              {fact}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="hero-in hero-in-delay-3 justify-self-center lg:justify-self-end">
+      <ScreenshotPlaceholder
+        label="Log capture, mid-flow"
+        shot="The capture sheet open on an animal profile: category chips, the note field with a real sentence typed in it, the photo thumbnail attached, Save primed."
+        viewport="390 x 844, light mode"
+        frame="phone"
+      />
+    </div>
+  </div>
+</section>

@@ -1,0 +1,53 @@
+---
+import Section from "./Section.astro";
+import ScreenshotPlaceholder from "./ScreenshotPlaceholder.astro";
+import { RECORD_GROUPS } from "../data/records";
+---
+
+<Section
+  id="records"
+  tone="muted"
+  eyebrow="What it records"
+  title="A record system, not a notes app with animals in it."
+  lead="Everything below exists in the product today. Where something needs a particular plan, it says so on the card rather than in a footnote."
+>
+  <div class="reveal mt-12">
+    <ScreenshotPlaceholder
+      label="The animal profile, on a desk"
+      shot="A full animal profile at desk width: identity header with identifiers and status, the provenance timeline, the weight trend chart with real points, and the recent log stream. Use a seeded animal with a year of history, not a fresh record."
+      viewport="1680 x 1050, light mode"
+      frame="app"
+    />
+  </div>
+
+  <ul class="mt-14 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+    {
+      RECORD_GROUPS.map((group, i) => (
+        <li class="reveal flex flex-col rounded-2xl border border-border bg-card p-7 shadow-sm">
+          <div class="flex items-baseline justify-between gap-4">
+            <span class="eyebrow" aria-hidden="true">
+              {String(i + 1).padStart(2, "0")}
+            </span>
+            {group.tier && (
+              <span class="rounded-full bg-accent px-2.5 py-1 text-xs font-semibold text-accent-foreground">
+                {group.tier === "Standard" ? "Standard and up" : "Pro and up"}
+              </span>
+            )}
+          </div>
+
+          <h3 class="mt-3 text-xl">{group.title}</h3>
+          <p class="mt-2 text-sm text-muted-foreground">{group.blurb}</p>
+
+          <ul class="mt-5 space-y-2 border-t border-border pt-5 text-sm">
+            {group.items.map((item) => (
+              <li class="grid grid-cols-[0.75rem_1fr] gap-2.5">
+                <span class="mt-2.5 h-px bg-primary" aria-hidden="true" />
+                <span class="text-pretty">{item}</span>
+              </li>
+            ))}
+          </ul>
+        </li>
+      ))
+    }
+  </ul>
+</Section>

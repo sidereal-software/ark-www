@@ -1,0 +1,43 @@
+---
+import Section from "./Section.astro";
+import { SOURCES } from "../data/sources";
+---
+
+<Section
+  id="sources"
+  eyebrow="Sources"
+  title="Where the claims on this page come from."
+  lead="Everything above that is a statement about the world rather than about ARK is numbered and listed here. Where we could not verify a source, the claim was cut rather than softened."
+  width="prose"
+>
+  <ol class="mt-12 space-y-6">
+    {
+      SOURCES.map((source, i) => (
+        <li id={`source-${source.id}`} class="grid scroll-mt-24 grid-cols-[1.75rem_1fr] gap-2">
+          <span class="text-sm font-semibold text-primary tabular-nums">{i + 1}.</span>
+          <div>
+            <p class="text-sm text-pretty text-muted-foreground">{source.text}</p>
+            {source.href && (
+              <p class="mt-1.5">
+                <a
+                  href={source.href}
+                  rel="noopener nofollow"
+                  class="rounded text-sm font-medium text-primary underline underline-offset-4 hover:no-underline"
+                >
+                  {source.href.replace(/^https?:\/\//, "")}
+                </a>
+              </p>
+            )}
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+
+  <p class="mt-10 border-t border-border pt-6 text-sm text-muted-foreground">
+    Sources without a link are cited by name, section and date because we did not have a URL we were
+    confident would still resolve. Nothing here is quoted beyond what the source actually says;
+    where a phrase appears in quotation marks, it is the source's wording and not a paraphrase of
+    it.
+  </p>
+</Section>

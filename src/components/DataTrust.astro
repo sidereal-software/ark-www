@@ -1,0 +1,53 @@
+---
+import Section from "./Section.astro";
+import LiveCounters from "./LiveCounters.astro";
+
+const points = [
+  {
+    title: "Your organization is the boundary",
+    body: "Every request resolves your membership before it touches a row. Another organization's animal does not come back as forbidden; it comes back as not found, because as far as your session is concerned it does not exist. The database enforces the same rule underneath as a second net.",
+  },
+  {
+    title: "Every change is attributable",
+    body: "Mutations write an audit row - who, what, when, and the values before and after. Records are soft-deleted rather than erased, so something that was removed can still account for itself. Auditing is not a paid feature.",
+  },
+  {
+    title: "Leaving is a supported operation",
+    body: "CSV takeout of your animals and your logs is on every plan and carries no feature flag, and it keeps working after a trial lapses. Pro adds API tokens if you would rather pull it programmatically.",
+  },
+  {
+    title: "Billing gates capture, never care",
+    body: "The paywall is attached to creating new records. It is not attached to reading, searching, printing or exporting the ones you already have, and it never will be - a rescue that cannot pay this month still has to be able to look up what an animal was treated with last week.",
+  },
+  {
+    title: "Photos and records back up together",
+    body: "An image without its record is unreachable and a record without its image is a broken page, so the files and the database are treated as one backup unit rather than two schedules that can drift apart.",
+  },
+  {
+    title: "No advertising, no data resale",
+    body: "There is no analytics business hiding behind the subscription. The subscription is the business model, which is exactly why it is priced to be payable.",
+  },
+];
+---
+
+<Section
+  id="trust"
+  tone="muted"
+  eyebrow="Your data"
+  title="It is your record. That has consequences for how ARK is built."
+>
+  <div class="mt-14 grid gap-x-10 gap-y-9 md:grid-cols-2 lg:grid-cols-3">
+    {
+      points.map((point) => (
+        <div class="reveal">
+          <h3 class="text-lg">{point.title}</h3>
+          <p class="mt-2.5 text-muted-foreground">{point.body}</p>
+        </div>
+      ))
+    }
+  </div>
+
+  <div class="mt-14">
+    <LiveCounters />
+  </div>
+</Section>

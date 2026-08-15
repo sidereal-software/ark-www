@@ -1,0 +1,77 @@
+---
+import Logo from "./Logo.astro";
+import { CONTACT_HREF, SITE } from "../consts";
+
+const year = new Date().getFullYear();
+
+const columns = [
+  {
+    heading: "The page",
+    links: [
+      { href: "#problem", label: "The problem" },
+      { href: "#how", label: "How it works" },
+      { href: "#records", label: "What it records" },
+      { href: "#standards", label: "Standards and compliance" },
+    ],
+  },
+  {
+    heading: "Deciding",
+    links: [
+      { href: "#different", label: "Where ARK is different" },
+      { href: "#pricing", label: "Pricing" },
+      { href: "#never", label: "What we will never do" },
+      { href: "#sources", label: "Sources" },
+    ],
+  },
+];
+---
+
+<footer class="border-t border-border bg-background px-5 py-14 sm:px-8">
+  <div class="mx-auto max-w-6xl">
+    <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="lg:col-span-2">
+        <Logo />
+        <p class="mt-4 max-w-sm text-sm text-muted-foreground">
+          Mobile-first animal recordkeeping for zoos, wildlife rehabilitation centres, sanctuaries
+          and rescues. Built by Sidereal Software.
+        </p>
+        <a
+          href={CONTACT_HREF}
+          class="mt-4 inline-block rounded text-sm font-medium text-primary underline underline-offset-4 hover:no-underline"
+        >
+          {SITE.contactEmail}
+        </a>
+      </div>
+
+      {
+        columns.map((column) => (
+          <nav aria-label={column.heading}>
+            <h2 class="text-sm font-semibold">{column.heading}</h2>
+            <ul class="mt-4 space-y-2.5">
+              {column.links.map((link) => (
+                <li>
+                  <a
+                    href={link.href}
+                    class="rounded text-sm text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        ))
+      }
+    </div>
+
+    <div
+      class="mt-12 flex flex-col gap-3 border-t border-border pt-7 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between"
+    >
+      <p>&copy; {year} Sidereal Software. All rights reserved.</p>
+      <p>
+        ARK has no customers yet, so there are no logos and no testimonials on this site. When there
+        are, they will be real.
+      </p>
+    </div>
+  </div>
+</footer>

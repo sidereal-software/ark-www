@@ -1,0 +1,30 @@
+---
+import { SOURCE_INDEX, SOURCES } from "../data/sources";
+
+interface Props {
+  /** Must match an id in src/data/sources.ts. */
+  id: string;
+}
+
+const { id } = Astro.props;
+const number = SOURCE_INDEX[id];
+
+if (!number) {
+  throw new Error(
+    `Footnote "${id}" has no entry in src/data/sources.ts. Known ids: ${SOURCES.map((s) => s.id).join(", ")}`,
+  );
+}
+---
+
+{
+  /* No id on the marker: several claims cite the same source, and a per-source
+    id would be duplicated in the document. The browser's back button is the
+    return path, which is what a reader will reach for anyway. */
+}
+<a
+  href={`#source-${id}`}
+  class="footnote-ref ml-0.5 rounded align-super text-[0.65em] font-semibold underline-offset-2 hover:underline"
+  aria-label={`Source ${number}`}
+>
+  {number}
+</a>

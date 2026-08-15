@@ -1,0 +1,75 @@
+---
+import Section from "./Section.astro";
+import Footnote from "./Footnote.astro";
+
+const cards = [
+  {
+    title: "Current, not reconstructed",
+    body: "AZA's standards expect daily records entered the same day or by the end of the next working day. That is a much easier bar to clear when the entry is made where the observation happened, rather than from a whiteboard at nine that evening.",
+    cite: "aza",
+  },
+  {
+    title: "Produced on demand",
+    body: "An annual inventory by species with every acquisition and disposition in the period. A transfer form with identity, identifiers, provenance, medical summary and live permits. A care sheet for the enclosure door. CSV and XLSX.",
+  },
+  {
+    title: "Able to show their own history",
+    body: "Every change writes an audit row: who, what, when, and what the value was before. Deletion is soft, so a record that was removed can still account for itself. On every plan, including Starter.",
+  },
+];
+---
+
+<Section
+  id="standards"
+  eyebrow="Standards and compliance"
+  title="Accreditation asks for a records system. It does not ask for ours."
+  lead="AZA, the Zoological Association of America and the Global Federation of Animal Sanctuaries each require an accredited member to keep an animal records system. None of them requires a particular vendor. What they want is that the records exist, that they are current, and that you can produce them."
+>
+  <div class="mt-4 text-sm text-muted-foreground">
+    <Footnote id="standards-bodies" />
+  </div>
+
+  <div class="mt-12 grid gap-5 md:grid-cols-3">
+    {
+      cards.map((card) => (
+        <article class="reveal rounded-2xl border border-border bg-card p-7 shadow-sm">
+          <h3 class="text-xl text-balance">{card.title}</h3>
+          <p class="mt-3 text-muted-foreground">
+            {card.body}
+            {card.cite && <Footnote id={card.cite} />}
+          </p>
+        </article>
+      ))
+    }
+  </div>
+
+  <div
+    class="reveal mt-8 rounded-2xl border border-border border-l-4 border-l-primary bg-card p-7 sm:p-9"
+  >
+    <h3 class="text-xl">Two things we will not pretend to know for you</h3>
+
+    <div class="mt-5 grid gap-8 md:grid-cols-2">
+      <div>
+        <p class="font-semibold">How long you have to keep it</p>
+        <p class="mt-2 text-muted-foreground">
+          The spread is wider than any single number a vendor can put on a page. Licensed exhibitors
+          under the Animal Welfare Act keep records for one year after an animal is disposed of or
+          dies, longer where other law applies. Federal migratory bird rehabilitation permits
+          require five years. State schedules differ again.<Footnote id="retention" /> ARK never deletes
+          on a schedule of its own - deletion is soft and the audit trail keeps the story - so the retention
+          question stays yours to answer against the rules that actually bind you.
+        </p>
+      </div>
+
+      <div>
+        <p class="font-semibold">When your annual report is due</p>
+        <p class="mt-2 text-muted-foreground">
+          California, Washington and New York each have their own form and their own deadline, and
+          they do not agree with each other.<Footnote id="reporting" /> We are not going to publish a
+          fifty-state table we cannot stand behind. What ARK gives you is the underlying data - dated,
+          attributable and exportable - whichever form you are the one filling in.
+        </p>
+      </div>
+    </div>
+  </div>
+</Section>

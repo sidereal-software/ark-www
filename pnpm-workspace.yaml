@@ -1,0 +1,5 @@
+# pnpm 11 reads build-script approvals from here rather than from package.json.
+# esbuild's install script resolves its platform binary; without it Vite's
+# dependency optimiser has nothing to run, and `pnpm install` exits non-zero.
+allowBuilds:
+  esbuild: true

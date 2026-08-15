@@ -1,0 +1,106 @@
+---
+import Section from "./Section.astro";
+import Footnote from "./Footnote.astro";
+
+// The chain as the sector's own documentation describes it. Each step is
+// something a published source says happens, not a strawman we invented.
+const chain = [
+  {
+    step: "At the enclosure",
+    body: "A whiteboard, a clipboard or a paper log. Wild Welfare's own husbandry training tells facilities to keep a daily board at the section and transfer it into the permanent record afterwards.",
+    cite: "wildwelfare",
+  },
+  {
+    step: "Later that day",
+    body: "Someone types it up. AZA's 2026 accreditation standards still accommodate paper systems and require daily records to be entered the same day, or by the end of the next working day.",
+    cite: "aza",
+  },
+  {
+    step: "Then again",
+    body: "A registrar reviews the keeper's entries and accepts or rejects them - the standard division of labour Species360's own documentation describes.",
+    cite: "species360-workflow",
+  },
+  {
+    step: "And once more",
+    body: "At reporting time, the year gets transcribed again into whatever the permitting agency wants.",
+  },
+];
+---
+
+<Section
+  id="problem"
+  tone="ink"
+  eyebrow="The problem"
+  title="Everything gets written twice. Sometimes three times."
+  lead="Not because anyone is disorganised. Because the place the observation happens and the place the record lives are two different places, and the gap between them is bridged by hand."
+>
+  <div class="mt-14 grid gap-12 lg:grid-cols-2 lg:gap-16">
+    <ol class="reveal space-y-0">
+      {
+        chain.map((link, i) => (
+          <li class="relative pb-8 pl-10 last:pb-0">
+            {i < chain.length - 1 && (
+              <span
+                class="absolute top-8 bottom-0 left-[0.6875rem] w-px bg-ink-border"
+                aria-hidden="true"
+              />
+            )}
+            <span
+              class="absolute top-1 left-0 flex size-6 items-center justify-center rounded-full border border-ink-border bg-ink text-[0.7rem] font-semibold text-ink-primary"
+              aria-hidden="true"
+            >
+              {i + 1}
+            </span>
+            <p class="font-display text-lg font-semibold">{link.step}</p>
+            <p class="mt-1.5 text-ink-muted">
+              {link.body}
+              {link.cite && <Footnote id={link.cite} />}
+            </p>
+          </li>
+        ))
+      }
+    </ol>
+
+    <div class="reveal">
+      <figure class="rounded-2xl border border-ink-border bg-ink-foreground/[0.04] p-7 sm:p-9">
+        <p class="eyebrow">Peer-reviewed, not anecdotal</p>
+        <blockquote class="mt-5">
+          <p class="font-display text-xl leading-snug text-balance sm:text-2xl">
+            &ldquo;Data on these handwritten logs&hellip; were manually transcribed into digital
+            spreadsheets.&rdquo;
+          </p>
+        </blockquote>
+        <figcaption class="mt-5 text-sm text-ink-muted">
+          Hanson et al., <span class="text-ink-foreground"
+            >Species, causes, and outcomes of wildlife rehabilitation in New York State</span
+          >, PLOS ONE, 2021. 58,185 cases across three reporting years.<Footnote id="hanson" />
+        </figcaption>
+      </figure>
+
+      <div class="mt-8 space-y-5 text-ink-muted">
+        <p>
+          The same study reports what the copying costs. Errors and inconsistencies occurred
+          &ldquo;both within and between rehabilitation centers&rdquo; - misidentified species,
+          missing causes of distress, missing final dispositions - and incomplete records had to be
+          dropped before anything could be analysed.<Footnote id="hanson" />
+        </p>
+        <p>
+          Nearly three decades of state records existed and still could not answer basic questions,
+          because they &ldquo;were collected, but were not in a form conducive for such data
+          summaries.&rdquo;<Footnote id="hanson" />
+        </p>
+        <p>
+          Ask a rehabilitator how a year of intake sheets becomes a spreadsheet and you get the same
+          picture from the inside: it gets typed in, one sheet at a time, and it is
+          &ldquo;tedious&rdquo; right up until the moment the data finally tells you something.<Footnote
+            id="iwrc"
+          />
+        </p>
+        <p class="text-ink-foreground">
+          The entry that is never made at all does not show up in any of these numbers. It is
+          usually the biggest one.
+        </p>
+      </div>
+    </div>
+  </div>
+</Section>
