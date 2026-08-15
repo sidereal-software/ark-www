@@ -4,23 +4,25 @@ import { CONTACT_HREF, SITE } from "../consts";
 
 const year = new Date().getFullYear();
 
+// Root-relative, not bare fragments: this footer also renders on /404, and a
+// bare "#pricing" there resolves against the missing path and goes nowhere.
 const columns = [
   {
     heading: "The page",
     links: [
-      { href: "#problem", label: "The problem" },
-      { href: "#how", label: "How it works" },
-      { href: "#records", label: "What it records" },
-      { href: "#standards", label: "Standards and compliance" },
+      { href: "/#problem", label: "The problem" },
+      { href: "/#how", label: "How it works" },
+      { href: "/#records", label: "What it records" },
+      { href: "/#standards", label: "Standards and compliance" },
     ],
   },
   {
     heading: "Deciding",
     links: [
-      { href: "#different", label: "Where ARK is different" },
-      { href: "#pricing", label: "Pricing" },
-      { href: "#never", label: "What we will never do" },
-      { href: "#sources", label: "Sources" },
+      { href: "/#different", label: "Where ARK is different" },
+      { href: "/#pricing", label: "Pricing" },
+      { href: "/#never", label: "What we will never do" },
+      { href: "/#sources", label: "Sources" },
     ],
   },
 ];

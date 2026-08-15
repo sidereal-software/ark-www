@@ -2,11 +2,14 @@
 import Logo from "./Logo.astro";
 import { CONTACT_HREF } from "../consts";
 
+// Root-relative, not bare fragments. This header also renders on /404, where a
+// bare "#pricing" would resolve against the missing path and leave the visitor
+// exactly where they were.
 const links = [
-  { href: "#problem", label: "The problem" },
-  { href: "#how", label: "How it works" },
-  { href: "#records", label: "What it records" },
-  { href: "#pricing", label: "Pricing" },
+  { href: "/#problem", label: "The problem" },
+  { href: "/#how", label: "How it works" },
+  { href: "/#records", label: "What it records" },
+  { href: "/#pricing", label: "Pricing" },
 ];
 ---
 

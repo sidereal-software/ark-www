@@ -6,9 +6,18 @@ import ScreenshotPlaceholder from "./ScreenshotPlaceholder.astro";
 // Contour lines, the way a survey map or a field guide's terrain inset draws
 // them. This is the site's one piece of decoration and it is generated rather
 // than drawn, so it stays regular.
-const contours = Array.from({ length: 8 }, (_, i) => {
-  const y = 60 + i * 44;
-  return `M-60 ${y} C 130 ${y - 34}, 260 ${y + 38}, 450 ${y - 14} S 760 ${y + 30}, 980 ${y - 8}`;
+//
+// They fall down the page rather than across it. Drawn across, a hairline that
+// happens to pass under a line of body copy reads as an underline - the web's
+// one universal link signifier - and where it lands is decided by the line
+// wrap, so it appears and disappears with the viewport. Every stroke below
+// stays within about 22 degrees of vertical, which no amount of reflow can
+// turn into an underline. Steepness is a property of the path data: the y
+// coordinates advance monotonically and far faster than the x coordinates
+// wander, and `slice` scales uniformly, so the angles survive to the screen.
+const contours = Array.from({ length: 10 }, (_, i) => {
+  const x = -60 + i * 110;
+  return `M${x} -80 C ${x + 48} 190, ${x - 52} 380, ${x + 20} 560 S ${x - 44} 840, ${x + 12} 1000`;
 });
 
 const facts = [
@@ -24,7 +33,7 @@ const facts = [
 >
   <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
     <svg
-      viewBox="0 0 920 420"
+      viewBox="0 0 920 920"
       preserveAspectRatio="xMidYMid slice"
       class="h-full w-full text-primary opacity-[0.075]"
       fill="none"

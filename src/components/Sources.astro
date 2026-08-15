@@ -17,12 +17,17 @@ import { SOURCES } from "../data/sources";
           <span class="text-sm font-semibold text-primary tabular-nums">{i + 1}.</span>
           <div>
             <p class="text-sm text-pretty text-muted-foreground">{source.text}</p>
+            {/* A bare DOI is one unbreakable 36-character token, and the 1fr
+              track is sized by it: without a break opportunity the list pushes
+              the whole document 11px wider than a 320px viewport. `anywhere`
+              rather than `break-word` because only `anywhere` counts towards
+              the min-content size the track is measured against. */}
             {source.href && (
               <p class="mt-1.5">
                 <a
                   href={source.href}
                   rel="noopener nofollow"
-                  class="rounded text-sm font-medium text-primary underline underline-offset-4 hover:no-underline"
+                  class="rounded text-sm font-medium wrap-anywhere text-primary underline underline-offset-4 hover:no-underline"
                 >
                   {source.href.replace(/^https?:\/\//, "")}
                 </a>

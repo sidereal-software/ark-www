@@ -4,6 +4,19 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import "../styles/global.css";
 
+// The two faces that render the first screen: Fraunces for the heading, Plus
+// Jakarta Sans for everything else. Both are variable, so one file per family
+// covers every weight the page asks for. Discovered from a url() inside the
+// stylesheet, they would not start downloading until the CSS had parsed, and
+// font-display: swap would show fallback text until they arrived. Imported
+// here rather than hardcoded so the preload href tracks the hashed filename.
+//
+// The latin-ext cuts are deliberately not preloaded: no character on the site
+// falls in their unicode-range, so a browser never fetches them at all, and a
+// preload would be pure competition for the stylesheet.
+import frauncesLatin from "@fontsource-variable/fraunces/files/fraunces-latin-wght-normal.woff2?url";
+import jakartaLatin from "@fontsource-variable/plus-jakarta-sans/files/plus-jakarta-sans-latin-wght-normal.woff2?url";
+
 interface Props {
   /** Page title, rendered before the site name. Omit on the home page. */
   title?: string;
@@ -45,6 +58,13 @@ const jsonLd = {
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex, follow" />}
+
+    {
+      /* crossorigin is required even same-origin, or the preload is discarded
+      and the font is fetched a second time. */
+    }
+    <link rel="preload" as="font" type="font/woff2" crossorigin href={frauncesLatin} />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href={jakartaLatin} />
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
