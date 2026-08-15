@@ -9,24 +9,27 @@ const { markOnly = false, class: className = "" } = Astro.props;
 ---
 
 {
-  /* An arch on a groundline: an enclosure doorway and a hull, depending on how
-    you look at it. No paw prints. The mark is decorative here because the
-    wordmark beside it carries the name, so it is hidden from assistive tech. */
+  /* The ARK app's own mark, copied unchanged from the product's
+    frontend/public/favicon.svg: four toes and a pad. Two things differ from the
+    file it came from, and neither touches the geometry. The viewBox is cropped
+    to the paw's own bounds rather than the app icon's 64-unit square, so a
+    square box renders the paw at full width instead of floating it in padding;
+    and the fill is currentColor rather than the app's hardcoded #556A4D, so one
+    mark serves both colour schemes. Decorative here because the wordmark beside
+    it carries the name, so it is hidden from assistive tech. */
 }
 <span class={`inline-flex items-center gap-2.5 ${className}`}>
   <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="1.75"
-    stroke-linecap="round"
-    stroke-linejoin="round"
+    viewBox="3 13 58 40"
+    fill="currentColor"
     class="size-6 shrink-0 text-primary"
     aria-hidden="true"
   >
-    <path d="M5 20.5V11a7 7 0 0 1 14 0v9.5"></path>
-    <path d="M2.5 20.5h19"></path>
-    <circle cx="12" cy="12.5" r="1.75" fill="currentColor" stroke="none"></circle>
+    <ellipse cx="20" cy="22" rx="6" ry="8"></ellipse>
+    <ellipse cx="44" cy="22" rx="6" ry="8"></ellipse>
+    <ellipse cx="9" cy="34" rx="5" ry="7"></ellipse>
+    <ellipse cx="55" cy="34" rx="5" ry="7"></ellipse>
+    <path d="M32 30c8 0 15 6 15 13 0 6-5 9-15 9s-15-3-15-9c0-7 7-13 15-13z"></path>
   </svg>
   {
     !markOnly && (

@@ -88,7 +88,7 @@ scrolling. Split when a section earns its own URL, not before.
 
 This site shipped no JavaScript at all until it needed a navigation menu. Below
 the `md` breakpoint the header's inline links do not fit, which left a visitor on
-a phone with no way to navigate a page over 33,000px tall except to scroll it or
+a phone with no way to navigate a page over 31,000px tall except to scroll it or
 reach the footer. `src/components/MobileNav.tsx` is the fix, and it is the only
 hydrated thing here.
 
@@ -142,6 +142,13 @@ and the full table is at the bottom of `theme.css`. If you add a pair, measure
 it. One combination is measured and then _forbidden_: primary text on the accent
 fill is 3.41:1, so text on accent is always `--accent-foreground`.
 
+The mark is the product's, not the site's. `src/components/Logo.astro` and
+`public/favicon.svg` carry the paw from the ARK app's own
+`frontend/public/favicon.svg`, geometry unchanged; only the colour is different,
+so that one mark works in both schemes. The site does not get to design a
+different identity from the thing it is selling - if the app's mark changes,
+this one changes with it.
+
 Motion is CSS only, including the menu's - the sheet's enter and exit are
 `tw-animate-css` keyframes that Radix toggles by `data-state`, not animation
 driven from JavaScript. Section reveals use scroll-driven `animation-timeline:
@@ -176,10 +183,11 @@ Two habits worth keeping:
   the source itself and not reconstructed from a summary.
 
 There is no social proof on the site, because ARK has no customers yet: no
-logos, no testimonials, no "trusted by". `src/components/LiveCounters.astro` is
-a marked placeholder for real running totals later, with the wiring instructions
-in its own comment. It renders a dash rather than a number. Do not put a number
-in it until there is one.
+logos, no testimonials, no "trusted by", and no running totals. There is also no
+paragraph pointing that out. A page earns trust by being specific about what the
+software does, not by narrating its own honesty, and the two read very
+differently to someone deciding whether to spend their rescue's money here.
+Build a figures section when the figures exist and are measured.
 
 ## Screenshots
 

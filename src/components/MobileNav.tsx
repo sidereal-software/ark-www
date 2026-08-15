@@ -15,7 +15,7 @@ import { SECTION_LINKS } from "@/data/nav";
 /**
  * The whole of this site's JavaScript: the navigation a visitor gets below the
  * `md` breakpoint, where the header's inline links do not fit and the page
- * they would be navigating is over 33,000px tall.
+ * they would be navigating is over 31,000px tall.
  *
  * It is a Radix dialog rather than a `<details>` disclosure because a
  * disclosure cannot close on Escape, cannot close on an outside click, cannot
@@ -32,11 +32,12 @@ export default function MobileNav() {
    * the page. Radix locks body scroll for as long as the sheet is mounted, and
    * the sheet stays mounted through its exit animation, so a plain anchor
    * navigates against a page that cannot scroll and lands short of the
-   * section. Measured on the built site at 375px: /#pricing settles at 19,682px
-   * when nothing is in the way, at 19,341px through a closing sheet, and at
-   * 3,670px once the site's `scroll-behavior: smooth` has its animation cut off
-   * mid-flight. The last one leaves the visitor 16,000px from where they asked
-   * to go.
+   * section. Measured on the built site at 375px, where /#pricing settles at
+   * 19,298px with nothing in the way: through a closing sheet it lands 341px
+   * short, and once the site's `scroll-behavior: smooth` has had its animation
+   * cut off mid-flight it lands 16,012px short. The shortfalls are quoted
+   * rather than the landing positions, because the landing positions move with
+   * every edit to the copy above them and the shortfalls do not.
    *
    * So the navigation waits its turn. The click records the destination,
    * `onCloseAutoFocus` fires once the sheet has unmounted and released the

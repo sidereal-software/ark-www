@@ -43,9 +43,4 @@ export const NEVER: Promise_[] = [
     because:
       "One number per tier. No configurator, no line items to reconcile, no discovering at renewal that the thing you use daily was optional.",
   },
-  {
-    never: "Invent a customer we do not have",
-    because:
-      "There are no logos on this page and no testimonials, because ARK has no customers yet. When there are numbers worth publishing we will publish the real ones, starting from whatever they actually are.",
-  },
 ];

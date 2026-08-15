@@ -1,19 +1,21 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="ARK">
   <style>
-    /* The mark has to stay legible against both browser chromes. */
-    .bg { fill: #f8f7f4; }
-    .fg { fill: none; stroke: #476e54; }
-    .dot { fill: #476e54; }
+    /* The ARK app hardcodes #556A4D, which sinks into a dark browser chrome.
+       Same sage, one step either way, so the mark reads on both. */
+    .fg { fill: #476e54; }
     @media (prefers-color-scheme: dark) {
-      .bg { fill: #111316; }
-      .fg { stroke: #90b89d; }
-      .dot { fill: #90b89d; }
+      .fg { fill: #90b89d; }
     }
   </style>
-  <rect class="bg" width="32" height="32" rx="7" />
-  <g class="fg" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M9 24.5V15a7 7 0 0 1 14 0v9.5" />
-    <path d="M6.5 24.5h19" />
+  <!-- The app's paw, geometry unchanged from frontend/public/favicon.svg. It is
+       carried at full width with no background plate: a 16px tab icon has about
+       one pixel between a toe and the pad, and a plate spends the width that
+       gap needs on padding. -->
+  <g class="fg" transform="translate(-1.14 -1.68) scale(0.5357)">
+    <ellipse cx="20" cy="22" rx="6" ry="8" />
+    <ellipse cx="44" cy="22" rx="6" ry="8" />
+    <ellipse cx="9" cy="34" rx="5" ry="7" />
+    <ellipse cx="55" cy="34" rx="5" ry="7" />
+    <path d="M32 30c8 0 15 6 15 13 0 6-5 9-15 9s-15-3-15-9c0-7 7-13 15-13z" />
   </g>
-  <circle class="dot" cx="16" cy="16.5" r="2.2" />
 </svg>
