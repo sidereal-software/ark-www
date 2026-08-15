@@ -1,8 +1,14 @@
 ---
 /**
- * The site's whole icon set. It is three glyphs on purpose: the design leans on
- * typography and specimen-label numbering rather than an icon per feature, so
- * pulling in an icon library would buy nothing but a dependency.
+ * The prerendered pages' whole icon set. It is three glyphs on purpose: the
+ * design leans on typography and specimen-label numbering rather than an icon
+ * per feature, and these three ship as inline markup with no runtime behind
+ * them.
+ *
+ * The hydrated menu draws from `lucide-react` instead, because that is the
+ * icon library `components.json` names and the one shadcn's own sheet imports.
+ * Two glyphs from it reach the browser. Keep the split that way: an icon on a
+ * static page has no reason to arrive as JavaScript.
  */
 type Name = "check" | "cross" | "arrow-right";
 

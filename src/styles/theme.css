@@ -106,6 +106,11 @@
   --ink-border: oklch(0.34 0.026 268);
 
   --border: oklch(0.8879 0.0086 89);
+  /* Control boundary, as distinct from --border's decorative separation. The
+     shadcn button's outline variant asks for it, and a boundary that identifies
+     a control owes WCAG 1.4.11's 3:1 - which --border, at 1.31:1, does not pay.
+     Darker than the app's --input for the same reason --primary is darker. */
+  --input: oklch(0.6 0.011 89);
   --ring: oklch(0.5 0.06 155);
 
   --font-sans: "Plus Jakarta Sans Variable", "Plus Jakarta Sans", sans-serif;
@@ -157,6 +162,7 @@
     --ink-border: oklch(0.35 0.012 265);
 
     --border: oklch(0.32 0.01 265);
+    --input: oklch(0.56 0.011 265);
     --ring: oklch(0.745 0.058 155);
 
     --shadow-sm: 0px 1px 2px 0px hsl(0 0% 0% / 0.3), 0px 1px 2px -1px hsl(0 0% 0% / 0.3);
@@ -180,6 +186,7 @@
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
   --color-border: var(--border);
+  --color-input: var(--input);
   --color-ring: var(--ring);
 
   --color-ink: var(--ink);
@@ -262,6 +269,9 @@
  *   ink-foreground / ink ............................... 15.32:1
  *   ink-muted / ink ..................................... 8.20:1
  *   ink-primary / ink ................................... 7.28:1
+ *   input / background .................................. 3.68:1
+ *   input / card ........................................ 3.95:1
+ *   input / muted ....................................... 3.16:1
  *
  * Dark
  *   foreground / background ............................ 16.35:1
@@ -278,6 +288,9 @@
  *   ink-foreground / ink ............................... 13.92:1
  *   ink-muted / ink ..................................... 7.00:1
  *   ink-primary / ink ................................... 7.18:1
+ *   input / background .................................. 4.00:1
+ *   input / card ........................................ 3.67:1
+ *   input / muted ....................................... 3.22:1
  *
  * One pairing is measured and then forbidden: --primary as text on --accent is
  * 3.41:1 in light mode. Text on the accent fill is always --accent-foreground.

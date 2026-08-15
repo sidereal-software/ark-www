@@ -3,8 +3,11 @@
 The marketing site for **ARK** - mobile-first animal recordkeeping for zoos,
 wildlife rehabilitation centres, sanctuaries and rescues.
 
-Serves at <https://ark.sidereal.software>. Static, zero JavaScript shipped to the
-browser, deployed to GitHub Pages by Actions.
+Serves at <https://ark.sidereal.software>. Static HTML plus one hydrated island -
+the mobile navigation menu, and nothing else - deployed to GitHub Pages by
+Actions. That island costs **84.3 KB gzipped of JavaScript**; see
+[The JavaScript budget](#the-javascript-budget) for what it buys and what it
+replaced.
 
 This repository is the _site_. The product lives in the private `ark`
 repository, and nothing here imports from it - the design tokens were copied
@@ -12,17 +15,23 @@ across once, deliberately, and the copy is annotated where it diverges.
 
 ## Stack
 
-|                 |                                                                                             |
-| --------------- | ------------------------------------------------------------------------------------------- |
-| Framework       | Astro 7 (static output, no JavaScript unless a component asks for it - none currently does) |
-| Styles          | Tailwind CSS v4 via `@tailwindcss/vite`                                                     |
-| Fonts           | Fraunces and Plus Jakarta Sans, self-hosted from `@fontsource-variable`, latin subsets only |
-| Package manager | pnpm                                                                                        |
-| Node            | 24                                                                                          |
+|                 |                                                                                                              |
+| --------------- | ------------------------------------------------------------------------------------------------------------ |
+| Framework       | Astro 7, static output. One component asks for JavaScript; every other page section is prerendered and inert |
+| Interactivity   | React 19 via `@astrojs/react`, on exactly one island                                                         |
+| Components      | shadcn/ui, `new-york` style, Radix primitives - the ARK app's own setup                                      |
+| Styles          | Tailwind CSS v4 via `@tailwindcss/vite`                                                                      |
+| Fonts           | Fraunces and Plus Jakarta Sans, self-hosted from `@fontsource-variable`, latin subsets only                  |
+| Package manager | pnpm                                                                                                         |
+| Node            | 24                                                                                                           |
 
 Tailwind arrives through the Vite plugin rather than `@astrojs/tailwind`. The
 Astro integration is deprecated and caps at Astro 5 / Tailwind 3; the Vite plugin
 is also what the ARK app itself uses, so both trees are on the same Tailwind.
+
+`components.json` mirrors the app's, so `pnpm dlx shadcn@latest add <component>`
+writes the same files here that it writes there. React and `radix-ui` are pinned
+to the versions the app runs.
 
 ## Local development
 
@@ -48,14 +57,19 @@ ignored, and esbuild's script is what resolves its platform binary.
 ## Layout
 
 ```
+components.json          shadcn/ui config, mirroring the ARK app's
 src/
   consts.ts              Site metadata and the one contact link
   data/                  Page content that is iterated over
+    nav.ts               The page's table of contents, shared header and menu
     pricing.ts           The four plans and what each adds
     records.ts           What ARK records, by group
     never.ts             The "what we will never do" commitments
     sources.ts           Every citation on the page, numbered
   components/            One component per page section, plus shared pieces
+    MobileNav.tsx        The only hydrated component on the site
+    ui/                  shadcn/ui components, added by its CLI
+  lib/utils.ts           cn(), the shadcn class merger
   layouts/BaseLayout.astro   <head>, metadata, skip link, header and footer
   pages/
     index.astro          The whole site
@@ -69,6 +83,40 @@ public/                  favicon, touch icon, OG image, robots.txt
 One page, deliberately. Splitting pricing or the feature list onto their own
 URLs would make someone navigate to finish a decision they are already making by
 scrolling. Split when a section earns its own URL, not before.
+
+## The JavaScript budget
+
+This site shipped no JavaScript at all until it needed a navigation menu. Below
+the `md` breakpoint the header's inline links do not fit, which left a visitor on
+a phone with no way to navigate a page over 33,000px tall except to scroll it or
+reach the footer. `src/components/MobileNav.tsx` is the fix, and it is the only
+hydrated thing here.
+
+What it costs, gzipped, measured from `dist/`:
+
+| Chunk         | Raw      | Gzip        |
+| ------------- | -------- | ----------- |
+| React runtime | 180.6 KB | 56.4 KB     |
+| `react-dom`   | 11.5 KB  | 4.2 KB      |
+| The island    | 73.1 KB  | 23.8 KB     |
+| **Total**     |          | **84.3 KB** |
+
+First-view transfer for `/` goes from roughly 88 KB to roughly 176 KB, counting
+HTML, CSS and the two preloaded fonts. That is the honest price of a Radix dialog
+and it is not small. Two things to know before changing it:
+
+- **It is `client:load` on purpose.** A navigation control sits in a sticky
+  header, on screen from the first frame, and has to work when it is touched
+  rather than when the browser gets round to it. `client:visible` and
+  `client:idle` are the wrong trade for this one component.
+- **Desktop pays for a control it never sees.** The trigger is `md:hidden`, so
+  above 768px the whole 84.3 KB hydrates a button nobody can reach. Switching
+  the directive to `client:media="(max-width: 767px)"` would take desktop to
+  zero and leave mobile unchanged - at the cost of hydrating on media-query
+  match rather than on load.
+
+Everything else on the page is still prerendered and inert. Adding a `client:*`
+directive anywhere else is a decision to be made deliberately, not by accident.
 
 ## Design system
 
@@ -94,11 +142,22 @@ and the full table is at the bottom of `theme.css`. If you add a pair, measure
 it. One combination is measured and then _forbidden_: primary text on the accent
 fill is 3.41:1, so text on accent is always `--accent-foreground`.
 
-Motion is CSS only. Section reveals use scroll-driven `animation-timeline:
+Motion is CSS only, including the menu's - the sheet's enter and exit are
+`tw-animate-css` keyframes that Radix toggles by `data-state`, not animation
+driven from JavaScript. Section reveals use scroll-driven `animation-timeline:
 view()`, wrapped in `@supports` and in `prefers-reduced-motion: no-preference`,
 and content is fully visible by default - so a browser without scroll-driven
 animations, or a visitor who asked for less motion, simply gets the finished
-state. Nothing can be left invisible by a script that did not run.
+state. No page content can be left invisible by a script that did not run.
+
+The two shadcn components here diverge from the ARK app's copies in one shared
+way, recorded at the top of each file: neither draws its own focus ring. This
+site has a single `:focus-visible` outline in `global.css` that every link,
+button and menu item shares, and a component that opted out with `outline-none`
+would be the only control on the page with a different one. `button.tsx` also
+carries the site's semibold label and press affordance, and an `xl` step on both
+size scales, because 44px touch targets are the floor on a site about software
+used one-handed on a phone.
 
 ## Content rules
 

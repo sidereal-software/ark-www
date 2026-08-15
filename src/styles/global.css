@@ -1,4 +1,8 @@
 @import "tailwindcss";
+/* Supplies the enter/exit keyframe utilities (animate-in, fade-in-0,
+   slide-in-from-right) that the shadcn overlay components animate with. Same
+   package and version the ARK app uses. */
+@import "tw-animate-css";
 @import "./theme.css";
 
 @layer base {
