@@ -1,0 +1,39 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Pricing from "../components/Pricing.astro";
+import NeverBlock from "../components/NeverBlock.astro";
+import DataTrust from "../components/DataTrust.astro";
+import NextPages from "../components/NextPages.astro";
+import ContactCta from "../components/ContactCta.astro";
+---
+
+{
+  /* The three sections a reader weighs together before spending their
+    facility's money: what it costs, what we promise never to charge for, and
+    what happens to the records if they leave. Splitting those across pages
+    would make somebody navigate in the middle of one decision. */
+}
+<BaseLayout
+  title="Pricing"
+  description="Four plans from $19 a month, priced on active animals and storage rather than on people. Unlimited users on every plan, a 30-day free trial with Pro features, and your records downloadable whatever you pay."
+>
+  <Pricing />
+  <NeverBlock />
+  <DataTrust />
+  <NextPages
+    links={[
+      {
+        href: "/what-it-records",
+        label: "What it records",
+        blurb: "Everything in ARK today, with the plan each capability needs marked on the card.",
+      },
+      {
+        href: "/#different",
+        label: "Design decisions",
+        blurb:
+          "Why the price counts animals instead of people, and the two other choices behind the product.",
+      },
+    ]}
+  />
+  <ContactCta />
+</BaseLayout>

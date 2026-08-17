@@ -1,0 +1,38 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Records from "../components/Records.astro";
+import Standards from "../components/Standards.astro";
+import NextPages from "../components/NextPages.astro";
+import ContactCta from "../components/ContactCta.astro";
+---
+
+{
+  /* Records and Standards share a page because they answer one question from
+    two directions: what ARK holds, and whether what it holds satisfies the
+    body that inspects you. Someone checking the second has always just
+    finished checking the first. */
+}
+<BaseLayout
+  title="What it records"
+  description="Twelve groups of record in ARK today: the animal, the daily log, measurements and readings, feeding, tasks, medical, welfare checks, documents, compliance paperwork, the facility, orientation, and getting your data in and out."
+>
+  <Records />
+  <Standards />
+  <NextPages
+    links={[
+      {
+        href: "/pricing",
+        label: "Pricing",
+        blurb:
+          "Which plan each of these needs, what the limits are, and what we are committing never to charge you for.",
+      },
+      {
+        href: "/#how",
+        label: "How it works",
+        blurb:
+          "The capture loop everything above hangs off: find the animal, pick a category, write the line, save.",
+      },
+    ]}
+  />
+  <ContactCta />
+</BaseLayout>

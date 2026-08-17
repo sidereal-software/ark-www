@@ -1,0 +1,46 @@
+---
+import Icon from "./Icon.astro";
+
+/**
+ * Where the reader goes next.
+ *
+ * On one long page the answer was "keep scrolling", and the page carried
+ * people from the problem to the price whether or not they had decided to go.
+ * Split across four URLs, that stops happening: a visitor who reaches the
+ * bottom of the home page has read the argument and is standing at a dead end
+ * with only the header to save them.
+ *
+ * So each page names the next two deliberately. It is not a sitemap - the
+ * header and the footer already carry every link. It is the two questions a
+ * reader has at that point, in the order they usually have them: what does it
+ * actually hold, and what does it cost.
+ */
+interface Props {
+  links: { href: string; label: string; blurb: string }[];
+}
+
+const { links } = Astro.props;
+---
+
+<nav aria-label="Continue reading" class="bg-background px-5 py-16 sm:px-8 sm:py-20">
+  <div class="mx-auto grid max-w-6xl gap-5 sm:grid-cols-2">
+    {
+      links.map((link) => (
+        <a
+          href={link.href}
+          class="reveal group flex flex-col rounded-2xl border border-border bg-card p-7 shadow-sm transition-[box-shadow,transform] hover:shadow-md active:translate-y-px sm:p-8"
+        >
+          <span class="eyebrow">Next</span>
+          <span class="mt-3 flex items-center gap-2 font-display text-2xl font-semibold text-balance">
+            {link.label}
+            <Icon
+              name="arrow-right"
+              class="size-5 shrink-0 text-primary transition-transform group-hover:translate-x-1"
+            />
+          </span>
+          <span class="mt-2.5 text-muted-foreground">{link.blurb}</span>
+        </a>
+      ))
+    }
+  </div>
+</nav>

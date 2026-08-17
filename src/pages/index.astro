@@ -3,32 +3,38 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Hero from "../components/Hero.astro";
 import Problem from "../components/Problem.astro";
 import HowItWorks from "../components/HowItWorks.astro";
-import Records from "../components/Records.astro";
-import Standards from "../components/Standards.astro";
 import Different from "../components/Different.astro";
-import Pricing from "../components/Pricing.astro";
-import NeverBlock from "../components/NeverBlock.astro";
-import DataTrust from "../components/DataTrust.astro";
+import NextPages from "../components/NextPages.astro";
 import ContactCta from "../components/ContactCta.astro";
-import Sources from "../components/Sources.astro";
 ---
 
 {
-  /* One page, in the order someone actually decides in: what is this, why does
-    it exist, how does it work, what does it hold, does it satisfy my auditor,
-    why you and not them, what does it cost, what will you refuse to do to me,
-    whose data is it, and how do I reach a human. */
+  /* Home carries the whole argument and nothing a reader would go looking for
+    on purpose: what this is, why it exists, how it works, and why it is built
+    the way it is. What it records and what it costs are the two things people
+    arrive already meaning to check, so they get their own URLs - see the top
+    of src/data/nav.ts for the measurement that decided the split. */
 }
-<BaseLayout>
+<BaseLayout structuredData>
   <Hero />
   <Problem />
   <HowItWorks />
-  <Records />
-  <Standards />
   <Different />
-  <Pricing />
-  <NeverBlock />
-  <DataTrust />
+  <NextPages
+    links={[
+      {
+        href: "/what-it-records",
+        label: "What it records",
+        blurb:
+          "Twelve groups of record, from the daily log to medical and welfare checks, and what the accrediting bodies expect of each.",
+      },
+      {
+        href: "/pricing",
+        label: "Pricing",
+        blurb:
+          "Four plans, priced on animals rather than people, and the things we are committing never to charge you for.",
+      },
+    ]}
+  />
   <ContactCta />
-  <Sources />
 </BaseLayout>

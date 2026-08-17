@@ -7,13 +7,18 @@ import { SECTION_LINKS } from "@/data/nav";
 
 /**
  * The whole of this site's JavaScript: the navigation a visitor gets below the
- * `md` breakpoint, where the header's inline links do not fit and the page
- * they would be navigating is over 31,000px tall.
+ * `md` breakpoint, where the header's inline links do not fit.
  *
  * It is a Radix dialog rather than a `<details>` disclosure because a
  * disclosure cannot close on Escape, cannot close on an outside click, cannot
  * trap focus while it covers the page, and cannot hand focus back to the
  * trigger afterwards. All four arrive with the dialog.
+ *
+ * Most of the links here are now page navigations rather than jumps within one
+ * document - the site was split into four pages once the single page passed
+ * 28,000px on a phone. The scroll handling below still matters, because the
+ * home page's own sections are still fragments and the same lock applies to
+ * them.
  */
 export default function MobileNav() {
   const [open, setOpen] = React.useState(false);
@@ -25,12 +30,12 @@ export default function MobileNav() {
    * the page. Radix locks body scroll for as long as the sheet is mounted, and
    * the sheet stays mounted through its exit animation, so a plain anchor
    * navigates against a page that cannot scroll and lands short of the
-   * section. Measured on the built site at 375px, where /#pricing settles at
-   * 19,298px with nothing in the way: through a closing sheet it lands 341px
-   * short, and once the site's `scroll-behavior: smooth` has had its animation
-   * cut off mid-flight it lands 16,012px short. The shortfalls are quoted
-   * rather than the landing positions, because the landing positions move with
-   * every edit to the copy above them and the shortfalls do not.
+   * section. Measured at 375px on the single-page version of this site, where
+   * a link near the bottom landed 341px short through a closing sheet, and
+   * 16,012px short once `scroll-behavior: smooth` had its animation cut off
+   * mid-flight. The distances are smaller now that the site is four pages, and
+   * the failure is not - a fragment on the home page still lands short if it
+   * is followed while the sheet holds the scroll lock.
    *
    * So the navigation waits its turn. The click records the destination,
    * `onCloseAutoFocus` fires once the sheet has unmounted and released the

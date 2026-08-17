@@ -17,12 +17,18 @@ if (!number) {
 ---
 
 {
-  /* No id on the marker: several claims cite the same source, and a per-source
-    id would be duplicated in the document. The browser's back button is the
-    return path, which is what a reader will reach for anyway. */
+  /* An absolute path, not a bare fragment. The bibliography used to sit at the
+    bottom of the same page as every claim that cited it; it is now /sources,
+    and markers are rendered from two other pages. A bare "#source-x" would
+    resolve against whichever page the reader is on and go nowhere.
+
+    No id on the marker itself: several claims cite the same source, and a
+    per-source id would be duplicated in the document. The back button is the
+    return path, which is what a reader reaches for anyway - and it still is,
+    now that following a marker is a page navigation rather than a jump. */
 }
 <a
-  href={`#source-${id}`}
+  href={`/sources#source-${id}`}
   class="footnote-ref ml-0.5 rounded align-super text-[0.65em] font-semibold underline-offset-2 hover:underline"
   aria-label={`Source ${number}`}
 >

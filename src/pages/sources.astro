@@ -1,0 +1,19 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Sources from "../components/Sources.astro";
+---
+
+{
+  /* The bibliography, on its own URL because every footnote marker on every
+    other page now points into it. Deliberately not indexed: it is a reference
+    for someone checking a claim they just read, not a page anyone should
+    arrive on from a search engine. `follow` is kept so the outbound citations
+    still count. */
+}
+<BaseLayout
+  title="Sources"
+  description="Every claim on this site about the world rather than about ARK, cited."
+  noindex
+>
+  <Sources />
+</BaseLayout>
