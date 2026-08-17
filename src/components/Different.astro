@@ -1,14 +1,31 @@
 ---
 import Section from "./Section.astro";
-import Footnote from "./Footnote.astro";
+
+/*
+ * This section used to argue by comparison. Each of the three cards carried an
+ * aside about a named competitor - two vendors' per-user prices, a quotation
+ * from another product's own documentation about its mobile support, and a
+ * note about what ARK does not replace.
+ *
+ * They are gone, and the rule that replaced them is worth keeping: this page
+ * says what ARK does and why it was built that way, and it does not sell by
+ * standing next to somebody else. Naming a competitor to look better than it
+ * reads as anxious rather than confident, it dates the moment they ship the
+ * thing you quoted them not having, and it spends the reader's attention on a
+ * product that is not ours.
+ *
+ * The one remaining mention of another system is in card three, where ARK
+ * imports from named export formats. That is a capability, not a comparison:
+ * it tells a reader whether their current data can come with them.
+ */
 ---
 
 <Section
   id="different"
   tone="muted"
-  eyebrow="The bet"
-  title="Where ARK is different."
-  lead="Most of what a records system does is settled. These are the three places ARK is built differently, and all three would be hard to reverse later."
+  eyebrow="Design decisions"
+  title="Three decisions behind the product."
+  lead="Most of what a records system does is settled, and ARK does it the ordinary way. These three are choices. They shape everything else, and all three would be expensive to walk back."
 >
   <div class="mt-14 space-y-6">
     <article class="reveal rounded-2xl border border-border bg-card p-7 sm:p-10">
@@ -18,34 +35,34 @@ import Footnote from "./Footnote.astro";
           <h3 class="mt-3 text-2xl text-balance">Pricing does not count users.</h3>
           <p class="mt-4 text-muted-foreground">
             This sector runs on volunteers, students, weekend keepers and one person who comes in on
-            Tuesdays. Software that prices by user teaches an organization to share a login, and a
-            shared login destroys the one thing a record needs: knowing who wrote it.
+            Tuesdays. Software priced by user teaches an organization to share a login, and a shared
+            login destroys the one thing a record needs: knowing who wrote it.
           </p>
           <p class="mt-4 text-muted-foreground">
-            ARK's limits are active animals and storage. There is no seat cap anywhere in the
-            product.
+            So ARK charges for the animals you are looking after instead. Add everyone who works
+            with them - every volunteer, every student, every vet who visits - and the price does
+            not move.
           </p>
         </div>
 
         <aside class="rounded-xl border border-border bg-muted/70 p-6">
-          <p class="text-sm font-semibold">For comparison, from their own published pricing</p>
+          <p class="text-sm font-semibold">What a plan limits</p>
           <dl class="mt-4 space-y-4 text-sm">
             <div>
-              <dt class="font-medium">OERCA</dt>
+              <dt class="font-medium">Active animals</dt>
               <dd class="text-muted-foreground">
-                Priced per user - publicly quoted at $110 per month for five users, plus a $250
-                setup fee.
+                How many animals are in your care at once. Released and deceased animals keep their
+                records without counting against it.
               </dd>
             </div>
             <div>
-              <dt class="font-medium">Tracks</dt>
-              <dd class="text-muted-foreground">
-                Priced by full-time-equivalent staff.<Footnote id="oerca" />
-              </dd>
+              <dt class="font-medium">Storage</dt>
+              <dd class="text-muted-foreground">For photos and attached files.</dd>
             </div>
           </dl>
           <p class="mt-5 border-t border-border pt-4 text-sm text-muted-foreground">
-            Under ARK, a rescue with forty weekend volunteers pays what a rescue with four pays.
+            That is the whole list. A rescue with forty weekend volunteers pays what a rescue with
+            four pays.
           </p>
         </aside>
       </div>
@@ -55,30 +72,32 @@ import Footnote from "./Footnote.astro";
       <div class="grid gap-8 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-14">
         <div>
           <p class="eyebrow">02</p>
-          <h3 class="mt-3 text-2xl text-balance">The phone is the primary surface.</h3>
+          <h3 class="mt-3 text-2xl text-balance">The phone comes first, not the desk.</h3>
           <p class="mt-4 text-muted-foreground">
-            The incumbents are not standing still here: ZIMS shipped mobile data entry with QR codes
-            at the enclosure in May 2026. The difference is which end the system was designed from.
+            You notice things at the enclosure, with one hand free and often with no signal. ARK was
+            built for that first and given a desk view afterwards, so the phone is not a
+            stripped-down version of the real thing.
           </p>
           <p class="mt-4 text-muted-foreground">
-            ARK was built phone-first and then given a desk view, so nothing on the phone is a
-            cut-down version of a screen that lives somewhere else.
+            The desk is where the reading, the trends and the paperwork happen. It is the same
+            records either way.
           </p>
         </div>
 
-        <figure class="rounded-xl border border-border bg-muted/70 p-6">
-          <blockquote>
-            <p class="font-display text-lg leading-snug">
-              &ldquo;While not all modules are fully supported on mobile&hellip; For the best
-              experience, we still recommend using a desktop for more complex tasks.&rdquo;
-            </p>
-          </blockquote>
-          <figcaption class="mt-4 text-sm text-muted-foreground">
-            Species360's own documentation, on ZIMS mobile support.<Footnote
-              id="species360-mobile"
-            />
-          </figcaption>
-        </figure>
+        <aside class="rounded-xl border border-border bg-muted/70 p-6">
+          <p class="text-sm font-semibold">What that means in practice</p>
+          <ul class="mt-4 space-y-3 text-sm text-muted-foreground">
+            <li>You can log an animal with no signal, and it uploads itself later.</li>
+            <li>
+              If you write something up at the end of your shift, it still carries the time you
+              actually saw it.
+            </li>
+            <li>
+              The photo is taken there and then, not hunted for in your camera roll afterwards.
+            </li>
+            <li>Buttons are big enough to hit with one hand, wet, in a hurry.</li>
+          </ul>
+        </aside>
       </div>
     </article>
 
@@ -86,27 +105,38 @@ import Footnote from "./Footnote.astro";
       <div class="grid gap-8 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-14">
         <div>
           <p class="eyebrow">03</p>
-          <h3 class="mt-3 text-2xl text-balance">Import is free, and an admin can run it.</h3>
+          <h3 class="mt-3 text-2xl text-balance">
+            Moving your records in is free, and you can do it yourself.
+          </h3>
           <p class="mt-4 text-muted-foreground">
-            Most of the cost of changing records systems is the migration nobody has time for, not
-            the subscription. Upload a CSV or a spreadsheet, map the columns, see a full preview of
-            what would be created, and only then commit.
+            The reason facilities stay on a system they have outgrown is almost never the price. It
+            is that moving years of records is a job nobody has a spare week for.
           </p>
           <p class="mt-4 text-muted-foreground">
-            It ships with documented recipes for AnimalCare and ZIMS exports, and it is safe to run
-            twice - a row that already exists is skipped and says so, matched on the strongest
-            identifier it has.
+            So it is a spreadsheet upload, not a project. Tell ARK which column is which, look at
+            exactly what it is about to create, and only then say yes. There are step-by-step
+            instructions for files exported from AnimalCare and ZIMS. Run the same file twice by
+            mistake and you will not end up with two of every animal - it recognises the ones it has
+            already seen and tells you it skipped them.
           </p>
         </div>
 
+        {
+          /* Kept, and reworded off the competitor's name. Saying plainly what
+            ARK is not is worth more than another paragraph on what it is: it
+            is the fastest way for a reader whose need ARK does not meet to
+            find that out, and finding it out here is better for both of us
+            than finding it out after a migration. */
+        }
         <aside class="rounded-xl border border-border bg-muted/70 p-6">
-          <p class="text-sm font-semibold">Where ARK does not replace ZIMS</p>
+          <p class="text-sm font-semibold">What ARK is not</p>
           <p class="mt-3 text-sm text-muted-foreground">
-            ZIMS sits on a shared global species database that hundreds of institutions contribute
-            to. If participating in that network is why you use it, ARK does not replace it.
+            ARK keeps your own records about your own animals. It does not share what you write with
+            other institutions, and it is not a pooled database of the world's species.
           </p>
           <p class="mt-3 text-sm text-muted-foreground">
-            ARK holds the record you keep about the animals in your own care.
+            If contributing to that kind of shared network is a reason you keep records, ARK will
+            not do it for you, and it is better to hear that now than after you have moved.
           </p>
         </aside>
       </div>

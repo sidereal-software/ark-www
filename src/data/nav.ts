@@ -28,10 +28,10 @@ export const SECTION_LINKS: NavLink[] = [
   { href: "/#how", label: "How it works", inBar: true },
   { href: "/#records", label: "What it records", inBar: true },
   { href: "/#standards", label: "Standards and compliance" },
-  { href: "/#different", label: "Where ARK is different" },
+  { href: "/#different", label: "Design decisions" },
   { href: "/#pricing", label: "Pricing", inBar: true },
   { href: "/#never", label: "What we will never do" },
-  { href: "/#trust", label: "Your data" },
+  { href: "/#trust", label: "Your records" },
   // Labelled to distinguish it from the header's "Get in touch" button, which
   // sits beside the menu and opens a mail client rather than scrolling.
   { href: "/#contact", label: "Talk to us" },

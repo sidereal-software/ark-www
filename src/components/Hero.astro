@@ -1,7 +1,7 @@
 ---
 import { CONTACT_HREF } from "../consts";
 import Icon from "./Icon.astro";
-import Photo from "./Photo.astro";
+import ScreenshotPlaceholder from "./ScreenshotPlaceholder.astro";
 
 // Contour lines, the way a survey map or a field guide's terrain inset draws
 // them. This is the site's one piece of decoration and it is generated rather
@@ -23,20 +23,13 @@ const contours = Array.from({ length: 10 }, (_, i) => {
 const facts = [
   "Unlimited users on every plan",
   "30-day free trial, Pro features",
-  "Export your data on any plan",
+  "Download your records any time",
 ];
 ---
 
-{
-  /* The section itself carries no horizontal padding above lg, because the
-    photograph has to reach the right edge of the viewport. Padding is pushed
-    onto the text column instead, where `pl` reproduces the gutter the header
-    and every Section below use: half the difference between the viewport and
-    the 72rem content column, never less than the 2rem side margin. That keeps
-    the eyebrow left-aligned with the logo above it and the section headings
-    below it, which a plain 50/50 split would not. */
-}
-<section class="relative isolate overflow-hidden pt-16 pb-20 sm:pt-24 lg:pt-0 lg:pb-0">
+<section
+  class="relative isolate overflow-hidden px-5 pt-16 pb-20 sm:px-8 sm:pt-24 lg:pt-28 lg:pb-28"
+>
   <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
     <svg
       viewBox="0 0 920 920"
@@ -54,10 +47,10 @@ const facts = [
     </div>
   </div>
 
-  <div class="grid items-center gap-14 lg:grid-cols-2 lg:gap-0">
-    <div
-      class="mx-auto w-full max-w-6xl px-5 sm:px-8 lg:mx-0 lg:max-w-none lg:py-28 lg:pr-14 lg:pl-[max(2rem,calc((100vw-72rem)/2))]"
-    >
+  <div
+    class="mx-auto grid max-w-6xl items-center gap-14 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-20"
+  >
+    <div>
       <p class="hero-in eyebrow">
         Zoos &middot; Rehabilitation &middot; Sanctuaries &middot; Rescues
       </p>
@@ -72,7 +65,7 @@ const facts = [
         class="hero-in hero-in-delay-2 mt-6 max-w-xl text-lg text-pretty text-muted-foreground sm:text-xl"
       >
         A keeper finds the animal, taps a category, adds a note and a photo, and saves it to the
-        permanent record. About thirty seconds on a phone.
+        permanent record - standing at the enclosure, on a phone, with or without a signal.
       </p>
 
       {
@@ -115,26 +108,11 @@ const facts = [
       </ul>
     </div>
 
-    {
-      /* The photograph is the argument, so it is not an illustration beside the
-        headline - it is the other half of the spread. A bander holds a warbler
-        in one hand over a ring binder of paper record sheets, pencil across the
-        columns. That is the job this product is for, and it is the paper ARK
-        replaces, in one frame.
-
-        It bleeds off the right and the top on large screens the way a plate is
-        tipped into a page, rather than sitting in a rounded card - a card would
-        make it a screenshot of a photograph. Below lg it becomes a full-width
-        band above the text, which is the arrangement every zoo and rehab site
-        uses on a phone. */
-    }
-    <div class="hero-in hero-in-delay-3 order-first px-5 sm:px-8 lg:order-none lg:h-full lg:px-0">
-      <Photo
-        slug="banding-record-sheet"
-        eager
-        position="46% 62%"
-        sizes="(min-width: 1024px) 50vw, 100vw"
-        class="aspect-[4/3] w-full rounded-2xl sm:aspect-[16/10] lg:aspect-auto lg:h-full lg:min-h-[40rem] lg:rounded-none"
+    <div class="hero-in hero-in-delay-3 justify-self-center lg:justify-self-end">
+      <ScreenshotPlaceholder
+        label="Logging an animal"
+        caption="Choosing a category, typing the note and attaching the photo, on a phone."
+        frame="phone"
       />
     </div>
   </div>

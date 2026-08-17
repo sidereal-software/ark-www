@@ -1,6 +1,5 @@
 ---
 import Icon from "./Icon.astro";
-import Photo from "./Photo.astro";
 import { CONTACT_HREF, SITE } from "../consts";
 
 /*
@@ -32,30 +31,10 @@ import { CONTACT_HREF, SITE } from "../consts";
  */
 ---
 
-{
-  /* The closing band is the one place a photograph sits under type. A release
-    is the right note to end on and it is a public-domain file, so nothing in
-    this section depends on a licence that asks anything of us.
-
-    The overlay is opaque, not a gradient: `--ink` at 88% over the photograph
-    keeps ink-foreground above 13:1 across every part of the frame, including
-    the bright sky. A gradient would pass where it is dark and fail where it is
-    not, and which text landed on which part would be decided by the viewport.
-    The photograph reads as texture behind the words, which is all it is doing
-    here - the frame that has to be legible as a photograph is the hero. */
-}
 <section
   id="contact"
-  class="on-ink relative isolate scroll-mt-20 overflow-hidden bg-ink px-5 py-20 text-ink-foreground sm:px-8 sm:py-24 lg:py-32"
+  class="on-ink scroll-mt-20 bg-ink px-5 py-20 text-ink-foreground sm:px-8 sm:py-24 lg:py-32"
 >
-  <Photo
-    slug="raptor-release"
-    position="50% 42%"
-    sizes="100vw"
-    class="absolute inset-0 -z-10 h-full w-full"
-  />
-  <div class="absolute inset-0 -z-10 bg-ink/[0.88]" aria-hidden="true"></div>
-
   <div class="mx-auto max-w-3xl text-center">
     <p class="eyebrow">Get in touch</p>
     <div class="rule-center mx-auto mt-3 mb-7 w-24"></div>

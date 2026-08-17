@@ -30,11 +30,11 @@ export const PLANS: Plan[] = [
     animals: "25 active animals",
     storage: "5 GB of photos and files",
     adds: [
-      "Animals, groups and log capture",
+      "Animals, groups and the daily log",
       "Weights, measurements and enclosure readings",
       "Feeding and diet log",
       "Tasks and reminders",
-      "Search, audit trail and CSV export",
+      "Search, a full history of changes, and spreadsheet download",
     ],
   },
   {
@@ -48,7 +48,7 @@ export const PLANS: Plan[] = [
     adds: [
       "Medical records and medication schedules",
       "Documents and attachments",
-      "Welfare checks on a Five Domains rubric",
+      "Welfare checks, scored on the Five Domains",
       "Saved searches",
     ],
     featured: true,
@@ -62,9 +62,9 @@ export const PLANS: Plan[] = [
     animals: "1,000 active animals",
     storage: "250 GB of photos and files",
     adds: [
-      "Compliance pack: annual inventory, transfer forms, care sheets",
-      "Formatted reports and XLSX export",
-      "API access with personal tokens",
+      "Annual inventory, transfer forms and care sheets, filled in for you",
+      "Formatted reports, and downloads that open in Excel",
+      "Connect ARK to another system, if you have someone who wants to",
     ],
   },
   {
@@ -80,7 +80,7 @@ export const PLANS: Plan[] = [
     storage: "Storage to suit",
     adds: [
       "Single sign-on and custom roles",
-      "Audit export and an SLA",
+      "Exportable audit history, and a support agreement",
       "Invoicing rather than a card",
     ],
   },
@@ -90,6 +90,6 @@ export const PLANS: Plan[] = [
 export const PLAN_CONSTANTS = [
   "Unlimited users, every plan",
   "30-day free trial with Pro features",
-  "Offline capture on every plan",
-  "Export your data on every plan",
+  "Works with no signal, on every plan",
+  "Download your records on every plan",
 ];

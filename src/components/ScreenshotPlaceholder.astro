@@ -3,26 +3,33 @@
  * A marked gap, not a grey box.
  *
  * ARK has no product screenshots yet. Rather than ship decorative filler, each
- * of these states on the page exactly which shot belongs in it, at which
- * viewport. SCREENSHOTS.md carries the same list in one place.
+ * of these says what will be in it - but it says it to a *visitor*, not to
+ * whoever is going to take the shot.
  *
- * Replacing one: drop the image into src/assets/, import it, and swap this
- * component for <Image>. The wrapper's aspect ratio is already the right one,
- * so nothing below it moves when the real shot lands.
+ * It used to do the opposite. It rendered the full capture brief and the
+ * viewport spec ("390 x 844, light mode, airplane mode on") and a line telling
+ * the reader to see SCREENSHOTS.md "in this repository". The people this site
+ * is for are keepers and rehabilitators. Handing them a developer's shot list
+ * in the hero, with a reference to a repository they will never open, is worse
+ * than an empty frame.
+ *
+ * The capture brief and the viewport live in SCREENSHOTS.md, which was always
+ * the single place they belonged - the component was duplicating them onto the
+ * page. Replacing one: drop the image into src/assets/, import it, and swap
+ * this component for <Image>. The wrapper's aspect ratio is already right, so
+ * nothing below it moves when the real shot lands.
  */
 interface Props {
-  /** Short name, matching the entry in SCREENSHOTS.md. */
+  /** Short name, matching the entry in SCREENSHOTS.md. Plain English. */
   label: string;
-  /** What to photograph, in enough detail that someone else could take it. */
-  shot: string;
-  /** e.g. "390 x 844 (iPhone 15)" */
-  viewport: string;
+  /** One sentence a visitor can read, saying what the screen does. */
+  caption: string;
   /** `phone` is a portrait device frame; `app` is a landscape desktop window. */
   frame?: "phone" | "app";
   class?: string;
 }
 
-const { label, shot, viewport, frame = "phone", class: className = "" } = Astro.props;
+const { label, caption, frame = "phone", class: className = "" } = Astro.props;
 
 const aspect = frame === "phone" ? "aspect-[390/844]" : "aspect-[16/9]";
 const maxWidth = frame === "phone" ? "max-w-[19rem]" : "mx-auto max-w-4xl";
@@ -49,17 +56,12 @@ const maxWidth = frame === "phone" ? "max-w-[19rem]" : "mx-auto max-w-4xl";
       <div
         class="max-w-sm rounded-xl border border-border bg-card/95 px-5 py-6 text-center shadow-sm"
       >
-        <p class="eyebrow">Screenshot pending</p>
+        <p class="eyebrow">Screenshot coming</p>
         <p class="mt-2.5 font-display text-lg leading-snug font-semibold text-foreground">
           {label}
         </p>
-        <p class="mt-2 text-sm text-pretty text-muted-foreground">{shot}</p>
-        <p class="mt-3 text-xs tracking-wide text-muted-foreground">{viewport}</p>
+        <p class="mt-2 text-sm text-pretty text-muted-foreground">{caption}</p>
       </div>
     </div>
   </div>
-  <figcaption class="mt-3 text-xs text-muted-foreground">
-    Placeholder. See <span class="font-medium">SCREENSHOTS.md</span> in this repository for the full shot
-    list.
-  </figcaption>
 </figure>

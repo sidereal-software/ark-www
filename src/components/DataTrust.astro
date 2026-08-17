@@ -1,26 +1,46 @@
 ---
 import Section from "./Section.astro";
 
+/*
+ * Nobody reading this page is technical. They are keepers, rehabilitators,
+ * sanctuary managers and volunteers, and they are deciding whether this
+ * software will make their week easier.
+ *
+ * This section used to answer a question none of them asked. It described
+ * request-level membership resolution, a second enforcement net in the
+ * database, mutation audit rows, API tokens and backup units that could
+ * otherwise drift apart. Every one of those was true and every one of them
+ * was the implementation of a promise rather than the promise.
+ *
+ * The rule now: say what the reader gets, in the words they would use. If a
+ * sentence would only reassure someone who already knows what a row is, it is
+ * answering the wrong question. The engineering still has to be there - it
+ * just is not what sells it.
+ */
 const points = [
   {
-    title: "Your organization is the boundary",
-    body: "Every request resolves your membership before it touches a row. Another organization's animal comes back as not found rather than as forbidden, because as far as your session is concerned it does not exist. The database enforces the same rule underneath as a second net.",
+    title: "Only your people can see your animals",
+    body: "Your records belong to your organization and stop there. Nobody at another facility can see them, search them or come across them by accident.",
   },
   {
-    title: "Every change is attributable",
-    body: "Mutations write an audit row - who, what, when, and the values before and after. Auditing is not a paid feature.",
+    title: "You can always tell who wrote what",
+    body: "Every entry and every change carries a name and a time. If a weight looks wrong six months later, you can see who recorded it, when, and what it said before somebody edited it.",
   },
   {
-    title: "Leaving is a supported operation",
-    body: "Export keeps working after a trial lapses or a downgrade. Pro adds API tokens if you would rather pull the data programmatically.",
+    title: "Nothing quietly disappears",
+    body: "A record someone removes can still be accounted for. If an inspector asks what happened to an animal you had last year, the answer is there.",
   },
   {
-    title: "Photos and records back up together",
-    body: "An image without its record is unreachable and a record without its image is a broken page, so the files and the database are treated as one backup unit rather than two schedules that can drift apart.",
+    title: "Your photos stay with the records they belong to",
+    body: "A photo is part of the entry it was taken for, not a separate gallery you have to keep in step. You will not end up with a note describing a wound and no picture of it.",
   },
   {
-    title: "No advertising, no data resale",
-    body: "Your records are not sold, aggregated for resale, or used to target advertising. The subscription is the business model.",
+    title: "You can take everything with you",
+    body: "Download every animal and every log you have written, as a spreadsheet, whenever you want. That keeps working if your trial ends or you move to a cheaper plan. If you ever leave ARK, you leave with your records.",
+  },
+  {
+    title: "We do not sell your records",
+    body: "Not to anyone, for any purpose, and not to sell advertising against. The subscription is how ARK makes money.",
   },
 ];
 ---
@@ -28,8 +48,8 @@ const points = [
 <Section
   id="trust"
   tone="muted"
-  eyebrow="Your data"
-  title="Where your records live, and who can reach them."
+  eyebrow="Your records"
+  title="Whose they are, and who can see them."
 >
   <div class="mt-14 grid gap-x-10 gap-y-9 md:grid-cols-2 lg:grid-cols-3">
     {

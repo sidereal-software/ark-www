@@ -3,7 +3,7 @@ export const SITE = {
   /** Used in <title> after the page title, and as the OG site name. */
   tagline: "Animal recordkeeping that gets written at the enclosure",
   description:
-    "ARK is mobile-first animal recordkeeping for zoos, wildlife rehabilitation centres, sanctuaries and rescues. A keeper finds an animal, adds a categorized note with a photo, and saves it in about 30 seconds. Unlimited users on every plan.",
+    "ARK is mobile-first animal recordkeeping for zoos, wildlife rehabilitation centres, sanctuaries and rescues. A keeper finds an animal and saves a categorized note with a photo to the permanent record, at the enclosure, online or off. Unlimited users on every plan.",
   url: "https://ark.sidereal.software",
   locale: "en",
   /** Owned by the operator of the site, not a shared inbox alias. */

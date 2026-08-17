@@ -2,14 +2,7 @@ import * as React from "react";
 import { MenuIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { SECTION_LINKS } from "@/data/nav";
 
 /**
@@ -91,11 +84,17 @@ export default function MobileNav() {
       <SheetContent
         side="right"
         className="w-[86%] max-w-sm gap-0"
+        aria-describedby={undefined}
         onCloseAutoFocus={handleCloseAutoFocus}
       >
+        {/* No description. Radix wants one and warns without `aria-describedby`
+            being set explicitly, so it is set to undefined above rather than
+            filled with text. The only sentence that fitted here described the
+            order of the list the visitor is already looking at, which tells
+            someone opening a menu nothing they came for. The title names the
+            thing; the links are the content. */}
         <SheetHeader className="pr-14">
           <SheetTitle className="text-base">Sections</SheetTitle>
-          <SheetDescription>Every part of the page, in the order it argues them.</SheetDescription>
         </SheetHeader>
 
         <nav aria-label="Sections" className="overflow-y-auto px-4 pb-6">

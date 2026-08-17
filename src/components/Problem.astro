@@ -2,27 +2,34 @@
 import Section from "./Section.astro";
 import Footnote from "./Footnote.astro";
 
-// The chain as the sector's own documentation describes it. Each step is
-// something a published source says happens, not a strawman we invented.
+/*
+ * This section used to carry a citation on every step of the chain and a
+ * full-height pull-quote panel with two more. It was doing the work of a
+ * literature review to establish something the reader either recognises from
+ * their own week or does not.
+ *
+ * The steps below are a plain description of ordinary practice, not contested
+ * factual claims, so they no longer cite anything. One source remains, on the
+ * one statement here that is genuinely a finding rather than an observation:
+ * that the recopying loses data. That is worth citing precisely because a
+ * reader could reasonably doubt it.
+ */
 const chain = [
   {
     step: "At the enclosure",
-    body: "A whiteboard, a clipboard or a paper log. Wild Welfare's husbandry training tells facilities to keep a daily board at the section and transfer it into the permanent record afterwards.",
-    cite: "wildwelfare",
+    body: "A whiteboard, a clipboard or a paper log - whatever is closest to the animal at the moment somebody notices something.",
   },
   {
     step: "Later that day",
-    body: "Someone types it up. AZA's 2026 accreditation standards still accommodate paper systems alongside electronic ones.",
-    cite: "aza",
+    body: "Someone types it up, from the board or from memory, into the system that holds the permanent record.",
   },
   {
     step: "Then again",
-    body: "A registrar reviews the keeper's entries and accepts or rejects them, the division of labour Species360's documentation describes.",
-    cite: "species360-workflow",
+    body: "A senior keeper or a registrar reviews those entries and accepts or rejects them before they are final.",
   },
   {
     step: "And once more",
-    body: "At reporting time, the year is transcribed again into whatever the permitting agency wants.",
+    body: "At reporting time the year is transcribed again, into whatever form the permitting agency wants.",
   },
 ];
 ---
@@ -52,44 +59,27 @@ const chain = [
               {i + 1}
             </span>
             <p class="font-display text-lg font-semibold">{link.step}</p>
-            <p class="mt-1.5 text-ink-muted">
-              {link.body}
-              {link.cite && <Footnote id={link.cite} />}
-            </p>
+            <p class="mt-1.5 text-ink-muted">{link.body}</p>
           </li>
         ))
       }
     </ol>
 
     <div class="reveal">
-      <figure class="rounded-2xl border border-ink-border bg-ink-foreground/[0.04] p-7 sm:p-9">
-        <p class="eyebrow">Peer-reviewed</p>
-        <blockquote class="mt-5">
-          <p class="font-display text-xl leading-snug text-balance sm:text-2xl">
-            &ldquo;Data on these handwritten logs&hellip; were manually transcribed into digital
-            spreadsheets.&rdquo;
-          </p>
-        </blockquote>
-        <figcaption class="mt-5 text-sm text-ink-muted">
-          Hanson et al., <span class="text-ink-foreground"
-            >Species, causes, and outcomes of wildlife rehabilitation in New York State</span
-          >, PLOS ONE, 2021. 58,185 cases across three reporting years.<Footnote id="hanson" />
-        </figcaption>
-      </figure>
-
-      <div class="mt-8 space-y-5 text-ink-muted">
-        <p>
-          The same study reports what the copying costs. Errors and inconsistencies occurred
-          &ldquo;both within and between rehabilitation centers&rdquo; - misidentified species,
-          missing causes of distress, missing final dispositions - and incomplete records had to be
-          dropped before anything could be analysed. Nearly three decades of state records existed
-          and still could not answer basic questions, because they &ldquo;were collected, but were
-          not in a form conducive for such data summaries.&rdquo;<Footnote id="hanson" />
+      <div class="space-y-5 text-ink-muted">
+        <p class="font-display text-xl leading-snug text-balance text-ink-foreground sm:text-2xl">
+          Every one of those steps is a chance to lose something.
         </p>
         <p>
-          Rehabilitators describe it the same way from the inside: a year of intake sheets becomes a
-          spreadsheet one sheet at a time, and it is &ldquo;tedious&rdquo; right up until the moment
-          the data finally tells you something.<Footnote id="iwrc" />
+          A study of 58,185 wildlife rehabilitation cases in New York State found that the
+          handwritten logs behind them had to be transcribed by hand into spreadsheets, and that
+          errors and inconsistencies occurred both within and between centres - misidentified
+          species, missing causes of distress, missing final dispositions. Incomplete records had to
+          be discarded before the rest could be analysed at all.<Footnote id="hanson" />
+        </p>
+        <p>
+          None of that is anyone's fault. It is what copying by hand does, and it is what happens
+          when the record is written somewhere other than where the work is.
         </p>
       </div>
     </div>

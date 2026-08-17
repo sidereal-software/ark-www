@@ -1,4 +1,4 @@
-# Screenshots still to take
+# Imagery still to make
 
 The site ships with three marked placeholders instead of product screenshots,
 because ARK has none yet. Each one renders a panel on the page saying what
@@ -120,5 +120,42 @@ the two phone images.
 5. Remove that section from this file, so the file always lists exactly what is
    still missing.
 
-When all three are gone, delete `src/components/ScreenshotPlaceholder.astro` and
-this document with them.
+When all three are gone, delete `src/components/ScreenshotPlaceholder.astro`
+with them. Keep this document while the photography section below is still
+open.
+
+## Photography, deferred
+
+Separate from the screenshots above, and not started.
+
+The site was briefly built photograph-led: a hero photograph, two full-bleed
+bands between sections, and a photograph behind the closing call to action.
+It was reverted. The implementation is in the history if it is wanted back -
+see the commit that added `Photo.astro`, `PhotoBand.astro` and
+`src/data/photos.ts`, which carried a build-time check that every photograph
+declared its licence and credit, and rendered those credits in the footer.
+
+It came out because of the pictures, not the plumbing. They were openly
+licensed stock from Wikimedia Commons, which means they are photographs of
+somebody else's facility, and it showed. A keeper standing beside an elephant
+could be on any zoo's about page and says nothing about recordkeeping.
+
+Two directions, if this is picked up again:
+
+1. **Photograph the record, not the animal.** The one image that earned its
+   place was a bander holding a bird over a paper record sheet with a pencil
+   across the columns - the job this product is for and the paper it replaces,
+   in one frame. Measurement, handwriting, hands. Not wildlife portraits.
+2. **Photograph a real facility.** The ceiling on open-licence stock is that
+   it is always someone else's. One afternoon at a pilot customer's site,
+   with permission, beats anything on Commons - and it turns the photography
+   from decoration into evidence.
+
+Whichever is chosen, two rules from the first attempt still apply. **Get the
+licence in writing** and render the credit in the page, not in a repository
+file no visitor can read. And **no photograph may be captioned to imply it
+shows an ARK customer** unless it actually does - the no-social-proof rule in
+the README governs pictures as much as it governs logos.
+
+Re-adding photography means re-adding `sharp`, which `astro:assets` needs and
+which was removed when the images went.

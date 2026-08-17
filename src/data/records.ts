@@ -16,36 +16,36 @@ export const RECORD_GROUPS: RecordGroup[] = [
   {
     title: "The animal",
     blurb:
-      "One record per animal or per group, with the identifiers a registrar actually needs and a provenance timeline that keeps its real dates.",
+      "One record per animal or per group, with the identifiers a registrar needs and a history that keeps the dates things really happened on.",
     items: [
-      "Individuals and groups on the same record shape",
+      "One animal, or a whole group, recorded the same way",
       "Microchip, band, USDA, studbook and case identifiers",
       "Intake, transfer, release, death - each with the date it happened",
       "Photos on the animal record",
-      "Promote an individual out of a group, with linked history on both",
+      "Split one animal out of a group when it needs its own record, and keep the history on both",
     ],
   },
   {
     title: "The daily log",
     blurb:
-      "The entry the whole product is built around: a categorized note, a photo, and a timestamp that means the moment it was observed.",
+      "The entry everything else hangs off: a note, a category, a photo, and the time you actually saw it.",
     items: [
-      "Log categories your organization defines",
-      "Observed-at time separate from entered-at time",
-      "Captured offline and synced exactly once",
+      "Categories you name yourself, matching what your team already says",
+      "Written up later still carries the time you actually saw it",
+      "Works with no signal, and will not save the same note twice",
       "Search across every log you have ever written",
     ],
   },
   {
     title: "Measurements and readings",
     blurb:
-      "Weights on an animal, water chemistry on a tank. The same machinery, because a reading belongs to an enclosure and not to a separate module.",
+      "Weights on an animal, water chemistry on a tank. Recorded the same way, because a reading belongs to the animal or the place it was taken from.",
     items: [
-      "Measurement types your organization defines, with units",
+      "Whatever you measure, in the units you already use",
       "Enclosure readings: pH, temperature, salinity, whatever you track",
-      "Desired ranges, with a per-location override",
-      "An out-of-range reading flags itself and raises one task",
-      "Trends on the animal profile and on the location",
+      "Set the range you expect, and a different one for a particular enclosure",
+      "A reading outside that range flags itself and puts a job on someone's list",
+      "See how it has moved over weeks and months, per animal or per enclosure",
     ],
   },
   {
@@ -55,15 +55,15 @@ export const RECORD_GROUPS: RecordGroup[] = [
     items: [
       "Food items your organization curates",
       "Eaten, partial, refused or regurgitated",
-      "Quantity recorded as it was entered, not converted",
-      "Refusal streaks surfaced on the profile and the list",
+      "Amounts stay in the units you entered them in",
+      "Repeated refusals get flagged before anyone would have noticed the pattern",
     ],
   },
   {
     title: "Tasks and reminders",
     blurb: "Work that recurs, assigned or not, and visible to whoever walks in next.",
     items: [
-      "Recurring tasks tied to an animal or to the organization",
+      "Jobs that repeat, attached to an animal or to the whole facility",
       "Due today and overdue, on the home screen",
       "Email digest and push reminders",
       "Complete from the dashboard in one tap",
@@ -73,23 +73,23 @@ export const RECORD_GROUPS: RecordGroup[] = [
     title: "Medical",
     tier: "Standard",
     blurb:
-      "A record-keeping module, deliberately not a clinical system. No dosing calculators, no diagnostics.",
+      "Somewhere to write down what was done. Deliberately not a clinical system: it will not work out a dose for you or suggest a diagnosis.",
     items: [
-      "Medication schedules that generate their own tasks",
+      "Medication schedules that put themselves on the task list",
       "Vaccinations with lot numbers",
       "Vet visit notes with attachments",
-      "A chronological medical tab on the profile",
+      "The whole medical history in date order on the animal's page",
     ],
   },
   {
     title: "Welfare checks",
     tier: "Standard",
     blurb:
-      "A rubric your organization owns, seeded from the Five Domains model, scored 1-5 in five taps.",
+      "Your own checklist, starting from the Five Domains model, scored one to five in five taps.",
     items: [
-      "Every domain scored, so a check always means every lens was used",
-      "A low score raises exactly one open task per animal",
-      "Per-domain trends over time",
+      "Every domain has to be scored, so a check is never half-done",
+      "A low score raises one job to follow up, not a pile of them",
+      "See whether an animal is improving or sliding",
       "An overdue-for-a-check list",
     ],
   },
@@ -100,7 +100,7 @@ export const RECORD_GROUPS: RecordGroup[] = [
     items: [
       "Attach to an animal, a vet visit or the organization",
       "Permits with expiry dates and renewal reminders",
-      "Everything downloadable, on every plan",
+      "Download any of it, on any plan",
     ],
   },
   {
@@ -110,21 +110,21 @@ export const RECORD_GROUPS: RecordGroup[] = [
       "The paperwork that has to be produced rather than browsed, generated from the records you already keep.",
     items: [
       "Annual inventory by species, with every acquisition and disposition in the period",
-      "Printable transfer form: identity, identifiers, provenance, medical summary, live permits",
+      "Printable transfer form with what a receiving facility asks for, filled in already",
       "Care sheet for the enclosure door, built from observed diet and routines",
       "Permit renewal reminders in the daily digest",
-      "CSV and XLSX",
+      "Download as a spreadsheet, or as a file that opens in Excel",
     ],
   },
   {
     title: "The facility",
     blurb:
-      "Areas, sections and enclosures, restructured by dragging - and history that survives the restructure.",
+      "Areas, sections and enclosures, rearranged by dragging - and history that survives the rearranging.",
     items: [
       "Three levels: area, section, enclosure",
-      "Occupancy rolled up from every enclosure beneath",
-      "Advisory capacity that flags a crowded enclosure and never blocks a move",
-      "Old records keep the location they were written against",
+      "See how full an area is, counted up from the enclosures inside it",
+      "A crowding warning that never stops you moving an animal",
+      "Reorganize or rename, and old records still show where the animal really was",
     ],
   },
   {
@@ -133,7 +133,7 @@ export const RECORD_GROUPS: RecordGroup[] = [
     items: [
       "Since your last visit: new logs, completed tasks, new intakes, alerts",
       "Activity calendar over logs and tasks",
-      "Role-aware home screen",
+      "A home screen that shows what your role needs",
       // Tiered mid-list rather than badging the whole card: everything else in
       // this group is on every plan, and a card-level badge would say otherwise.
       "Saved searches (Standard and up)",
@@ -143,11 +143,11 @@ export const RECORD_GROUPS: RecordGroup[] = [
     title: "Getting your data in and out",
     blurb: "Moving records in from a spreadsheet or another system, and taking them out again.",
     items: [
-      "Import wizard: upload, map columns, preview, then commit",
-      "Documented recipes for AnimalCare and ZIMS exports",
-      "Re-run the same file and nothing duplicates",
-      "CSV takeout of animals and logs, always",
-      "API access with personal tokens (Pro)",
+      "Upload a spreadsheet, say which column is which, check the preview, then import",
+      "Step-by-step instructions for files exported from AnimalCare and ZIMS",
+      "Import the same file twice and you will not get two of everything",
+      "Download your animals and logs as a spreadsheet, on any plan",
+      "Connect ARK to another system, if you have someone who wants to (Pro)",
     ],
   },
 ];

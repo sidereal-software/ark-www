@@ -2,24 +2,30 @@
 import Section from "./Section.astro";
 import ScreenshotPlaceholder from "./ScreenshotPlaceholder.astro";
 
+/*
+ * The steps used to carry a stopwatch - 0s, 8s, 15s, 30s - which reads as a
+ * measurement and was not one. Nobody timed a keeper. They are numbered now.
+ * The loop is still short, and the copy is allowed to say the loop is short;
+ * it is not allowed to put a figure on it that no one has measured.
+ */
 const steps = [
   {
-    at: "0s",
+    at: "01",
     title: "Find the animal",
     body: "Search by name, microchip, band, case number or enclosure. Or open the enclosure in front of you and pick from who lives there.",
   },
   {
-    at: "8s",
+    at: "02",
     title: "Tap a category",
     body: "Categories your organization defines. Feeding, behaviour, treatment, enrichment - whatever your team already says out loud.",
   },
   {
-    at: "15s",
+    at: "03",
     title: "Write the sentence, take the photo",
-    body: "One line is a complete record. The photo comes straight from the camera. What you observed and when you observed it are stored separately from when you typed it.",
+    body: "One line is a complete record. The photo comes straight from the camera. If you write it up an hour later, you can still say when it actually happened.",
   },
   {
-    at: "30s",
+    at: "04",
     title: "Save",
     body: "It is in the permanent record, attributed to you, searchable, and visible to whoever walks in next. Nobody types it up again.",
   },
@@ -56,23 +62,21 @@ const steps = [
       <h3 class="mt-3 text-2xl text-balance">Capture does not wait for a connection.</h3>
       <div class="mt-4 space-y-4 text-muted-foreground">
         <p>
-          Facilities report the ordinary kind of outage: the site's internet goes down for an
-          afternoon and the work carries on regardless. ARK treats the network as optional rather
-          than assumed.
+          Back of the property, inside a barn, in a quarantine room, or on the afternoon the site's
+          internet is simply down. The work carries on either way.
         </p>
         <p>
-          A note, a photo, a weight or a feeding is written on the device and queued. When a
-          connection returns it syncs, and because every capture carries an id the device generated,
-          a retry is acknowledged as the entry you already made rather than filed as a second one.
+          A note, a photo, a weight or a feeding saves on your phone straight away, and uploads
+          itself the moment you are back in range. You do not have to remember to do anything, and
+          tapping save twice on a bad signal will not leave you with the same entry recorded twice.
         </p>
       </div>
     </div>
 
     <ScreenshotPlaceholder
       class="justify-self-center lg:justify-self-end"
-      label="Captured offline, waiting to sync"
-      shot="An animal profile in airplane mode with a just-saved log carrying the pending-sync chip, and the offline indicator visible in the app chrome."
-      viewport="390 x 844, light mode, airplane mode on"
+      label="Saved with no signal"
+      caption="An entry safely on the phone, waiting to upload itself when the signal comes back."
       frame="phone"
     />
   </div>

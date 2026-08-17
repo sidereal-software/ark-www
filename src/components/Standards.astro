@@ -9,12 +9,18 @@ const cards = [
     cite: "aza",
   },
   {
+    // The annual inventory, transfer form and care sheet are the Pro-tier
+    // compliance pack (see src/data/records.ts, "Compliance documents", and
+    // the Pro column in src/data/pricing.ts). This card previously described
+    // them without saying so, which read as though every plan produced them.
+    // If a capability is tiered anywhere on the page it has to be tiered
+    // everywhere on the page.
     title: "Produced on demand",
-    body: "The annual inventory, the transfer form and the care sheet are generated from the records you already keep, on the day someone asks for them. CSV and XLSX.",
+    body: "The annual inventory, the transfer form and the care sheet are generated from the records you already keep, on the day someone asks for them. These are on the Pro plan; downloading your animals and logs as a spreadsheet is on every plan.",
   },
   {
     title: "Able to show their own history",
-    body: "Every change writes an audit row: who, what, when, and what the value was before. Deletion is soft, so a record that was removed can still account for itself.",
+    body: "When an inspector asks who recorded something and when, the answer is in the record - including what it said before anyone changed it, and what happened to entries somebody removed.",
   },
 ];
 ---

@@ -22,7 +22,6 @@ across once, deliberately, and the copy is annotated where it diverges.
 | Components      | shadcn/ui, `new-york` style, Radix primitives - the ARK app's own setup                                      |
 | Styles          | Tailwind CSS v4 via `@tailwindcss/vite`                                                                      |
 | Fonts           | Fraunces and Plus Jakarta Sans, self-hosted from `@fontsource-variable`, latin subsets only                  |
-| Images          | `astro:assets` with `sharp`, emitting WebP at five widths per photograph                                     |
 | Package manager | pnpm                                                                                                         |
 | Node            | 24                                                                                                           |
 
@@ -67,11 +66,7 @@ src/
     records.ts           What ARK records, by group
     never.ts             The "what we will never do" commitments
     sources.ts           Every citation on the page, numbered
-    photos.ts            Every photograph, with its licence and credit
-  assets/photos/         The photograph files themselves, optimized at build
   components/            One component per page section, plus shared pieces
-    Photo.astro          The only way an image gets onto the site
-    PhotoBand.astro      A full-bleed photograph between two sections
     MobileNav.tsx        The only hydrated component on the site
     ui/                  shadcn/ui components, added by its CLI
   lib/utils.ts           cn(), the shadcn class merger
@@ -109,12 +104,11 @@ What it costs, gzipped, measured from `dist/`:
 This island roughly doubles what the page would otherwise ship in script and
 markup. That is the honest price of a Radix dialog and it is not small.
 
-Measured against `pnpm preview` at 1440px, first-view transfer for `/` is about
-**338 KB** over 9 requests, of which **182 KB is photography** - four WebP
-files, served from a five-width `srcset` so a phone fetches a much smaller cut
-than a desktop does. The images cost more than the island, and they are worth
-it: see [Photography](#photography). Two things to know before changing the
-island:
+There are no photographs on the site, so the island is the page's largest
+single cost by a wide margin. See [`SCREENSHOTS.md`](./SCREENSHOTS.md) for why
+the photography was reverted and what would have to be true to bring it back;
+note that doing so also brings back `sharp` and roughly doubles first-view
+transfer again. Two things to know before changing the island:
 
 - **It is `client:load` on purpose.** A navigation control sits in a sticky
   header, on screen from the first frame, and has to work when it is touched
@@ -132,7 +126,7 @@ directive anywhere else is a decision to be made deliberately, not by accident.
 ## Design system
 
 The tokens in `src/styles/theme.css` are the ARK app's own, so the site and the
-product look like one company. Three things are deliberately not inherited, and
+product look like one company. Five things are deliberately not inherited, and
 each is commented where it happens:
 
 1. **The primary colour is darker.** The app's
@@ -222,7 +216,7 @@ The page makes claims about an industry, so it carries a bibliography.
 marker, and the component throws at build time if the id is not in the file - a
 footnote cannot point at nothing.
 
-Two habits worth keeping:
+Four habits worth keeping:
 
 - **A source gets a link only where the URL is known to resolve.** The rest are
   cited by name, section and date. A citation someone can look up beats a link
@@ -230,6 +224,34 @@ Two habits worth keeping:
 - **Nothing is quoted beyond what the source says.** Where quotation marks
   appear on the page, the words inside them are the source's, verified against
   the source itself and not reconstructed from a summary.
+- **Cite what a reader could reasonably doubt, and nothing else.** The
+  bibliography was twice this size and most of it was decorating plain
+  descriptions of ordinary practice. A footnote on "keepers write on a
+  whiteboard" is not rigour, it is throat-clearing, and every one of those
+  makes the citations that carry real regulatory weight harder to notice. What
+  is left is the regulatory detail and one research finding.
+- **No figure the page cannot stand behind.** The capture loop used to be
+  labelled 0s / 8s / 15s / 30s and the hero said "about thirty seconds". Nobody
+  had timed a keeper. The copy may say the loop is short; it may not put a
+  number on it that no one measured. The same goes for fractions - "half this
+  sector" became "many of the facilities ARK is for".
+
+**The page does not sell by comparison.** It says what ARK does and why it was
+built that way, and it does not stand next to a named competitor to look better
+than one. That section used to carry two vendors' per-user prices and a
+quotation from a third's documentation about its own mobile support. Selling
+that way reads as anxious rather than confident, it dates the moment they ship
+the thing you quoted them not having, and it spends the reader's attention on
+somebody else's product. Naming another system is fine where it is a
+_capability_ - ARK imports documented AnimalCare and ZIMS exports, and a reader
+migrating needs to know that. The test is whether the sentence would survive
+the competitor fixing the thing you mentioned.
+
+**Every tiered capability is tiered everywhere it appears.** `records.ts`
+carries a `tier` per group and `pricing.ts` carries the plans; prose elsewhere
+on the page has to agree with both. The compliance pack - annual inventory,
+transfer forms, care sheets - is Pro, and the standards section described it
+without saying so until this was written down.
 
 There is no social proof on the site, because ARK has no customers yet: no
 logos, no testimonials, no "trusted by", and no running totals. There is also no
@@ -238,46 +260,12 @@ software does, not by narrating its own honesty, and the two read very
 differently to someone deciding whether to spend their rescue's money here.
 Build a figures section when the figures exist and are measured.
 
-## Photography
+## Imagery
 
-Four photographs, all openly licensed, all sourced from Wikimedia Commons. They
-are what stops the page reading as a developer tool: every zoo, aquarium,
-sanctuary and rehabilitation site this one has to feel familiar beside is
-photograph-led, including Species360, the incumbent this product displaces.
-
-Every image goes through `<Photo slug="..." />`, and every slug must exist in
-`src/data/photos.ts` or the build throws - the same rule `<Footnote />` enforces
-for citations, for the same reason. An unattributed CC BY-SA photograph is a
-licence breach, not a cosmetic bug, so it must not survive to a deploy.
-
-Three of the four are CC BY-SA and **oblige us to print a credit**, which
-`Footer.astro` renders from the data file. The fourth, a US National Park
-Service work, is public domain and asks nothing. Four things to keep in mind
-before touching this:
-
-- **Do not crop a BY-SA file.** ShareAlike binds adaptations, and a crop is
-  arguably one. Framing is done with `object-position`, so the file on disk
-  stays whole and the viewport does the cropping. If a design genuinely needs a
-  cropped photograph, use one of the two public-domain files or license the crop.
-- **Credits render in the page, not in this README.** A licence condition that
-  only a developer can see has not been met.
-- **No photograph here shows an ARK customer**, because there are none. The
-  no-social-proof rule below still governs: nothing may be captioned to imply
-  the people in these frames use this product.
-- **The data file and the page stay in step.** The footer credits every entry
-  in `photos.ts`, so a photograph that is declared but no longer placed on the
-  page produces a credit for something nobody can see. Remove the last use,
-  remove the entry and the file.
-
-Replacing one means adding the file to `src/assets/photos/`, adding its entry
-to `src/data/photos.ts` with the licence exactly as Commons records it, and
-checking whether `attributionRequired` changes what the footer prints.
-
-## Screenshots
-
-There are none yet. Three marked placeholders stand in for them;
+There is none yet. Three marked placeholders stand in for product screenshots;
 [`SCREENSHOTS.md`](./SCREENSHOTS.md) says what to capture, at what viewport, and
-how to swap each one in.
+how to swap each one in. It also records why the site's photography was
+reverted and what would have to be true to bring it back.
 
 ## The contact form seam
 
