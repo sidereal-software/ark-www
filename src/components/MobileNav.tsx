@@ -1,7 +1,6 @@
 import * as React from "react";
-import { MenuIcon } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
+import { GameIcon } from "@/components/GameIcon";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { NAV_GROUPS } from "@/data/nav";
 
@@ -81,7 +80,7 @@ export default function MobileNav() {
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <Button ref={triggerRef} variant="ghost" size="icon-xl" className="md:hidden">
-          <MenuIcon className="size-6" />
+          <GameIcon name="menu" className="size-5" />
           <span className="sr-only">Menu</span>
         </Button>
       </SheetTrigger>

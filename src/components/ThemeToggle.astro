@@ -1,4 +1,6 @@
 ---
+import Icon from "./Icon.astro";
+
 /**
  * Day / night switch.
  *
@@ -38,38 +40,20 @@ const { class: className = "" } = Astro.props;
   class={`inline-flex size-11 shrink-0 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground ${className}`}
   aria-label="Switch between day and night colours"
 >
-  {/* Sun: shown while the page is light. */}
-  <svg
-    class="theme-icon-sun size-5"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="1.75"
-    stroke-linecap="round"
-    aria-hidden="true"
-  >
-    <circle cx="12" cy="12" r="4"></circle>
-    <path
-      d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"
-    ></path>
-  </svg>
-
-  {/* Moon: shown while the page is dark. */}
-  <svg
-    class="theme-icon-moon size-5"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="1.75"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-    aria-hidden="true"
-  >
-    <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a7 7 0 1 0 10.5 10.5z"></path>
-  </svg>
+  {/* Both glyphs render; the stylesheet below hides the wrong one. */}
+  <Icon name="sun" class="theme-icon-sun size-4" />
+  <Icon name="moon" class="theme-icon-moon size-4" />
 </button>
 
-<style>
+<style is:global>
+  /* `is:global` is load-bearing. Astro scopes a component's styles by adding
+     an attribute to the elements *that component* renders, and these two
+     glyphs are rendered by <Icon>, a different component - so a scoped
+     `.theme-icon-moon` matched nothing and both icons showed at once. The
+     selectors below also reach :root, which is outside this component either
+     way. Class names are prefixed to stay unambiguous now that they are
+     global. */
+
   /* The sun shows by default; the moon replaces it wherever the page is dark.
      Both selectors are needed, and in this order: the media query covers a
      visitor following their system, and the attribute covers one who is not -
