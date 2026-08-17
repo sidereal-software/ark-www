@@ -5,7 +5,7 @@ wildlife rehabilitation centres, sanctuaries and rescues.
 
 Serves at <https://ark.sidereal.software>. Static HTML, one hydrated island -
 the mobile navigation menu - and two small inline scripts for the theme
-toggle, deployed to GitHub Pages by Actions. That island costs **84.3 KB gzipped of JavaScript**; see
+toggle, deployed to GitHub Pages by Actions. That island costs **82.3 KB gzipped of JavaScript**; see
 [The JavaScript budget](#the-javascript-budget) for what it buys and what it
 replaced.
 
@@ -142,10 +142,10 @@ What it costs, gzipped, measured from `dist/`:
 
 | Chunk         | Raw      | Gzip        |
 | ------------- | -------- | ----------- |
-| React runtime | 180.6 KB | 56.4 KB     |
-| `react-dom`   | 11.5 KB  | 4.2 KB      |
-| The island    | 73.1 KB  | 23.8 KB     |
-| **Total**     |          | **84.3 KB** |
+| React runtime | 176.4 KB | 55.0 KB     |
+| `react-dom`   | 11.3 KB  | 4.0 KB      |
+| The island    | 71.4 KB  | 23.3 KB     |
+| **Total**     |          | **82.3 KB** |
 
 This island roughly doubles what the page would otherwise ship in script and
 markup. That is the honest price of a Radix dialog and it is not small.
@@ -161,7 +161,7 @@ transfer again. Two things to know before changing the island:
   rather than when the browser gets round to it. `client:visible` and
   `client:idle` are the wrong trade for this one component.
 - **Desktop pays for a control it never sees.** The trigger is `md:hidden`, so
-  above 768px the whole 84.3 KB hydrates a button nobody can reach. Switching
+  above 768px the whole 82.3 KB hydrates a button nobody can reach. Switching
   the directive to `client:media="(max-width: 767px)"` would take desktop to
   zero and leave mobile unchanged - at the cost of hydrating on media-query
   match rather than on load.
@@ -177,6 +177,37 @@ flashes the wrong palette. A button that flips an attribute does not need focus
 trapping or an escape key, which is the only reason the mobile menu earns its
 hydration - so putting the toggle behind that island would have cost 84 KB to
 do the work of nine lines.
+
+## Icons
+
+lucide, everywhere, and **nothing is hand-drawn**. `Icon.astro` used to carry
+three glyphs whose path data was eyeballed to look roughly like lucide - a
+tick, a cross and an arrow - and `ThemeToggle.astro` had a hand-drawn sun and
+moon, while the hydrated menu imported the real package. Two vocabularies, one
+of them invented.
+
+They are now the genuine lucide components, **rendered on the server**. Astro
+runs the React renderer at build time and emits plain SVG: one `<astro-island>`
+per page, and it is the menu. The icons add no client JavaScript at all, which
+is why importing a React icon library into a static page is not the
+contradiction it looks like.
+
+Two things to keep:
+
+- **Import the component, never inline path data.** Adding an icon means
+  importing it in `Icon.astro` and adding it to `GLYPHS`. Copying a `d`
+  attribute out of lucide is how the hand-drawn set happened in the first
+  place, and it silently stops tracking the package.
+- **Pass `className`, not `class`.** Astro hands props to a framework
+  component untranslated, so `class` is dropped and the icon renders at
+  lucide's default 24px. lucide merges what it is given with its own
+  `lucide lucide-<name>` classes rather than replacing them, which is what lets
+  `ThemeToggle`'s `.theme-icon-*` hooks work.
+
+One trap, and it has now cost two attempts: **`ThemeToggle`'s `<style>` must be
+`is:global`.** Astro scopes a component's CSS to elements _that component_
+renders, and the sun and moon come from `Icon.astro` - a different component -
+so scoped selectors match nothing and both glyphs show at once.
 
 ## Design system
 

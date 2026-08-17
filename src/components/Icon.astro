@@ -1,40 +1,48 @@
 ---
+import { ArrowRight, Check, Moon, Sun, X } from "lucide-react";
+
 /**
- * The prerendered pages' whole icon set. It is three glyphs on purpose: the
- * design leans on typography and specimen-label numbering rather than an icon
- * per feature, and these three ship as inline markup with no runtime behind
- * them.
+ * Every icon on a prerendered page, from lucide.
  *
- * The hydrated menu draws from `lucide-react` instead, because that is the
- * icon library `components.json` names and the one shadcn's own sheet imports.
- * Two glyphs from it reach the browser. Keep the split that way: an icon on a
- * static page has no reason to arrive as JavaScript.
+ * These are the real lucide components, rendered on the server. Astro runs the
+ * React renderer at build time and emits plain SVG - the probe that settled
+ * this produced lucide's own markup with no `astro-island` wrapper and not one
+ * byte of client JavaScript. So the rule the old version of this file claimed
+ * still holds, and now it is true of actual lucide rather than of a hand-drawn
+ * approximation of it: an icon on a static page has no reason to arrive as
+ * JavaScript.
+ *
+ * What was here before was five hand-drawn glyphs - a tick, a cross and an
+ * arrow in this file, a sun and a moon inside ThemeToggle - all of them
+ * eyeballed to look roughly like lucide while the hydrated menu imported the
+ * genuine article. Two icon vocabularies, one of them invented. Nothing on the
+ * site is hand-drawn now.
+ *
+ * Adding one: import it here and add it to the map. Do not inline path data.
  */
-type Name = "check" | "cross" | "arrow-right";
+const GLYPHS = {
+  check: Check,
+  cross: X,
+  "arrow-right": ArrowRight,
+  sun: Sun,
+  moon: Moon,
+} as const;
+
+export type IconName = keyof typeof GLYPHS;
 
 interface Props {
-  name: Name;
+  name: IconName;
   class?: string;
 }
 
 const { name, class: className = "size-4" } = Astro.props;
-
-const paths: Record<Name, string> = {
-  check: "M4 12.5 9 17.5 20 6.5",
-  cross: "M6 6 18 18 M18 6 6 18",
-  "arrow-right": "M4 12h15 M13 6l6 6-6 6",
-};
+const Glyph = GLYPHS[name];
 ---
 
-<svg
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="currentColor"
-  stroke-width="2"
-  stroke-linecap="round"
-  stroke-linejoin="round"
-  class={className}
-  aria-hidden="true"
->
-  <path d={paths[name]}></path>
-</svg>
+{
+  /* `className`, not `class`. Astro hands props to a framework component
+    untranslated, so `class` would be dropped on the floor and every icon would
+    render at lucide's default 24px. lucide merges what it is given with its own
+    `lucide lucide-<name>` classes rather than replacing them. */
+}
+<Glyph className={className} />
