@@ -1,6 +1,5 @@
 ---
 import Section from "./Section.astro";
-import ScreenshotPlaceholder from "./ScreenshotPlaceholder.astro";
 
 /*
  * The steps used to carry a stopwatch - 0s, 8s, 15s, 30s - which reads as a
@@ -54,10 +53,16 @@ const steps = [
     }
   </ol>
 
-  <div
-    class="reveal mt-8 grid items-center gap-10 rounded-2xl border border-border bg-muted/60 p-7 sm:p-10 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-14"
-  >
-    <div>
+  {
+    /* SCREENSHOT SEAM - an entry saved with no signal.
+      A phone-shaped shot of an animal profile in airplane mode, the just-saved
+      log carrying its pending-sync marker. It belongs on the right of this
+      panel; restore the two-column grid when it lands:
+        grid items-center lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-14
+      Capture brief in SCREENSHOTS.md. */
+  }
+  <div class="reveal mt-8 rounded-2xl border border-border bg-muted/60 p-7 sm:p-10">
+    <div class="max-w-2xl">
       <p class="eyebrow">Offline</p>
       <h3 class="mt-3 text-2xl text-balance">Capture does not wait for a connection.</h3>
       <div class="mt-4 space-y-4 text-muted-foreground">
@@ -72,12 +77,5 @@ const steps = [
         </p>
       </div>
     </div>
-
-    <ScreenshotPlaceholder
-      class="justify-self-center lg:justify-self-end"
-      label="Saved with no signal"
-      caption="An entry safely on the phone, waiting to upload itself when the signal comes back."
-      frame="phone"
-    />
   </div>
 </Section>

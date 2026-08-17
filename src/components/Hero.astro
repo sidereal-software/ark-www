@@ -1,7 +1,6 @@
 ---
 import { CONTACT_HREF, SITE } from "../consts";
 import Icon from "./Icon.astro";
-import ScreenshotPlaceholder from "./ScreenshotPlaceholder.astro";
 
 // Contour lines, the way a survey map or a field guide's terrain inset draws
 // them. This is the site's one piece of decoration and it is generated rather
@@ -47,10 +46,21 @@ const facts = [
     </div>
   </div>
 
-  <div
-    class="mx-auto grid max-w-6xl items-center gap-14 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-20"
-  >
-    <div>
+  {
+    /* SCREENSHOT SEAM - the capture sheet, mid-flow, on a phone.
+      A category chosen, a real sentence in the note field, the photo attached,
+      Save primed. It belongs to the right of this column; restore the grid
+      when it lands:
+        <div class="mx-auto grid max-w-6xl items-center gap-14
+                    lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-20">
+      and put the <Image> in a second child div. Capture brief in
+      SCREENSHOTS.md.
+
+      Until then the hero is a single column with the measure capped, rather
+      than a wide column with a hole beside it. */
+  }
+  <div class="mx-auto max-w-6xl">
+    <div class="max-w-2xl">
       <p class="hero-in eyebrow">
         Zoos &middot; Rehabilitation &middot; Sanctuaries &middot; Rescues
       </p>
@@ -112,14 +122,6 @@ const facts = [
           ))
         }
       </ul>
-    </div>
-
-    <div class="hero-in hero-in-delay-3 justify-self-center lg:justify-self-end">
-      <ScreenshotPlaceholder
-        label="Logging an animal"
-        caption="Choosing a category, typing the note and attaching the photo, on a phone."
-        frame="phone"
-      />
     </div>
   </div>
 </section>

@@ -1,6 +1,5 @@
 ---
 import Section from "./Section.astro";
-import ScreenshotPlaceholder from "./ScreenshotPlaceholder.astro";
 import { RECORD_GROUPS } from "../data/records";
 ---
 
@@ -11,13 +10,18 @@ import { RECORD_GROUPS } from "../data/records";
   title={`${RECORD_GROUPS.length} groups of record.`}
   lead="Everything below is in ARK today, not on a roadmap. Where something needs a particular plan, the card says which one."
 >
-  <div class="reveal mt-12">
-    <ScreenshotPlaceholder
-      label="An animal's page"
-      caption="Who the animal is, where it came from, how its weight has moved, and everything written about it lately."
-      frame="app"
-    />
-  </div>
+  {
+    /* SCREENSHOT SEAM - an animal's page, at desk width.
+      Who the animal is, where it came from, how its weight has moved, and
+      everything written about it lately. Landscape, 16:9, above the card grid.
+      Capture brief in SCREENSHOTS.md; drop an <Image> here.
+
+      The marked placeholders that used to stand in for the three shots are
+      gone. They were honest about the gap, but they were also the only visual
+      on the site, which meant a visitor's strongest impression of the product
+      was three dashed rectangles apologising for themselves. An absence reads
+      better than an advertised absence. */
+  }
 
   <ul class="mt-14 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
     {

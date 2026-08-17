@@ -1,13 +1,26 @@
 # Imagery still to make
 
-The site ships with three marked placeholders instead of product screenshots,
-because ARK has none yet. Each one renders a panel on the page saying what
-belongs in it; this file is the same list in one place, with enough detail that
-whoever takes the shots does not have to guess.
+ARK has no product screenshots yet, and the site now shows nothing where they
+will go. This file is the shot list, with enough detail that whoever takes them
+does not have to guess.
 
-They are `<ScreenshotPlaceholder>` components
-(`src/components/ScreenshotPlaceholder.astro`). Each already reserves the right
-aspect ratio, so nothing below a placeholder moves when the real image lands.
+The site used to render three marked placeholders - dashed frames naming the
+shot that belonged in each. They were honest, and they were also the only
+visual on the site, which meant a visitor's strongest impression of the product
+was three rectangles apologising for themselves. An absence reads better than
+an advertised absence, so they are gone.
+
+What is left in their place is a `SCREENSHOT SEAM` comment at each of the three
+sites, saying what belongs there and what layout to restore around it:
+
+| Where                               | File                              |
+| ----------------------------------- | --------------------------------- |
+| Capture sheet, mid-flow, on a phone | `src/components/Hero.astro`       |
+| An entry saved with no signal       | `src/components/HowItWorks.astro` |
+| An animal's page, at desk width     | `src/components/Records.astro`    |
+
+Grep for `SCREENSHOT SEAM`. Two of the three need a grid restored when the
+image lands, and the comment at each site says which one.
 
 ## Before you start
 
@@ -93,10 +106,13 @@ placeholder is 16:9, so frame the capture to that rather than cropping a
 This is the "it is a real record system" shot, and it is the counterweight to
 the two phone images.
 
-## Replacing a placeholder
+## Filling a seam
 
-1. Put the image in `src/assets/` (not `public/`) so Astro processes it.
-2. In the component, import it and Astro's `<Image>`:
+1. Put the image in `src/assets/` (not `public/`) so Astro processes it. Note
+   that `sharp` was removed with the photography and has to come back for
+   `astro:assets` to run: `pnpm add sharp`.
+2. At the `SCREENSHOT SEAM` comment, import Astro's `<Image>` and the file, and
+   restore the layout the comment describes:
 
    ```astro
    ---
@@ -113,16 +129,14 @@ the two phone images.
    />
    ```
 
-3. Delete the `<ScreenshotPlaceholder>` for that slot and its import if it is no
-   longer used.
+3. Delete the seam comment, so a filled slot never looks like an open one.
 4. Write a real `alt`. It describes what is happening in the screenshot, for
    someone who cannot see it - not "ARK screenshot".
 5. Remove that section from this file, so the file always lists exactly what is
    still missing.
 
-When all three are gone, delete `src/components/ScreenshotPlaceholder.astro`
-with them. Keep this document while the photography section below is still
-open.
+Keep this document until both the shot list above and the photography section
+below are empty.
 
 ## Photography, deferred
 

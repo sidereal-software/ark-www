@@ -293,10 +293,15 @@ Build a figures section when the figures exist and are measured.
 
 ## Imagery
 
-There is none yet. Three marked placeholders stand in for product screenshots;
-[`SCREENSHOTS.md`](./SCREENSHOTS.md) says what to capture, at what viewport, and
-how to swap each one in. It also records why the site's photography was
-reverted and what would have to be true to bring it back.
+There is none yet, and the page shows nothing where it will go rather than a
+placeholder saying so. Three `SCREENSHOT SEAM` comments mark the slots - grep
+for them - and [`SCREENSHOTS.md`](./SCREENSHOTS.md) is the shot list, with the
+viewport for each and the layout to restore around it. It also records why the
+site's photography was reverted and what would have to be true to bring it
+back.
+
+Both the screenshots and the photography need `sharp` reinstalled;
+`astro:assets` cannot process a local image without it.
 
 ## The OG image
 
