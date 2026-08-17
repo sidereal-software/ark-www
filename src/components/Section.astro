@@ -38,12 +38,24 @@ const widthClass = width === "prose" ? "max-w-3xl" : "max-w-6xl";
 const leadClass = tone === "ink" ? "text-ink-muted" : "text-muted-foreground";
 ---
 
+{
+  /* The fragment id sits on the content, not on the <section>.
+    A section carries 128px of top padding at lg, so an anchor pointed at the
+    section box scrolled its *padding* to just under the header and left 135px
+    of empty space before the eyebrow appeared - measured, not guessed. The
+    section still lands correctly by that reading, and it still looked broken,
+    because what a reader is aiming at is the heading rather than the box.
+    Targeting the inner container scrolls the padding off and puts the eyebrow
+    where the section box used to be.
+
+    The <section> keeps aria-labelledby, so moving the id costs it nothing: it
+    is labelled by its own heading, and the id was only ever a link target. */
+}
 <section
-  id={id}
   class={`px-5 py-20 sm:px-8 sm:py-24 lg:py-32 ${toneClass} ${className}`}
   aria-labelledby={id && title ? `${id}-heading` : undefined}
 >
-  <div class={`mx-auto ${widthClass}`}>
+  <div id={id} class={`mx-auto ${widthClass}`}>
     {
       (eyebrow || title || lead) && (
         <header class="reveal max-w-3xl">

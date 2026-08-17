@@ -31,11 +31,13 @@ import { CONTACT_HREF, SITE } from "../consts";
  */
 ---
 
-<section
-  id="contact"
-  class="on-ink bg-ink px-5 py-20 text-ink-foreground sm:px-8 sm:py-24 lg:py-32"
->
-  <div class="mx-auto max-w-3xl text-center">
+{
+  /* The id is on the content rather than the section, for the reason recorded
+    in Section.astro: this band has the same 128px of top padding, and an
+    anchor aimed at the box lands on the padding. */
+}
+<section class="on-ink bg-ink px-5 py-20 text-ink-foreground sm:px-8 sm:py-24 lg:py-32">
+  <div id="contact" class="mx-auto max-w-3xl text-center">
     <p class="eyebrow">Get in touch</p>
     <div class="rule-center mx-auto mt-3 mb-7 w-24"></div>
 
