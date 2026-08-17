@@ -1,29 +1,40 @@
 ---
-import { ICONS, ICON_VIEWBOX, type IconName } from "../data/icons";
-
 /**
- * Every icon on a prerendered page, from game-icons.net.
+ * The prerendered pages' whole icon set. It is three glyphs on purpose: the
+ * design leans on typography and specimen-label numbering rather than an icon
+ * per feature, and these three ship as inline markup with no runtime behind
+ * them.
  *
- * The set and the licence live in src/data/icons.ts; this only draws them. It
- * ships as inline markup with no runtime behind it, which is the rule that has
- * not changed: an icon on a static page has no reason to arrive as JavaScript.
- * The React island uses <GameIcon> instead, and both read from the same data,
- * so the two surfaces cannot drift onto different glyphs.
+ * The hydrated menu draws from `lucide-react` instead, because that is the
+ * icon library `components.json` names and the one shadcn's own sheet imports.
+ * Two glyphs from it reach the browser. Keep the split that way: an icon on a
+ * static page has no reason to arrive as JavaScript.
  */
+type Name = "check" | "cross" | "arrow-right";
+
 interface Props {
-  name: IconName;
+  name: Name;
   class?: string;
 }
 
 const { name, class: className = "size-4" } = Astro.props;
-const icon = ICONS[name];
+
+const paths: Record<Name, string> = {
+  check: "M4 12.5 9 17.5 20 6.5",
+  cross: "M6 6 18 18 M18 6 6 18",
+  "arrow-right": "M4 12h15 M13 6l6 6-6 6",
+};
 ---
 
-{
-  /* No stroke. These are filled shapes rather than stroked outlines, which is
-    the whole difference in weight between this set and the line icons it
-    replaced. */
-}
-<svg viewBox={ICON_VIEWBOX} fill="currentColor" class={className} aria-hidden="true">
-  <path d={icon.path} transform={icon.transform}></path>
+<svg
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class={className}
+  aria-hidden="true"
+>
+  <path d={paths[name]}></path>
 </svg>

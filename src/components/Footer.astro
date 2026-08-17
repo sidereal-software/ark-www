@@ -1,7 +1,6 @@
 ---
 import Logo from "./Logo.astro";
 import { CONTACT_HREF, SITE } from "../consts";
-import { iconAuthors } from "../data/icons";
 
 const year = new Date().getFullYear();
 
@@ -93,7 +92,7 @@ const columns = [
       class="mt-12 flex flex-col gap-2 border-t border-border pt-7 text-sm text-muted-foreground sm:flex-row sm:items-baseline sm:justify-between"
     >
       <p>&copy; {year} Sidereal Software. All rights reserved.</p>
-      <p class="max-w-xl sm:text-right">
+      <p>
         Leaf pattern by <a
           href="https://heropatterns.com"
           rel="noopener"
@@ -104,16 +103,6 @@ const columns = [
           rel="license noopener"
           class="rounded underline underline-offset-4 hover:text-foreground hover:no-underline"
           >CC BY 4.0</a
-        >. Icons by {iconAuthors().join(", ")}, from <a
-          href="https://game-icons.net"
-          rel="noopener"
-          class="rounded underline underline-offset-4 hover:text-foreground hover:no-underline"
-          >game-icons.net</a
-        >, <a
-          href="https://creativecommons.org/licenses/by/3.0/"
-          rel="license noopener"
-          class="rounded underline underline-offset-4 hover:text-foreground hover:no-underline"
-          >CC BY 3.0</a
         >.
       </p>
     </div>

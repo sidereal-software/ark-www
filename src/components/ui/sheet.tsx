@@ -1,8 +1,8 @@
 import * as React from "react";
+import { XIcon } from "lucide-react";
 import { Dialog as SheetPrimitive } from "radix-ui";
 
 import { cn } from "@/lib/utils";
-import { GameIcon } from "@/components/GameIcon";
 
 /**
  * shadcn/ui sheet, new-york style, as the CLI writes it. One divergence, the
@@ -75,7 +75,7 @@ function SheetContent({
         {children}
         {showCloseButton && (
           <SheetPrimitive.Close className="absolute top-2.5 right-2.5 flex size-11 items-center justify-center rounded-lg opacity-70 transition-opacity hover:bg-muted hover:opacity-100 disabled:pointer-events-none">
-            <GameIcon name="close" className="size-4" />
+            <XIcon className="size-5" />
             <span className="sr-only">Close</span>
           </SheetPrimitive.Close>
         )}

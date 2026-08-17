@@ -66,11 +66,9 @@ src/
     records.ts           What ARK records, by group
     never.ts             The "what we will never do" commitments
     sources.ts           Every citation on the page, numbered
-    icons.ts             The icon set, with each glyph's author and licence
   components/            One component per page section, plus shared pieces
     NextPages.astro      The two onward links at the foot of each page
     ThemeToggle.astro    Day/night switch, no framework
-    GameIcon.tsx         The two icons the React island draws
     MobileNav.tsx        The only hydrated component on the site
     ui/                  shadcn/ui components, added by its CLI
   lib/utils.ts           cn(), the shadcn class merger
@@ -144,10 +142,10 @@ What it costs, gzipped, measured from `dist/`:
 
 | Chunk         | Raw      | Gzip        |
 | ------------- | -------- | ----------- |
-| React runtime | 176.3 KB | 55.1 KB     |
-| `react-dom`   | 11.2 KB  | 4.0 KB      |
-| The island    | 70.8 KB  | 23.1 KB     |
-| **Total**     |          | **82.2 KB** |
+| React runtime | 180.6 KB | 56.4 KB     |
+| `react-dom`   | 11.5 KB  | 4.2 KB      |
+| The island    | 73.1 KB  | 23.8 KB     |
+| **Total**     |          | **84.3 KB** |
 
 This island roughly doubles what the page would otherwise ship in script and
 markup. That is the honest price of a Radix dialog and it is not small.
@@ -327,54 +325,6 @@ back.
 
 Both the screenshots and the photography need `sharp` reinstalled;
 `astro:assets` cannot process a local image without it.
-
-## Icons
-
-game-icons.net, matching the ARK app, which moved to the same set. Before this
-the site ran two vocabularies at once: three hand-drawn stroke glyphs of its
-own, plus two from `lucide-react` inside the menu - so the only icons a visitor
-met on a phone were the only ones that were not the app's. `lucide-react` is
-gone from the source entirely.
-
-Seven glyphs, all in `src/data/icons.ts`, inlined as paths. There is no icon
-package in the bundle.
-
-**They are CC BY 3.0 and the credit is a licence condition.** game-icons.net is
-one licence across many authors, so `author` is stored per icon and the footer
-renders the distinct set - add an icon by a new author and the credit updates
-itself.
-
-Three things to know before adding one:
-
-- **Strip the background plate.** Every upstream file is a 512x512 black square
-  with the glyph painted white over it. Kept, it paints a filled box behind the
-  icon.
-- **Make the glyph `currentColor`**, not `#fff`, so one path serves the sage on
-  cream and the phosphor green on a dark ground.
-- **Do not import `ICONS` into anything that ships to the browser.** The map is
-  one object referencing all seven paths, so importing it put 1.7 KB gzipped of
-  unused icons in the island. `GameIcon.tsx` imports the two consts it draws by
-  name. `iconAuthors()` is a function rather than a computed constant for the
-  same reason: as a top-level expression it ran at module evaluation, which the
-  bundler cannot treat as pure, and it kept the whole map alive.
-
-These are filled glyphs on a 512 grid rather than 24px line icons, so they
-carry more weight at the same box size. Sizes were tuned down when they landed,
-and one caller changed shape: the never-do list used to draw a ring around a
-bare X, and `cancel` is already a crossed circle, so the ring came off.
-
-**`lucide-react` is uninstalled, and `components.json` still names `lucide` as
-its icon library.** That is deliberate rather than an oversight: the file
-mirrors the ARK app's, and a component added with
-`pnpm dlx shadcn@latest add <name>` will still be generated with lucide
-imports. It will not compile until they are swapped for `<GameIcon>` - which is
-the point. A missing dependency turns "quietly reintroduce a second icon set"
-into a build error somebody has to look at.
-
-**The logo is not from this set.** `Logo.astro` and `public/favicon.svg` carry
-the ARK app's own paw, and the rule there has not changed: the site does not
-get to design a different identity from the product. If the app's mark moves to
-a game-icons paw, this one follows it.
 
 ## Night mode
 
