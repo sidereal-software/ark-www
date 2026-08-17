@@ -3,7 +3,7 @@ import { MenuIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { SECTION_LINKS } from "@/data/nav";
+import { NAV_GROUPS } from "@/data/nav";
 
 /**
  * The whole of this site's JavaScript: the navigation a visitor gets below the
@@ -103,18 +103,44 @@ export default function MobileNav() {
         </SheetHeader>
 
         <nav aria-label="Sections" className="overflow-y-auto px-4 pb-6">
-          <ul className="flex flex-col gap-1">
-            {SECTION_LINKS.map((link) => (
-              <li key={link.href}>
+          {/* Grouped by destination. A flat list could not tell the reader
+            which of these move to another page and which only scroll the one
+            they are on; the headings do. Each heading is itself the link to
+            that page, so the group name is not dead text. */}
+          <ul className="flex flex-col gap-6">
+            {NAV_GROUPS.map((group) => (
+              <li key={group.href}>
                 <a
-                  href={link.href}
+                  href={group.href}
                   onClick={handleLinkClick}
-                  className="flex min-h-11 items-center rounded-lg px-3 font-medium text-foreground transition-colors hover:bg-muted"
+                  className="eyebrow block rounded px-3 py-1 hover:underline"
                 >
-                  {link.label}
+                  {group.heading}
                 </a>
+                <ul className="mt-1 flex flex-col gap-1">
+                  {group.links.map((link) => (
+                    <li key={link.href}>
+                      <a
+                        href={link.href}
+                        onClick={handleLinkClick}
+                        className="flex min-h-11 items-center rounded-lg px-3 font-medium text-foreground transition-colors hover:bg-muted"
+                      >
+                        {link.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
               </li>
             ))}
+            <li>
+              <a
+                href="/sources"
+                onClick={handleLinkClick}
+                className="flex min-h-11 items-center rounded-lg px-3 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+              >
+                Sources
+              </a>
+            </li>
           </ul>
         </nav>
       </SheetContent>

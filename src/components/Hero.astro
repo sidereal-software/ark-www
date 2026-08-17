@@ -48,14 +48,16 @@ const facts = [
         the pattern is densest in the corner nobody reads. */
     }
     {
-      /* Sized in percentages, not rem. At a fixed 70rem radius the clear
-        centre was wider than a phone, so the wash never actually reached the
-        copy and the leaves stayed at full strength behind the headline. A
-        percentage radius is measured against the hero, so the fade lands in
-        the same place at 390px as it does at 1440px. */
+      /* A fade at the bottom edge only, and nothing else over the leaves.
+        There used to be a radial wash anchored to the top right, which meant
+        the pattern was only ever at strength in one corner and visibly gave
+        out across the panel - it read as artwork that had been cut off rather
+        than as a ground. The field now tiles the whole hero evenly, and the
+        one gradient left is a short vertical fade that hands over to the flat
+        section below instead of stopping at a hard line. */
     }
     <div
-      class="absolute inset-0 bg-[radial-gradient(115%_85%_at_88%_-12%,transparent,var(--background)_68%)]"
+      class="absolute inset-x-0 bottom-0 h-32 bg-[linear-gradient(to_bottom,transparent,var(--background))]"
     >
     </div>
   </div>

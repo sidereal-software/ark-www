@@ -13,8 +13,16 @@
   html {
     -webkit-text-size-adjust: 100%;
     scroll-behavior: smooth;
-    /* Anchored sections land below the sticky header rather than under it. */
-    scroll-padding-top: 5rem;
+    /* Anchored targets land below the sticky header rather than under it.
+       The header is 4rem; the extra 0.5rem is breathing room.
+
+       This is the *only* scroll offset on the site, deliberately. Sections and
+       footnote entries used to carry `scroll-mt-20` and `scroll-mt-24` as
+       well, and the two mechanisms add up rather than one winning: 5rem of
+       padding plus 5rem of margin left a fragment landing 6rem above its own
+       heading, so following a link showed the bottom of the section before it.
+       Set the offset here or on the target, never both. */
+    scroll-padding-top: 4.5rem;
   }
 
   body {

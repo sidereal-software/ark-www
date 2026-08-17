@@ -100,6 +100,14 @@ What moved, and why:
 | `/pricing`         | Plans, the never-do commitments, your records         | 4,763px |
 | `/sources`         | The bibliography                                      | 1,685px |
 
+**The menu is grouped by destination, not flat.** The first version listed
+nine links in one column and mixed three kinds of thing: sections of the home
+page, other pages, and sections of those other pages. Nothing in the list told
+a reader which links would move them somewhere new and which would only
+scroll. Each group is now headed by the page it belongs to, the heading is
+itself the link to that page, and the footer is grouped the same way. The
+desktop bar carries three: how it works, what it records, what it costs.
+
 The split is by **what a reader goes looking for on purpose**. What it records
 and what it costs are the two things people arrive already meaning to check, so
 they get URLs that can be sent to a colleague or a board without a fragment
@@ -110,6 +118,12 @@ Two things the split needed:
 - **Footnote markers became absolute.** `<Footnote>` links to
   `/sources#source-<id>` rather than a bare fragment, because the bibliography
   is no longer on the same page as the claims citing it.
+- **There is exactly one scroll offset**, `scroll-padding-top` on `html` in
+  `global.css`. Sections and footnote entries used to carry `scroll-mt-*` as
+  well, and the two mechanisms add rather than one winning - 5rem of padding
+  plus 5rem of margin against a 4rem header left every fragment landing above
+  its own heading, showing the bottom of the section before it. Set the offset
+  in one place, never both.
 - **Each page ends with `<NextPages>`.** On one page the answer to "what now"
   was to keep scrolling. Split up, a reader who finishes the home page is at a
   dead end, so each page names the next two deliberately.
@@ -334,6 +348,11 @@ night, and none should - every colour resolves through a token that
 
 Three mechanics worth knowing before touching it:
 
+- **Surfaces keep one ladder**, and it is the same shape in both schemes:
+  `ink < background < muted < card`. Cards are the lightest thing on the page,
+  because a card darker than the band it sits on stops reading as a card. The
+  first cut had `muted` above `card`, so the alternating band lifted past the
+  cards inside it and read as an arbitrary lighter panel.
 - **The values are declared once**, as `--night-*`, then applied from three
   selectors: the media query, `[data-theme="dark"]`, and the `:not()` guard
   that lets a pinned light theme survive a dark operating system. Writing them

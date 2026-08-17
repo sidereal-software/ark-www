@@ -25,15 +25,24 @@ const cards = [
 ];
 ---
 
+{
+  /* The lead is written here rather than passed to <Section lead="...">
+    because it carries a citation. As a prop it is a plain string, so the
+    marker had to go in a block of its own underneath - which rendered as a
+    lone superscript "2" floating under the paragraph with nothing attached
+    to it. A footnote marker has to sit against the sentence it cites. */
+}
 <Section
   id="standards"
   eyebrow="Standards and compliance"
   title="What the accrediting bodies require."
-  lead="AZA, the Zoological Association of America and the Global Federation of Animal Sanctuaries each require an accredited member to keep an animal records system. None of them requires a particular vendor. What they want is that the records exist, that they are current, and that you can produce them."
 >
-  <div class="mt-4 text-sm text-muted-foreground">
-    <Footnote id="standards-bodies" />
-  </div>
+  <p class="reveal mt-5 max-w-3xl text-lg text-pretty text-muted-foreground">
+    AZA, the Zoological Association of America and the Global Federation of Animal Sanctuaries each
+    require an accredited member to keep an animal records system. None of them requires a
+    particular vendor. What they want is that the records exist, that they are current, and that you
+    can produce them.<Footnote id="standards-bodies" />
+  </p>
 
   <div class="mt-12 grid gap-5 md:grid-cols-3">
     {

@@ -215,11 +215,19 @@
  * times is how the three drift apart.
  * ------------------------------------------------------------------------ */
 :root {
+  /* One ladder, and every surface keeps its place on it:
+     ink .115  <  background .155  <  muted .185  <  card .225
+     Cards are the lightest thing on the page in both schemes, because a card
+     that is darker than the band it sits on stops reading as a card. The
+     first cut of this palette had muted at .235, above card's .196, so the
+     alternating band lifted past the cards it contained and read as an
+     arbitrary lighter panel. The band is a small step off the ground; the
+     card is the big one. */
   --night-background: oklch(0.155 0.012 62);
   --night-foreground: oklch(0.94 0.012 85);
-  --night-card: oklch(0.196 0.014 60);
+  --night-card: oklch(0.225 0.015 60);
   --night-secondary: oklch(0.28 0.03 120);
-  --night-muted: oklch(0.235 0.015 62);
+  --night-muted: oklch(0.185 0.014 62);
   --night-muted-foreground: oklch(0.735 0.016 75);
   --night-accent: oklch(0.32 0.05 150);
   --night-destructive: oklch(0.7 0.16 28);
@@ -431,28 +439,28 @@
  *
  * Night
  *   foreground / background ........................... 16.41:1
- *   foreground / card ................................. 15.33:1
- *   foreground / muted ................................ 14.01:1
+ *   foreground / card ................................. 14.38:1
+ *   foreground / muted ................................ 15.65:1
  *   foreground / secondary ............................ 12.16:1
  *   foreground / accent ............................... 10.42:1
  *   muted-foreground / background ....................... 8.32:1
- *   muted-foreground / card ............................. 7.77:1
- *   muted-foreground / muted ............................ 7.10:1
+ *   muted-foreground / card ............................. 7.29:1
+ *   muted-foreground / muted ............................ 7.94:1
  *   primary / background .............................. 11.08:1
- *   primary / card .................................... 10.35:1
+ *   primary / card ..................................... 9.71:1
  *   primary-foreground / primary ...................... 10.77:1
  *   destructive / background ............................ 6.83:1
  *   clay / background ................................... 9.92:1
- *   clay / card ......................................... 9.27:1
- *   clay / muted ........................................ 8.47:1
+ *   clay / card ......................................... 8.69:1
+ *   clay / muted ........................................ 9.46:1
  *   foreground / clay-soft ............................ 11.54:1
  *   foreground / ink .................................. 17.10:1
  *   muted-foreground / ink .............................. 8.67:1
  *   primary / ink ..................................... 11.55:1
  *   clay / ink ........................................ 10.34:1
  *   input / background .................................. 3.69:1
- *   input / card ........................................ 3.45:1
- *   input / muted ....................................... 3.16:1
+ *   input / card ........................................ 3.24:1
+ *   input / muted ....................................... 3.52:1
  *
  * The three daylight bans do not carry over, and this was measured rather
  * than assumed. At night --primary on --accent is 7.04:1, --clay on --accent
