@@ -67,12 +67,16 @@ src/
     never.ts             The "what we will never do" commitments
     sources.ts           Every citation on the page, numbered
   components/            One component per page section, plus shared pieces
+    NextPages.astro      The two onward links at the foot of each page
     MobileNav.tsx        The only hydrated component on the site
     ui/                  shadcn/ui components, added by its CLI
   lib/utils.ts           cn(), the shadcn class merger
   layouts/BaseLayout.astro   <head>, metadata, skip link, header and footer
-  pages/
-    index.astro          The whole site
+  pages/                 One file per URL
+    index.astro          Home: the problem, the loop, the design decisions
+    what-it-records.astro  The record groups and the accreditation standards
+    pricing.astro        Plans, the never-do commitments, and your records
+    sources.astro        The bibliography every footnote marker points into
     404.astro
   styles/
     theme.css            Design tokens, and the measured contrast table
@@ -80,17 +84,44 @@ src/
 public/                  favicon, touch icon, OG image, robots.txt
 ```
 
-One page, deliberately. Splitting pricing or the feature list onto their own
-URLs would make someone navigate to finish a decision they are already making by
-scrolling. Split when a section earns its own URL, not before.
+**Four pages, after starting as one.** The single page was the right call until
+it measured **15,188px on desktop and 28,309px on a phone** - seventeen screens
+and thirty-four. The original argument, that scrolling beats navigating while
+somebody is still deciding, holds right up until the page is longer than anyone
+will scroll.
+
+What moved, and why:
+
+| Page               | Carries                                               | Height  |
+| ------------------ | ----------------------------------------------------- | ------- |
+| `/`                | The argument: problem, capture loop, design decisions | 6,690px |
+| `/what-it-records` | The record groups, and the standards that judge them  | 5,699px |
+| `/pricing`         | Plans, the never-do commitments, your records         | 4,763px |
+| `/sources`         | The bibliography                                      | 1,685px |
+
+The split is by **what a reader goes looking for on purpose**. What it records
+and what it costs are the two things people arrive already meaning to check, so
+they get URLs that can be sent to a colleague or a board without a fragment
+hanging off them. Everything that only makes sense in sequence stayed on home.
+
+Two things the split needed:
+
+- **Footnote markers became absolute.** `<Footnote>` links to
+  `/sources#source-<id>` rather than a bare fragment, because the bibliography
+  is no longer on the same page as the claims citing it.
+- **Each page ends with `<NextPages>`.** On one page the answer to "what now"
+  was to keep scrolling. Split up, a reader who finishes the home page is at a
+  dead end, so each page names the next two deliberately.
 
 ## The JavaScript budget
 
 This site shipped no JavaScript at all until it needed a navigation menu. Below
 the `md` breakpoint the header's inline links do not fit, which left a visitor on
-a phone with no way to navigate a page over 31,000px tall except to scroll it or
-reach the footer. `src/components/MobileNav.tsx` is the fix, and it is the only
-hydrated thing here.
+a phone with no way to navigate except to scroll or reach the footer. Splitting
+the site into four pages shortened the scroll but did not remove the need: the
+menu is still the only way to reach another page below `md`.
+`src/components/MobileNav.tsx` is the fix, and it is the only hydrated thing
+here.
 
 What it costs, gzipped, measured from `dist/`:
 
@@ -266,6 +297,32 @@ There is none yet. Three marked placeholders stand in for product screenshots;
 [`SCREENSHOTS.md`](./SCREENSHOTS.md) says what to capture, at what viewport, and
 how to swap each one in. It also records why the site's photography was
 reverted and what would have to be true to bring it back.
+
+## The OG image
+
+`public/og.png` is generated from `src/pages/og-card.astro`, not drawn by hand.
+
+It used to be a binary with no source, and it rotted exactly the way an
+unsourced binary does: it carried the old headline for months after the
+headline changed, and it was still promising a capture "in about thirty
+seconds" after that claim came off the site for never having been measured.
+Anyone sharing a link into Slack was advertising copy the site had retracted.
+
+To regenerate after changing the motto or the palette:
+
+```sh
+pnpm build && pnpm preview
+# then, at exactly 1200x630 with no device-pixel-ratio scaling:
+#   open http://localhost:4322/og-card and capture #og-card to public/og.png
+```
+
+The card is built from the same tokens, typeface and `SITE.motto` as the rest
+of the site, so it follows a palette change for free. Capture at **1x**: the
+meta tags in `BaseLayout.astro` declare 1200x630 and the file should be what
+they say it is.
+
+`/og-card` carries `noindex` and is filtered out of the sitemap in
+`astro.config.mjs`. It is source artwork, not a page of the site.
 
 ## The contact form seam
 

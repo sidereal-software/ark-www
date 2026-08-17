@@ -1,5 +1,5 @@
 ---
-import { CONTACT_HREF } from "../consts";
+import { CONTACT_HREF, SITE } from "../consts";
 import Icon from "./Icon.astro";
 import ScreenshotPlaceholder from "./ScreenshotPlaceholder.astro";
 
@@ -55,17 +55,23 @@ const facts = [
         Zoos &middot; Rehabilitation &middot; Sanctuaries &middot; Rescues
       </p>
 
+      {
+        /* The motto is the heading, so the heading no longer says what ARK is.
+          The line below has to, and it carries the category words the <h1>
+          gave up - see the note on SITE.tagline in src/consts.ts for how that
+          trade is split between the two. */
+      }
       <h1
-        class="hero-in hero-in-delay-1 mt-5 text-[clamp(2.35rem,6.2vw,4.25rem)] leading-[1.04] font-semibold text-balance"
+        class="hero-in hero-in-delay-1 mt-5 text-[clamp(2.6rem,7vw,4.75rem)] leading-[1.02] font-semibold text-balance"
       >
-        Animal records that get written at the enclosure.
+        {SITE.motto}
       </h1>
 
       <p
         class="hero-in hero-in-delay-2 mt-6 max-w-xl text-lg text-pretty text-muted-foreground sm:text-xl"
       >
-        A keeper finds the animal, taps a category, adds a note and a photo, and saves it to the
-        permanent record - standing at the enclosure, on a phone, with or without a signal.
+        Animal recordkeeping for zoos, sanctuaries, rescues and rehabilitation centres. Log what you
+        saw standing at the enclosure, on a phone, online or off - and nobody types it up again.
       </p>
 
       {

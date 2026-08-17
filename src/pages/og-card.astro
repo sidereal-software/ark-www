@@ -1,0 +1,76 @@
+---
+import Logo from "../components/Logo.astro";
+import { SITE } from "../consts";
+import "../styles/global.css";
+
+/**
+ * The source of `public/og.png`, not a page anyone is meant to visit.
+ *
+ * The OG image used to be a binary with no source, and it rotted: it carried
+ * the old headline months after the headline changed, and it still promised a
+ * capture "in about thirty seconds" after that claim was removed from the site
+ * for never having been measured. A link shared into Slack was advertising
+ * copy the site itself had retracted.
+ *
+ * So it is generated from the same tokens, typeface and motto as everything
+ * else, and regenerating it is a documented step rather than an image-editor
+ * session. See the OG image section of the README.
+ *
+ * It is excluded from the sitemap in astro.config.mjs and carries noindex, so
+ * it does not become a page in its own right.
+ */
+const contours = Array.from({ length: 8 }, (_, i) => {
+  const x = -80 + i * 190;
+  return `M${x} -60 C ${x + 60} 160, ${x - 70} 330, ${x + 30} 500 S ${x - 60} 720, ${x + 20} 900`;
+});
+---
+
+<html lang={SITE.locale}>
+  <head>
+    <meta charset="utf-8" />
+    <title>OG card</title>
+    <meta name="robots" content="noindex, nofollow" />
+  </head>
+  <body>
+    {/* Exactly 1200x630, the size the meta tags declare. */}
+    <div
+      id="og-card"
+      class="relative isolate flex h-[630px] w-[1200px] flex-col justify-between overflow-hidden bg-background px-20 py-16"
+    >
+      <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+        <svg
+          viewBox="0 0 1200 630"
+          preserveAspectRatio="xMidYMid slice"
+          class="h-full w-full text-primary opacity-[0.075]"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+        >
+          {contours.map((d) => <path d={d} />)}
+        </svg>
+        <div
+          class="absolute inset-0 bg-[radial-gradient(50rem_28rem_at_15%_-15%,color-mix(in_oklab,var(--accent)_45%,transparent),transparent)]"
+        >
+        </div>
+      </div>
+
+      <div class="scale-[1.6] self-start [transform-origin:left_center]">
+        <Logo />
+      </div>
+
+      <div>
+        <p class="font-display text-[4.5rem] leading-[1.02] font-semibold tracking-tight">
+          {SITE.motto}
+        </p>
+        <p class="mt-6 max-w-[46rem] text-2xl text-muted-foreground">
+          Animal recordkeeping for zoos, sanctuaries, rescues and rehabilitation centres.
+        </p>
+      </div>
+
+      <div class="flex items-end justify-between border-t border-border pt-7">
+        <p class="text-xl text-muted-foreground">Written at the enclosure, online or off</p>
+        <p class="text-xl font-semibold text-primary">Unlimited users on every plan</p>
+      </div>
+    </div>
+  </body>
+</html>

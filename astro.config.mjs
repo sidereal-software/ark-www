@@ -12,7 +12,13 @@ import tailwindcss from "@tailwindcss/vite";
 // a client: directive, so React never reaches the browser on any other route.
 export default defineConfig({
   site: "https://ark.sidereal.software",
-  integrations: [sitemap(), react()],
+  integrations: [
+    // /og-card is the source artwork for public/og.png, not a destination. It
+    // carries noindex too; this keeps it out of the sitemap as well, so it is
+    // never offered to a crawler as a page of the site.
+    sitemap({ filter: (page) => !page.includes("/og-card") }),
+    react(),
+  ],
   vite: {
     plugins: [tailwindcss()],
   },
