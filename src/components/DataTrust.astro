@@ -4,19 +4,15 @@ import Section from "./Section.astro";
 const points = [
   {
     title: "Your organization is the boundary",
-    body: "Every request resolves your membership before it touches a row. Another organization's animal does not come back as forbidden; it comes back as not found, because as far as your session is concerned it does not exist. The database enforces the same rule underneath as a second net.",
+    body: "Every request resolves your membership before it touches a row. Another organization's animal comes back as not found rather than as forbidden, because as far as your session is concerned it does not exist. The database enforces the same rule underneath as a second net.",
   },
   {
     title: "Every change is attributable",
-    body: "Mutations write an audit row - who, what, when, and the values before and after. Records are soft-deleted rather than erased, so something that was removed can still account for itself. Auditing is not a paid feature.",
+    body: "Mutations write an audit row - who, what, when, and the values before and after. Auditing is not a paid feature.",
   },
   {
     title: "Leaving is a supported operation",
-    body: "CSV takeout of your animals and your logs is on every plan and carries no feature flag, and it keeps working after a trial lapses. Pro adds API tokens if you would rather pull it programmatically.",
-  },
-  {
-    title: "Billing gates capture, never care",
-    body: "The paywall is attached to creating new records. It is not attached to reading, searching, printing or exporting the ones you already have, and it never will be - a rescue that cannot pay this month still has to be able to look up what an animal was treated with last week.",
+    body: "Export keeps working after a trial lapses or a downgrade. Pro adds API tokens if you would rather pull the data programmatically.",
   },
   {
     title: "Photos and records back up together",
@@ -24,7 +20,7 @@ const points = [
   },
   {
     title: "No advertising, no data resale",
-    body: "Your records are not a dataset that gets sold, aggregated for resale, or used to target advertising. The subscription is the business model.",
+    body: "Your records are not sold, aggregated for resale, or used to target advertising. The subscription is the business model.",
   },
 ];
 ---
@@ -33,7 +29,7 @@ const points = [
   id="trust"
   tone="muted"
   eyebrow="Your data"
-  title="It is your record. That has consequences for how ARK is built."
+  title="Where your records live, and who can reach them."
 >
   <div class="mt-14 grid gap-x-10 gap-y-9 md:grid-cols-2 lg:grid-cols-3">
     {

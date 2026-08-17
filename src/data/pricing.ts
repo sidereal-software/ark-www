@@ -30,7 +30,7 @@ export const PLANS: Plan[] = [
     animals: "25 active animals",
     storage: "5 GB of photos and files",
     adds: [
-      "Animals, groups and the 30-second log capture",
+      "Animals, groups and log capture",
       "Weights, measurements and enclosure readings",
       "Feeding and diet log",
       "Tasks and reminders",

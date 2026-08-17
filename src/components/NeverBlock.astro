@@ -4,12 +4,7 @@ import Icon from "./Icon.astro";
 import { NEVER } from "../data/never";
 ---
 
-<Section
-  id="never"
-  eyebrow="Commitments"
-  title="What ARK will never do."
-  lead="A features list tells you what a company is selling today. Every line here is enforced by how the product is built, not by a policy page."
->
+<Section id="never" eyebrow="Commitments" title="What ARK will never do.">
   <ul class="mt-14 grid gap-5 lg:grid-cols-2">
     {
       NEVER.map((item) => (

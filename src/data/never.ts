@@ -21,26 +21,26 @@ export const NEVER: Promise_[] = [
   {
     never: "Charge you per user",
     because:
-      "This work runs on volunteers. Pricing that counts them punishes exactly the organizations that need the records most, and it teaches a rescue to share one login. Our caps are active animals and storage. There is no seat limit anywhere in the product.",
+      "Nothing in the product counts your users, so there is nothing for a price to attach to.",
   },
   {
     never: "Charge you per adoption or per animal moved",
     because:
-      "A sanctuary's terminal outcome is lifetime care and a rehabilitation centre's is release. Billing on adoptions taxes an event half this sector never has, and the half that does have it should not pay more for a good day.",
+      "A sanctuary's terminal outcome is lifetime care and a rehabilitation centre's is release. Billing on adoptions taxes an event half this sector never has.",
   },
   {
     never: "Lock you out of records you already wrote",
     because:
-      "If you downgrade, or your trial lapses, or your card fails, new entries stop. Reading, searching, printing and exporting everything you have ever recorded does not. An expired organization goes read-only, never dark.",
+      "If you downgrade, or your trial lapses, or your card fails, new entries stop. Reading, searching, printing and exporting everything you have ever recorded does not.",
   },
   {
     never: "Put your data behind a paid export",
     because:
-      "CSV takeout of your animals and your logs is on every plan and carries no feature flag. So is the import wizard. Leaving is not a billable event.",
+      "CSV takeout of your animals and your logs is on every plan and carries no feature flag. So is the import wizard.",
   },
   {
     never: "Sell a medical module as a separate add-on",
     because:
-      "One number per tier. No configurator, no line items to reconcile, no discovering at renewal that the thing you use daily was optional.",
+      "One number per tier, with no line items to reconcile and nothing to discover at renewal that you assumed was included.",
   },
 ];

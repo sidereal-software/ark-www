@@ -4,17 +4,17 @@ import Footnote from "./Footnote.astro";
 
 const cards = [
   {
-    title: "Current, not reconstructed",
-    body: "AZA's standards expect daily records entered the same day or by the end of the next working day. That is a much easier bar to clear when the entry is made where the observation happened, rather than from a whiteboard at nine that evening.",
+    title: "Entered the same day",
+    body: "AZA's standards expect daily records entered the same day, or by the end of the next working day. An entry made at the moment of the observation is already inside that window.",
     cite: "aza",
   },
   {
     title: "Produced on demand",
-    body: "An annual inventory by species with every acquisition and disposition in the period. A transfer form with identity, identifiers, provenance, medical summary and live permits. A care sheet for the enclosure door. CSV and XLSX.",
+    body: "The annual inventory, the transfer form and the care sheet are generated from the records you already keep, on the day someone asks for them. CSV and XLSX.",
   },
   {
     title: "Able to show their own history",
-    body: "Every change writes an audit row: who, what, when, and what the value was before. Deletion is soft, so a record that was removed can still account for itself. On every plan, including Starter.",
+    body: "Every change writes an audit row: who, what, when, and what the value was before. Deletion is soft, so a record that was removed can still account for itself.",
   },
 ];
 ---
@@ -22,7 +22,7 @@ const cards = [
 <Section
   id="standards"
   eyebrow="Standards and compliance"
-  title="Accreditation asks for a records system. It does not ask for ours."
+  title="What the accrediting bodies require."
   lead="AZA, the Zoological Association of America and the Global Federation of Animal Sanctuaries each require an accredited member to keep an animal records system. None of them requires a particular vendor. What they want is that the records exist, that they are current, and that you can produce them."
 >
   <div class="mt-4 text-sm text-muted-foreground">
@@ -52,12 +52,12 @@ const cards = [
       <div>
         <p class="font-semibold">How long you have to keep it</p>
         <p class="mt-2 text-muted-foreground">
-          The spread is wider than any single number a vendor can put on a page. Licensed exhibitors
-          under the Animal Welfare Act keep records for one year after an animal is disposed of or
-          dies, longer where other law applies. Federal migratory bird rehabilitation permits
-          require five years. State schedules differ again.<Footnote id="retention" /> ARK never deletes
-          on a schedule of its own - deletion is soft and the audit trail keeps the story - so the retention
-          question stays yours to answer against the rules that actually bind you.
+          Licensed exhibitors under the Animal Welfare Act keep records for one year after an animal
+          is disposed of or dies, longer where other law applies. Federal migratory bird
+          rehabilitation permits require five years. State schedules differ again.<Footnote
+            id="retention"
+          /> ARK never deletes on a schedule of its own, so the retention question stays yours to answer
+          against the rules that actually bind you.
         </p>
       </div>
 
@@ -65,8 +65,8 @@ const cards = [
         <p class="font-semibold">When your annual report is due</p>
         <p class="mt-2 text-muted-foreground">
           California, Washington and New York each have their own form and their own deadline, and
-          they do not agree with each other.<Footnote id="reporting" /> What ARK gives you is the underlying
-          data - dated, attributable and exportable - whichever form you are the one filling in.
+          they do not agree with each other.<Footnote id="reporting" /> ARK holds the underlying data,
+          dated, attributable and exportable, whichever form you have to fill in.
         </p>
       </div>
     </div>

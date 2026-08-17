@@ -21,16 +21,16 @@ export const RECORD_GROUPS: RecordGroup[] = [
       "Individuals and groups on the same record shape",
       "Microchip, band, USDA, studbook and case identifiers",
       "Intake, transfer, release, death - each with the date it happened",
-      "Photos, taken at the enclosure",
+      "Photos on the animal record",
       "Promote an individual out of a group, with linked history on both",
     ],
   },
   {
     title: "The daily log",
     blurb:
-      "The 30-second entry the whole product is built around: a categorized note, a photo, and a timestamp that means the moment it was observed.",
+      "The entry the whole product is built around: a categorized note, a photo, and a timestamp that means the moment it was observed.",
     items: [
-      "Categories your organization defines, not ours",
+      "Log categories your organization defines",
       "Observed-at time separate from entered-at time",
       "Captured offline and synced exactly once",
       "Search across every log you have ever written",
@@ -109,8 +109,8 @@ export const RECORD_GROUPS: RecordGroup[] = [
     blurb:
       "The paperwork that has to be produced rather than browsed, generated from the records you already keep.",
     items: [
-      "Annual inventory by species, with acquisitions and dispositions",
-      "Printable transfer form: identity, provenance, medical summary, permits",
+      "Annual inventory by species, with every acquisition and disposition in the period",
+      "Printable transfer form: identity, identifiers, provenance, medical summary, live permits",
       "Care sheet for the enclosure door, built from observed diet and routines",
       "Permit renewal reminders in the daily digest",
       "CSV and XLSX",
@@ -141,8 +141,7 @@ export const RECORD_GROUPS: RecordGroup[] = [
   },
   {
     title: "Getting your data in and out",
-    blurb:
-      "Import is data exit's twin, and neither is ever paywalled. Both work on every plan, including an expired trial.",
+    blurb: "Moving records in from a spreadsheet or another system, and taking them out again.",
     items: [
       "Import wizard: upload, map columns, preview, then commit",
       "Documented recipes for AnimalCare and ZIMS exports",
