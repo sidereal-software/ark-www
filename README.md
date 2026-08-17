@@ -13,6 +13,51 @@ This repository is the _site_. The product lives in the private `ark`
 repository, and nothing here imports from it - the design tokens were copied
 across once, deliberately, and the copy is annotated where it diverges.
 
+## The bug this repo keeps having
+
+Six defects in this codebase have been the same defect. It is worth naming,
+because it is not a knowledge problem and reading more carefully does not
+prevent it.
+
+**A value gets verified against one reference, and the failure happens against
+a different one.** The check is correct. The thing it checked was not the thing
+that breaks.
+
+| What was checked                            | What actually decided the outcome                                                                                                                         |
+| ------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| The dark tokens were deleted                | Tailwind's `dark:` resolves against the **operating system**, so `button.tsx` restyled itself for a dark-OS visitor against tokens that no longer existed |
+| Each scroll offset was right on its own     | The browser **adds** `scroll-padding-top` and `scroll-mt-*`, so 5rem + 5rem landed every anchor 6rem above its heading                                    |
+| The section box landed 7px under the header | A reader measures from the **first visible text**, and 128px of section padding put that 135px down the page                                              |
+| The selector matched the class in the file  | Astro scopes styles to the elements **that component renders**, and the sun and moon came from `Icon.astro`, so both showed at once                       |
+| `--muted` looked right on `--background`    | The band also has to sit under `--card`, and it ended up **lighter than the cards it contained**                                                          |
+| The hero wash faded correctly at 1440px     | Its radius was in `rem`, so its clear centre was **wider than a phone** and the leaves never faded at all                                                 |
+
+**Why it recurs:** the verification inherits the frame of whoever just wrote the
+code. Having decided a section starts at its box, you measure the box. Having
+decided dark mode is "the tokens", you check the tokens. The check confirms the
+mental model rather than testing it, which is exactly why re-reading the diff
+does not catch it - the diff is written in the same frame as the mistake.
+
+**The rule: verify in the frame the failure appears in.** In practice:
+
+- **Measure what a person sees**, not what an element declares. Header bottom to
+  first visible text, not to a boundary. The anchor bug survived one fix because
+  the fix measured a boundary.
+- **Check a new value against every surface it can meet**, not just the one it
+  was designed against. A colour is not "correct" until it has been held next to
+  each neighbour it can land on.
+- **Name the resolver when it is not you.** `dark:` resolves against the OS.
+  Astro's scoping resolves against the rendering component. `scroll-padding` and
+  `scroll-margin` resolve against each other. If a mechanism answers to
+  something outside the file, write that down where it is used.
+- **Two mechanisms for one outcome is the smell.** Both offsets were defensible
+  alone. Pick one and delete the other.
+
+The measured figures in this repo exist for this reason. `theme.css` carries a
+contrast table rather than an assurance, and the JavaScript budget quotes
+numbers from `dist/`, because a number is checkable from any frame and a
+conviction is not.
+
 ## Stack
 
 |                 |                                                                                             |
