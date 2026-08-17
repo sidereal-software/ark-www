@@ -77,6 +77,28 @@ const jsonLd = {
     <link rel="preload" as="font" type="font/woff2" crossorigin href={frauncesLatin} />
     <link rel="preload" as="font" type="font/woff2" crossorigin href={jakartaLatin} />
 
+    {
+      /* The theme, before first paint.
+        Night mode follows the operating system unless the visitor has said
+        otherwise, and a stored preference has to be applied before anything
+        renders or the page flashes the wrong scheme. That means an inline,
+        render-blocking script in <head> - `is:inline` so Astro leaves it here
+        rather than bundling it into a module that would load too late to help.
+        It is the only script on the site that is not the mobile menu.
+        The key is only ever written when the visitor disagrees with their own
+        system setting; see ThemeToggle.astro. */
+    }
+    <script is:inline>
+      try {
+        var stored = localStorage.getItem("ark-theme");
+        if (stored === "dark" || stored === "light") {
+          document.documentElement.dataset.theme = stored;
+        }
+      } catch (e) {
+        /* Private mode, or storage disabled. The OS preference still governs. */
+      }
+    </script>
+
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="sitemap" href="/sitemap-index.xml" />

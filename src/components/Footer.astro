@@ -83,8 +83,28 @@ const columns = [
       }
     </div>
 
-    <div class="mt-12 border-t border-border pt-7 text-sm text-muted-foreground">
+    {
+      /* CC BY 4.0 asks for a credit, and a licence condition is paid in the
+        page rather than in a repository file no visitor can read - the same
+        rule the photography credits followed while there was photography. */
+    }
+    <div
+      class="mt-12 flex flex-col gap-2 border-t border-border pt-7 text-sm text-muted-foreground sm:flex-row sm:items-baseline sm:justify-between"
+    >
       <p>&copy; {year} Sidereal Software. All rights reserved.</p>
+      <p>
+        Leaf pattern by <a
+          href="https://heropatterns.com"
+          rel="noopener"
+          class="rounded underline underline-offset-4 hover:text-foreground hover:no-underline"
+          >Steve Schoger</a
+        >, <a
+          href="https://creativecommons.org/licenses/by/4.0/"
+          rel="license noopener"
+          class="rounded underline underline-offset-4 hover:text-foreground hover:no-underline"
+          >CC BY 4.0</a
+        >.
+      </p>
     </div>
   </div>
 </footer>

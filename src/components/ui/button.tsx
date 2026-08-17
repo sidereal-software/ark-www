@@ -23,12 +23,19 @@ import { cn } from "@/lib/utils";
  *   3. **An `xl` step on both scales.** 44px, because this is a site about
  *      software used one-handed on a phone and the touch targets should not
  *      undercut the argument. `lg` tops out at 40px.
- *   4. **No `dark:` variants.** This site has no dark mode; see the header of
- *      theme.css for why. Tailwind's `dark:` still resolves against the
- *      operating system, so leaving upstream's variants in would have restyled
- *      these buttons for a visitor on a dark OS against tokens that no longer
- *      have dark values - the one case where deleting a colour scheme leaves
- *      something behind that still fires.
+ *   4. **Still no `dark:` variants, now that night mode exists.** They were
+ *      stripped when the first dark scheme was deleted, and they are staying
+ *      out. Upstream needs them because its tokens do not change between
+ *      schemes; ours do - every colour here resolves through a custom property
+ *      that theme.css redefines for night, so `bg-primary` is already the
+ *      phosphor green on a dark page without a second class to say so.
+ *
+ *      Putting them back would be worse than redundant. Tailwind's `dark:`
+ *      resolves against the operating system alone, and this site's theme can
+ *      be pinned against the operating system by the header toggle - so a
+ *      `dark:` rule would fire for a visitor who has explicitly chosen the
+ *      light palette on a dark laptop, and it would be the only thing on the
+ *      page that did. Style through the tokens; never through `dark:`.
  *
  * Everything else is upstream, so `shadcn add button --diff` stays useful.
  */

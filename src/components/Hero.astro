@@ -2,22 +2,21 @@
 import { CONTACT_HREF, SITE } from "../consts";
 import Icon from "./Icon.astro";
 
-// Contour lines, the way a survey map or a field guide's terrain inset draws
-// them. This is the site's one piece of decoration and it is generated rather
-// than drawn, so it stays regular.
+// Leaf, from Hero Patterns by Steve Schoger, CC BY 4.0. The credit is in the
+// footer, which is where a licence that asks for attribution has to be paid.
+// https://heropatterns.com
 //
-// They fall down the page rather than across it. Drawn across, a hairline that
-// happens to pass under a line of body copy reads as an underline - the web's
-// one universal link signifier - and where it lands is decided by the line
-// wrap, so it appears and disappears with the viewport. Every stroke below
-// stays within about 22 degrees of vertical, which no amount of reflow can
-// turn into an underline. Steepness is a property of the path data: the y
-// coordinates advance monotonically and far faster than the x coordinates
-// wander, and `slice` scales uniformly, so the angles survive to the screen.
-const contours = Array.from({ length: 10 }, (_, i) => {
-  const x = -60 + i * 110;
-  return `M${x} -80 C ${x + 48} 190, ${x - 52} 380, ${x + 20} 560 S ${x - 44} 840, ${x + 12} 1000`;
-});
+// It replaces a generated field of contour hairlines. Those were drawn to look
+// like a survey map and mostly read as a technical drawing - the thing this
+// site has spent a while getting away from. Foliage is the right register for
+// the subject in daylight, and it earns its keep twice over at night, where
+// leaves in phosphor green are exactly what the palette is quoting.
+//
+// The path is upstream's, unchanged. It tiles an 80x40 cell; drawn at that
+// size it is busy enough to read as texture-on-purpose rather than as ground,
+// so the <pattern> is scaled up and the whole field kept very faint.
+const LEAF_PATH =
+  "M0 40a19.96 19.96 0 0 1 5.9-14.11 20.17 20.17 0 0 1 19.44-5.2A20 20 0 0 1 20.2 40H0zM65.32.75A20.02 20.02 0 0 1 40.8 25.26 20.02 20.02 0 0 1 65.32.76zM.07 0h20.1l-.08.07A20.02 20.02 0 0 1 .75 5.25 20.08 20.08 0 0 1 .07 0zm1.94 40h2.53l4.26-4.24v-9.78A17.96 17.96 0 0 0 2 40zm5.38 0h9.8a17.98 17.98 0 0 0 6.67-16.42L7.4 40zm3.43-15.42v9.17l11.62-11.59c-3.97-.5-8.08.3-11.62 2.42zm32.86-.78A18 18 0 0 0 63.85 3.63L43.68 23.8zm7.2-19.17v9.15L62.43 2.22c-3.96-.5-8.05.3-11.57 2.4zm-3.49 2.72c-4.1 4.1-5.81 9.69-5.13 15.03l6.61-6.6V6.02c-.51.41-1 .85-1.48 1.33zM17.18 0H7.42L3.64 3.78A18 18 0 0 0 17.18 0zM2.08 0c-.01.8.04 1.58.14 2.37L4.59 0H2.07z";
 
 const facts = [
   "Unlimited users on every plan",
@@ -30,18 +29,33 @@ const facts = [
   class="relative isolate overflow-hidden px-5 pt-16 pb-20 sm:px-8 sm:pt-24 lg:pt-28 lg:pb-28"
 >
   <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
-    <svg
-      viewBox="0 0 920 920"
-      preserveAspectRatio="xMidYMid slice"
-      class="h-full w-full text-primary opacity-[0.075]"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="1.25"
-    >
-      {contours.map((d) => <path d={d} />)}
+    {
+      /* A <pattern> rather than a repeating background-image, so the leaves can
+        be painted in `currentColor` and follow the theme. A data-URI background
+        would have the fill baked into the string and need a second copy for
+        night. */
+    }
+    <svg class="leaf-field h-full w-full text-primary">
+      <defs>
+        <pattern id="leaf-tile" width="160" height="80" patternUnits="userSpaceOnUse">
+          <path d={LEAF_PATH} fill="currentColor" transform="scale(2)"></path>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#leaf-tile)"></rect>
     </svg>
+    {
+      /* The wash sits over the leaves and fades them out towards the copy, so
+        the pattern is densest in the corner nobody reads. */
+    }
+    {
+      /* Sized in percentages, not rem. At a fixed 70rem radius the clear
+        centre was wider than a phone, so the wash never actually reached the
+        copy and the leaves stayed at full strength behind the headline. A
+        percentage radius is measured against the hero, so the fade lands in
+        the same place at 390px as it does at 1440px. */
+    }
     <div
-      class="absolute inset-0 bg-[radial-gradient(60rem_32rem_at_18%_-10%,color-mix(in_oklab,var(--accent)_38%,transparent),transparent)]"
+      class="absolute inset-0 bg-[radial-gradient(115%_85%_at_88%_-12%,transparent,var(--background)_68%)]"
     >
     </div>
   </div>
@@ -125,3 +139,22 @@ const facts = [
     </div>
   </div>
 </section>
+
+<style>
+  /* Two opacities, because the same value does not read the same on both
+     grounds: solid shapes on cream want to be nearly invisible, and the same
+     ink on a dark ground disappears entirely. Night gets more, not less. */
+  .leaf-field {
+    opacity: 0.05;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .leaf-field {
+      opacity: 0.11;
+    }
+  }
+
+  :root[data-theme="dark"] .leaf-field {
+    opacity: 0.11;
+  }
+</style>

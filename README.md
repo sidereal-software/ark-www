@@ -3,9 +3,9 @@
 The marketing site for **ARK** - mobile-first animal recordkeeping for zoos,
 wildlife rehabilitation centres, sanctuaries and rescues.
 
-Serves at <https://ark.sidereal.software>. Static HTML plus one hydrated island -
-the mobile navigation menu, and nothing else - deployed to GitHub Pages by
-Actions. That island costs **84.3 KB gzipped of JavaScript**; see
+Serves at <https://ark.sidereal.software>. Static HTML, one hydrated island -
+the mobile navigation menu - and two small inline scripts for the theme
+toggle, deployed to GitHub Pages by Actions. That island costs **84.3 KB gzipped of JavaScript**; see
 [The JavaScript budget](#the-javascript-budget) for what it buys and what it
 replaced.
 
@@ -15,15 +15,15 @@ across once, deliberately, and the copy is annotated where it diverges.
 
 ## Stack
 
-|                 |                                                                                                              |
-| --------------- | ------------------------------------------------------------------------------------------------------------ |
-| Framework       | Astro 7, static output. One component asks for JavaScript; every other page section is prerendered and inert |
-| Interactivity   | React 19 via `@astrojs/react`, on exactly one island                                                         |
-| Components      | shadcn/ui, `new-york` style, Radix primitives - the ARK app's own setup                                      |
-| Styles          | Tailwind CSS v4 via `@tailwindcss/vite`                                                                      |
-| Fonts           | Fraunces and Plus Jakarta Sans, self-hosted from `@fontsource-variable`, latin subsets only                  |
-| Package manager | pnpm                                                                                                         |
-| Node            | 24                                                                                                           |
+|                 |                                                                                             |
+| --------------- | ------------------------------------------------------------------------------------------- |
+| Framework       | Astro 7, static output. One React island, two inline scripts, everything else prerendered   |
+| Interactivity   | React 19 via `@astrojs/react`, on exactly one island                                        |
+| Components      | shadcn/ui, `new-york` style, Radix primitives - the ARK app's own setup                     |
+| Styles          | Tailwind CSS v4 via `@tailwindcss/vite`                                                     |
+| Fonts           | Fraunces and Plus Jakarta Sans, self-hosted from `@fontsource-variable`, latin subsets only |
+| Package manager | pnpm                                                                                        |
+| Node            | 24                                                                                          |
 
 Tailwind arrives through the Vite plugin rather than `@astrojs/tailwind`. The
 Astro integration is deprecated and caps at Astro 5 / Tailwind 3; the Vite plugin
@@ -68,6 +68,7 @@ src/
     sources.ts           Every citation on the page, numbered
   components/            One component per page section, plus shared pieces
     NextPages.astro      The two onward links at the foot of each page
+    ThemeToggle.astro    Day/night switch, no framework
     MobileNav.tsx        The only hydrated component on the site
     ui/                  shadcn/ui components, added by its CLI
   lib/utils.ts           cn(), the shadcn class merger
@@ -151,8 +152,17 @@ transfer again. Two things to know before changing the island:
   zero and leave mobile unchanged - at the cost of hydrating on media-query
   match rather than on load.
 
-Everything else on the page is still prerendered and inert. Adding a `client:*`
-directive anywhere else is a decision to be made deliberately, not by accident.
+Everything else on the page is prerendered. Adding a `client:*` directive
+anywhere else is a decision to be made deliberately, not by accident.
+
+**Two inline scripts are not part of that budget**, and are deliberately not
+React. One sits in `<head>` and applies a stored theme before first paint; the
+other is the toggle's click handler. Together they are under thirty lines, they
+ship no framework, and the head one has to be render-blocking or the page
+flashes the wrong palette. A button that flips an attribute does not need focus
+trapping or an escape key, which is the only reason the mobile menu earns its
+hydration - so putting the toggle behind that island would have cost 84 KB to
+do the work of nine lines.
 
 ## Design system
 
@@ -169,14 +179,13 @@ each is commented where it happens:
    spacing base to fit dense record lists on a phone; reading matter wants room,
    so this uses Tailwind's own `0.25rem` and a larger scale with display
    leading.
-3. **There is no dark mode.** Not "no toggle" - no dark scheme at all. The
-   page is a warm, paper-coloured surface whatever the operating system is set
-   to, and `color-scheme: light` keeps form controls and scrollbars from
-   inverting underneath it. The sage-on-near-black variant this site used to
-   ship read as a developer tool, which is the one thing a page selling to
-   zoos, sanctuaries and rehabilitation centres cannot look like. Deleting it
-   touched four places, and the fourth is the one that bites: `button.tsx` had
-   upstream's `dark:` variants, and Tailwind resolves `dark:` against the
+3. **Night mode is the site's own, not the app's.** See
+   [Night mode](#night-mode). The first dark scheme here was sage on
+   near-black, it read as a developer tool, and it was deleted. What replaced
+   it is warm umber with phosphor accents and it exists for use, not taste.
+   One rule survives from the deletion and is now permanent: **never style
+   with `dark:`.** `button.tsx` shipped with upstream's `dark:` variants, and
+   Tailwind resolves `dark:` against the
    operating system whether or not any dark token exists. Grep for `dark:`
    before adding a shadcn component here.
 
@@ -302,6 +311,54 @@ back.
 
 Both the screenshots and the photography need `sharp` reinstalled;
 `astro:assets` cannot process a local image without it.
+
+## Night mode
+
+Warm umber ground, green and amber phosphor accents. It follows the operating
+system by default, and the toggle in the header overrides that in either
+direction.
+
+**Why there is one at all**, when the previous dark scheme was deleted for
+looking like a developer tool: keepers already work in the dark. Night checks,
+nocturnal houses, quarantine rooms, a 2am rehab intake. People doing that work
+protect their dark adaptation, and a cream page at full brightness in a dark
+barn is a work problem rather than a preference. The phosphor reference is
+borrowed from the instruments that live in that world, which is also why the
+accents are green and amber rather than one bright colour.
+
+**It re-pigments the system that already exists.** Daylight runs sage for
+things you can act on and clay for things that are only labels; night runs
+green and amber in exactly those slots. No component has a rule of its own for
+night, and none should - every colour resolves through a token that
+`theme.css` redefines.
+
+Three mechanics worth knowing before touching it:
+
+- **The values are declared once**, as `--night-*`, then applied from three
+  selectors: the media query, `[data-theme="dark"]`, and the `:not()` guard
+  that lets a pinned light theme survive a dark operating system. Writing them
+  out three times is how the three drift apart.
+- **The stored key only exists while the visitor disagrees with their system.**
+  Toggling back to whatever the OS already says deletes `ark-theme` rather than
+  writing it down, so someone who tried the switch once is not pinned to that
+  choice forever, and a laptop that flips itself at sunset keeps being
+  followed. See `ThemeToggle.astro`.
+- **`color-scheme` is set per theme, not once.** Otherwise a pinned light page
+  on a dark OS renders light with dark scrollbars and form controls.
+
+**The hero pattern is third-party and needs its credit.** The leaves are
+`Leaf` from [Hero Patterns](https://heropatterns.com) by Steve Schoger, under
+**CC BY 4.0**, and the attribution renders in the footer because that is where
+a licence condition gets paid. The path data in `Hero.astro` is upstream's,
+unchanged; it is drawn as an SVG `<pattern>` filled with `currentColor` rather
+than a data-URI background so one copy serves both themes. If you swap it for
+another Hero Pattern, the credit stays and only the name changes.
+
+The contrast table at the foot of `theme.css` has a Night section measured the
+same way the daylight one is. The three forbidden daylight pairs all pass at
+night - they were measured, not assumed - but the bans stay in force anyway,
+because a pair that is legal in one scheme and illegal in the other is a rule
+nobody remembers correctly.
 
 ## The OG image
 

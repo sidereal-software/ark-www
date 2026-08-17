@@ -11,13 +11,12 @@
  *   2. --spacing and the type scale are marketing-sized. A keeper reading a
  *      dense list and a visitor reading a hero want opposite densities; the
  *      app's 0.23rem base and compact scale would make this page feel cramped.
- *   3. There is no dark mode at all. The app has one because it is a workspace
- *      someone sits in all day. This page is a light, warm, paper-coloured
- *      surface in every scheme, because the sage-on-near-black variant it used
- *      to ship read as a developer tool - which is the one thing a page selling
- *      to zoos and sanctuaries must not look like. `color-scheme: light` below
- *      is what tells the browser to keep form controls and scrollbars light
- *      even when the operating system is dark.
+ *   3. Night mode is its own palette, not the app's. The site shipped with no
+ *      dark scheme for a while because the first one - sage on near-black -
+ *      read as a developer tool. What replaced it is warm umber with green and
+ *      amber phosphor accents, and it exists for use rather than taste: see
+ *      the night-mode block below. It follows the operating system by default
+ *      and the toggle in the header can override that in either direction.
  *   4. The near-blacks are rotated to the sage's own hue. The app's
  *      --foreground is oklch(0.2417 0.0298 269.8827); hue 270 is blue-violet,
  *      and blue-slate under a sage accent is the palette of every developer
@@ -86,7 +85,7 @@
 }
 
 :root {
-  color-scheme: light;
+  color-scheme: light dark;
 
   /* Shared with the app, unchanged. */
   --background: oklch(0.9761 0.0041 91.4461);
@@ -189,6 +188,120 @@
   --shadow-xl:
     0px 1px 2px 0px hsl(225 27.7778% 14.1176% / 0.05),
     0px 12px 24px -8px hsl(225 27.7778% 14.1176% / 0.08);
+}
+
+/* ---------------------------------------------------------------------------
+ * Night mode.
+ *
+ * The site shipped without a dark scheme for a while, and deliberately: the
+ * one it used to have was sage on near-black, which read as a developer tool.
+ * This is a different proposition and it earns its place on use, not taste.
+ *
+ * Keepers already work in the dark - night checks, nocturnal houses,
+ * quarantine rooms, a 2am rehab intake - and people doing that work protect
+ * their dark adaptation. A cream page at full brightness in a dark barn is a
+ * work problem, not a preference. So the ground is a warm umber black rather
+ * than a cool grey, and the two accents are the phosphors the instruments in
+ * that world actually used: green for anything you can act on, amber for
+ * anything that is only a label.
+ *
+ * That is the same split daylight runs with sage and clay. Night mode is a
+ * re-pigmenting of a system that already exists, not a second design - which
+ * is why nothing below needs a rule of its own in a component.
+ *
+ * Everything is declared once, in --night-*, and then applied from three
+ * places: the media query for visitors who never touch the toggle, and the
+ * two data-theme selectors for visitors who do. Writing the values three
+ * times is how the three drift apart.
+ * ------------------------------------------------------------------------ */
+:root {
+  --night-background: oklch(0.155 0.012 62);
+  --night-foreground: oklch(0.94 0.012 85);
+  --night-card: oklch(0.196 0.014 60);
+  --night-secondary: oklch(0.28 0.03 120);
+  --night-muted: oklch(0.235 0.015 62);
+  --night-muted-foreground: oklch(0.735 0.016 75);
+  --night-accent: oklch(0.32 0.05 150);
+  --night-destructive: oklch(0.7 0.16 28);
+  --night-border: oklch(0.3 0.014 62);
+  /* 0.53 and not lower: a control boundary owes WCAG 1.4.11 its 3:1, and
+     below this it fails against --muted even while passing on the ground. */
+  --night-input: oklch(0.53 0.014 62);
+  --night-primary: oklch(0.8 0.155 148);
+  --night-primary-foreground: oklch(0.17 0.03 148);
+  --night-clay: oklch(0.79 0.115 68);
+  --night-clay-soft: oklch(0.3 0.045 65);
+  /* The band goes darker than the page rather than lighter. In daylight the
+     ink band drops out of the cream; at night it has to keep reading as the
+     same band, and the only direction left is down. */
+  --night-ink: oklch(0.115 0.01 60);
+  --night-ink-border: oklch(0.24 0.012 60);
+}
+
+/* `@media` serves the visitor who never touches the toggle. `[data-theme]`
+   serves the one who does, and has to beat the media query in *both*
+   directions - hence the `:not()` here, which is what lets a pinned light
+   theme survive a dark operating system. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --background: var(--night-background);
+    --foreground: var(--night-foreground);
+    --card: var(--night-card);
+    --secondary: var(--night-secondary);
+    --secondary-foreground: var(--night-foreground);
+    --muted: var(--night-muted);
+    --muted-foreground: var(--night-muted-foreground);
+    --accent: var(--night-accent);
+    --accent-foreground: var(--night-foreground);
+    --destructive: var(--night-destructive);
+    --border: var(--night-border);
+    --input: var(--night-input);
+    --ring: var(--night-primary);
+    --primary: var(--night-primary);
+    --primary-foreground: var(--night-primary-foreground);
+    --clay: var(--night-clay);
+    --clay-foreground: var(--night-primary-foreground);
+    --clay-soft: var(--night-clay-soft);
+    --ink: var(--night-ink);
+    --ink-foreground: var(--night-foreground);
+    --ink-muted: var(--night-muted-foreground);
+    --ink-primary: var(--night-primary);
+    --ink-clay: var(--night-clay);
+    --ink-border: var(--night-ink-border);
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --background: var(--night-background);
+  --foreground: var(--night-foreground);
+  --card: var(--night-card);
+  --secondary: var(--night-secondary);
+  --secondary-foreground: var(--night-foreground);
+  --muted: var(--night-muted);
+  --muted-foreground: var(--night-muted-foreground);
+  --accent: var(--night-accent);
+  --accent-foreground: var(--night-foreground);
+  --destructive: var(--night-destructive);
+  --border: var(--night-border);
+  --input: var(--night-input);
+  --ring: var(--night-primary);
+  --primary: var(--night-primary);
+  --primary-foreground: var(--night-primary-foreground);
+  --clay: var(--night-clay);
+  --clay-foreground: var(--night-primary-foreground);
+  --clay-soft: var(--night-clay-soft);
+  --ink: var(--night-ink);
+  --ink-foreground: var(--night-foreground);
+  --ink-muted: var(--night-muted-foreground);
+  --ink-primary: var(--night-primary);
+  --ink-clay: var(--night-clay);
+  --ink-border: var(--night-ink-border);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
 }
 
 @theme inline {
@@ -315,4 +428,38 @@
  * --border is decorative separation between two surfaces, not a control
  * boundary, so its 1.31:1 is fine there; the focus ring carries the 3:1 duty
  * and uses --ring, which is --primary at 5.43:1 on the page background.
+ *
+ * Night
+ *   foreground / background ........................... 16.41:1
+ *   foreground / card ................................. 15.33:1
+ *   foreground / muted ................................ 14.01:1
+ *   foreground / secondary ............................ 12.16:1
+ *   foreground / accent ............................... 10.42:1
+ *   muted-foreground / background ....................... 8.32:1
+ *   muted-foreground / card ............................. 7.77:1
+ *   muted-foreground / muted ............................ 7.10:1
+ *   primary / background .............................. 11.08:1
+ *   primary / card .................................... 10.35:1
+ *   primary-foreground / primary ...................... 10.77:1
+ *   destructive / background ............................ 6.83:1
+ *   clay / background ................................... 9.92:1
+ *   clay / card ......................................... 9.27:1
+ *   clay / muted ........................................ 8.47:1
+ *   foreground / clay-soft ............................ 11.54:1
+ *   foreground / ink .................................. 17.10:1
+ *   muted-foreground / ink .............................. 8.67:1
+ *   primary / ink ..................................... 11.55:1
+ *   clay / ink ........................................ 10.34:1
+ *   input / background .................................. 3.69:1
+ *   input / card ........................................ 3.45:1
+ *   input / muted ....................................... 3.16:1
+ *
+ * The three daylight bans do not carry over, and this was measured rather
+ * than assumed. At night --primary on --accent is 7.04:1, --clay on --accent
+ * 6.30:1, and --primary on --clay-soft 7.79:1. The reason is structural: in
+ * daylight the pairs fail because sage and clay share a lightness with each
+ * other, and the phosphors do not share one with the dark surfaces they sit
+ * on. The rules stay in force anyway, because a token pair that is legal in
+ * one scheme and illegal in the other is a rule nobody will remember
+ * correctly, and nothing on the page needs the exemption.
  * ------------------------------------------------------------------------ */

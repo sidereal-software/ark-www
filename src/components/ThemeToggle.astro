@@ -1,0 +1,129 @@
+---
+/**
+ * Day / night switch.
+ *
+ * The default is the operating system, and this only exists to disagree with
+ * it. That matters for who this is for: someone can be sitting at a bright
+ * desk when they decide they want the dark palette on the phone they are about
+ * to carry into a nocturnal house.
+ *
+ * Two details worth keeping:
+ *
+ *  1. **The stored key only exists while the visitor disagrees with their OS.**
+ *     Toggling back to whatever the system already says deletes it rather than
+ *     writing the same value down. Without that, a visitor who tried the switch
+ *     once in June is pinned to that choice forever, and a laptop that starts
+ *     switching itself at sunset would stop being followed for no reason they
+ *     could see.
+ *  2. **The icon swaps in CSS, not in JavaScript.** Both glyphs are in the
+ *     markup and the stylesheet hides one, so the button is correct in the very
+ *     first frame - including for a visitor whose stored preference was applied
+ *     by the inline script in <head> before this component's script ran at all.
+ *
+ * No framework. The mobile menu is a Radix dialog because it needs focus
+ * trapping and an escape key; a button that flips an attribute needs neither,
+ * and adding it to the React island would put a second component behind
+ * 84 KB of hydration to do the work of nine lines.
+ */
+interface Props {
+  class?: string;
+}
+
+const { class: className = "" } = Astro.props;
+---
+
+<button
+  type="button"
+  id="theme-toggle"
+  class={`inline-flex size-11 shrink-0 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground ${className}`}
+  aria-label="Switch between day and night colours"
+>
+  {/* Sun: shown while the page is light. */}
+  <svg
+    class="theme-icon-sun size-5"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.75"
+    stroke-linecap="round"
+    aria-hidden="true"
+  >
+    <circle cx="12" cy="12" r="4"></circle>
+    <path
+      d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"
+    ></path>
+  </svg>
+
+  {/* Moon: shown while the page is dark. */}
+  <svg
+    class="theme-icon-moon size-5"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.75"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a7 7 0 1 0 10.5 10.5z"></path>
+  </svg>
+</button>
+
+<style>
+  /* The sun shows by default; the moon replaces it wherever the page is dark.
+     Both selectors are needed, and in this order: the media query covers a
+     visitor following their system, and the attribute covers one who is not -
+     including a visitor on a dark system who has pinned the page to light. */
+  .theme-icon-moon {
+    display: none;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .theme-icon-sun {
+      display: none;
+    }
+
+    :root:not([data-theme="light"]) .theme-icon-moon {
+      display: block;
+    }
+  }
+
+  :root[data-theme="dark"] .theme-icon-sun {
+    display: none;
+  }
+
+  :root[data-theme="dark"] .theme-icon-moon {
+    display: block;
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    var button = document.getElementById("theme-toggle");
+    if (!button) return;
+
+    var media = window.matchMedia("(prefers-color-scheme: dark)");
+
+    button.addEventListener("click", function () {
+      var root = document.documentElement;
+      var pinned = root.dataset.theme;
+      var isDark = pinned ? pinned === "dark" : media.matches;
+      var wantDark = !isDark;
+
+      // Agreeing with the system again means having no opinion again, so the
+      // key is removed rather than set. See the note at the top of this file.
+      if (wantDark === media.matches) {
+        delete root.dataset.theme;
+        try {
+          localStorage.removeItem("ark-theme");
+        } catch (e) {}
+        return;
+      }
+
+      root.dataset.theme = wantDark ? "dark" : "light";
+      try {
+        localStorage.setItem("ark-theme", root.dataset.theme);
+      } catch (e) {}
+    });
+  })();
+</script>

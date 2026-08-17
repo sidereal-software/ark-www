@@ -1,6 +1,7 @@
 ---
 import Logo from "./Logo.astro";
 import MobileNav from "./MobileNav";
+import ThemeToggle from "./ThemeToggle.astro";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { BAR_LINKS } from "@/data/nav";
@@ -48,9 +49,13 @@ import { CONTACT_HREF } from "../consts";
       }
     </ul>
 
-    <a href={CONTACT_HREF} class={cn(buttonVariants({ size: "xl" }), "ml-auto md:ml-0")}>
-      Get in touch
-    </a>
+    {
+      /* Below md the link list is hidden, so this is what pushes the right-hand
+      cluster over. Above md the list already did it. */
+    }
+    <ThemeToggle class="ml-auto md:ml-0" />
+
+    <a href={CONTACT_HREF} class={cn(buttonVariants({ size: "xl" }), "md:ml-0")}> Get in touch </a>
 
     <MobileNav client:load />
   </nav>
