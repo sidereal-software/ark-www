@@ -1,0 +1,41 @@
+---
+import Photo from "./Photo.astro";
+
+/**
+ * A photograph edge to edge, with no card around it and nothing on top of it.
+ *
+ * Its job is rhythm. Every other section on this page is the same shape -
+ * eyebrow, rule, serif heading, lead, then a grid of bordered cards - and
+ * eleven of those in a row is the cadence of a developer-tool landing page no
+ * matter how warm the palette is. A band is a rest: it is the only thing here
+ * that is not on the cream surface and not inside a border, so the section
+ * after it starts fresh instead of continuing a list.
+ *
+ * Deliberately no heading and no button. A band that argued something would
+ * just be another section; this one is only allowed to show the work.
+ */
+interface Props {
+  slug: string;
+  /** One quiet line under the image. Says what is happening, never sells. */
+  caption?: string;
+  position?: string;
+  /** Bands are tall enough to land but never a full screen - this is not a hero. */
+  height?: "short" | "tall";
+}
+
+const { slug, caption, position = "center", height = "short" } = Astro.props;
+
+const heightClass =
+  height === "tall" ? "h-[22rem] sm:h-[28rem] lg:h-[34rem]" : "h-[16rem] sm:h-[20rem] lg:h-[24rem]";
+---
+
+<div class="bg-ink">
+  <Photo slug={slug} position={position} sizes="100vw" class={`w-full ${heightClass}`} />
+  {
+    caption && (
+      <p class="mx-auto max-w-6xl px-5 py-4 text-sm text-ink-muted sm:px-8">
+        <span class="font-serif italic">{caption}</span>
+      </p>
+    )
+  }
+</div>

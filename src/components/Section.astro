@@ -23,9 +23,14 @@ const {
   class: className = "",
 } = Astro.props;
 
+// `muted` is the full sand, not a fraction of it. At 60% over the cream
+// background the band was nearly the same colour as the section above it,
+// which is how a warm palette ends up reading as grey - and the contrast
+// figures published in theme.css are measured against full --muted, so
+// blending it here would quietly make that table wrong.
 const toneClass = {
   base: "bg-background text-foreground",
-  muted: "bg-muted/60 text-foreground",
+  muted: "bg-muted text-foreground",
   ink: "on-ink bg-ink text-ink-foreground",
 }[tone];
 

@@ -1,6 +1,12 @@
 ---
 import Logo from "./Logo.astro";
 import { CONTACT_HREF, SITE } from "../consts";
+import { PHOTOS } from "../data/photos";
+
+// Only the licences that oblige us. CC0 and the public-domain release do not,
+// and listing them here would pad the credit line with names the licence did
+// not ask us to print, which makes the ones it did ask for easier to miss.
+const credited = PHOTOS.filter((p) => p.attributionRequired);
 
 const year = new Date().getFullYear();
 
@@ -66,8 +72,48 @@ const columns = [
       }
     </div>
 
+    {
+      /* Attribution is a licence condition, not a courtesy, so it renders in
+        the page rather than living in a repository file nobody visiting the
+        site can read. Each entry carries the author, the licence and a link to
+        the original, which is what CC BY and CC BY-SA ask for.
+
+        None of these photographs shows an ARK customer, and none is captioned
+        as though it did - see the header of src/data/photos.ts. */
+    }
     <div class="mt-12 border-t border-border pt-7 text-sm text-muted-foreground">
-      <p>&copy; {year} Sidereal Software. All rights reserved.</p>
+      <h2 class="text-sm font-semibold text-foreground">Photography</h2>
+      <p class="mt-3 max-w-3xl">
+        Photographs on this page are used under open licences and show working animal-care and
+        field-research settings. They do not depict ARK customers.
+      </p>
+      <ul class="mt-3 max-w-3xl space-y-1.5">
+        {
+          credited.map((p) => (
+            <li>
+              <a
+                href={p.href}
+                class="rounded underline underline-offset-4 hover:text-foreground hover:no-underline"
+                rel="noopener"
+              >
+                <cite class="not-italic">{p.title}</cite>
+              </a>
+              {" by "}
+              {p.credit}
+              {", "}
+              <a
+                href={p.licenseHref}
+                class="rounded underline underline-offset-4 hover:text-foreground hover:no-underline"
+                rel="license noopener"
+              >
+                {p.license}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <p class="mt-8">&copy; {year} Sidereal Software. All rights reserved.</p>
     </div>
   </div>
 </footer>

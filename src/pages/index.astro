@@ -11,6 +11,7 @@ import NeverBlock from "../components/NeverBlock.astro";
 import DataTrust from "../components/DataTrust.astro";
 import ContactCta from "../components/ContactCta.astro";
 import Sources from "../components/Sources.astro";
+import PhotoBand from "../components/PhotoBand.astro";
 ---
 
 {
@@ -22,8 +23,26 @@ import Sources from "../components/Sources.astro";
 <BaseLayout>
   <Hero />
   <Problem />
+  {
+    /* The bands sit at the two places the page changes subject. The first
+      closes the argument about the problem and puts a face to who has it,
+      before the product appears. The second lands after the record list,
+      where the page turns from what ARK stores to what it will and will not
+      do - and a measurement being taken by hand is the whole point of that
+      list. */
+  }
+  <PhotoBand
+    slug="keeper-and-elephant"
+    position="50% 32%"
+    caption="A keeper and an elephant at the Maryland Zoo. Most of what is worth recording happens here, not at a desk."
+  />
   <HowItWorks />
   <Records />
+  <PhotoBand
+    slug="wing-measurement"
+    position="50% 45%"
+    caption="A wing measured with a ruler, the way most of these numbers still get taken."
+  />
   <Standards />
   <Different />
   <Pricing />

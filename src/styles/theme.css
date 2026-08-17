@@ -1,7 +1,7 @@
 /* ARK marketing token layer.
  *
  * Derived from the ARK app's own token layer (frontend/src/index.css) so the
- * site and the product read as one company. Three things are deliberately
+ * site and the product read as one company. Five things are deliberately
  * NOT inherited, each recorded where it happens:
  *
  *   1. --primary is darkened. The app ships oklch(0.6333 0.0309 154.9039),
@@ -11,12 +11,25 @@
  *   2. --spacing and the type scale are marketing-sized. A keeper reading a
  *      dense list and a visitor reading a hero want opposite densities; the
  *      app's 0.23rem base and compact scale would make this page feel cramped.
- *   3. Dark mode follows the operating system rather than a class toggle.
- *      The app has a user-facing theme switch because it is a workspace; a
- *      one-page site does not earn the inline script, the storage key, and
- *      the flash-of-wrong-theme guard that a switch requires.
+ *   3. There is no dark mode at all. The app has one because it is a workspace
+ *      someone sits in all day. This page is a light, warm, paper-coloured
+ *      surface in every scheme, because the sage-on-near-black variant it used
+ *      to ship read as a developer tool - which is the one thing a page selling
+ *      to zoos and sanctuaries must not look like. `color-scheme: light` below
+ *      is what tells the browser to keep form controls and scrollbars light
+ *      even when the operating system is dark.
+ *   4. The near-blacks are rotated to the sage's own hue. The app's
+ *      --foreground is oklch(0.2417 0.0298 269.8827); hue 270 is blue-violet,
+ *      and blue-slate under a sage accent is the palette of every developer
+ *      tool on the web. Lightness is untouched at hue 152, so the page's
+ *      darkest ink reads as deep forest and the measured ratios move by
+ *      hundredths. See --foreground below.
+ *   5. There is a second hue, --clay, and a warmer --muted. The app is
+ *      monochrome sage; a page selling to zoos and sanctuaries cannot be.
+ *      See the second-hue block below for the rule that governs it - sage is
+ *      what you can act on, clay is what is only a label.
  *
- * Colour, typeface and radius are shared verbatim.
+ * Typeface and radius are shared verbatim.
  */
 
 /* Only the latin and latin-ext subsets are declared. Fontsource's index.css
@@ -77,14 +90,56 @@
 
   /* Shared with the app, unchanged. */
   --background: oklch(0.9761 0.0041 91.4461);
-  --foreground: oklch(0.2417 0.0298 269.8827);
   --card: oklch(1 0 0);
   --secondary: oklch(0.8596 0.0291 119.9919);
-  --secondary-foreground: oklch(0.2417 0.0298 269.8827);
-  --muted: oklch(0.9251 0.0071 88.645);
   --accent: oklch(0.8242 0.0221 136.6092);
-  --accent-foreground: oklch(0.2417 0.0298 269.8827);
   --destructive: oklch(0.5624 0.1743 26.1433);
+
+  /* ---------------------------------------------------------------------
+   * The second hue.
+   *
+   * The app is monochrome sage, which is right for a workspace and wrong for
+   * the page that sells it: one low-chroma accent on cream is the palette of
+   * a developer tool, and the facilities this is for - zoos, sanctuaries,
+   * rehabilitation centres - live in a much warmer register. Clay is the
+   * counterpoint. Terracotta, savanna earth, the colour of the ground in
+   * every enclosure photograph on this page.
+   *
+   * It is a *system*, not decoration, and the split is the whole point:
+   *
+   *   sage (--primary) means you can act on it - buttons, links, focus.
+   *   clay means it is a label - eyebrows, rules, specimen numbering.
+   *
+   * Before this, eyebrows were sage, which is the same colour as every link
+   * on the page. That was a small affordance lie: it painted a static label
+   * in the site's one interactive colour. Splitting the two fixes the lie and
+   * buys the warmth at the same time.
+   *
+   * Clay sits at the same lightness as --primary on purpose. They are peers,
+   * not a colour and its tint, and matching L is what stops one of them
+   * looking like the disabled state of the other.
+   * ------------------------------------------------------------------- */
+  --clay: oklch(0.5 0.115 45);
+  --clay-foreground: oklch(1 0 0);
+  /* Fill, for the rare thing that needs a clay surface rather than clay ink. */
+  --clay-soft: oklch(0.9 0.045 62);
+
+  /* Warmed from the app's oklch(0.9251 0.0071 88.645), which is so close to
+     neutral that the alternating section band read as grey - the one thing a
+     warm palette cannot afford on its largest surface. This is savanna sand:
+     still quiet, but unmistakably on the warm side of the cream it alternates
+     with. Every text colour the page puts on it is measured below. */
+  --muted: oklch(0.935 0.022 78);
+
+  /* Rotated off the app's oklch(0.2417 0.0298 269.8827). Same lightness, same
+     near-black on the page - but hue 270 is blue-violet, and a blue-slate dark
+     under a sage accent is the house style of every developer tool on the web.
+     Hue 152 is the sage's own family, so the darkest ink on the page now reads
+     as deep forest rather than as a dashboard. Lightness is untouched, so every
+     measured ratio below moves by hundredths. */
+  --foreground: oklch(0.2417 0.024 152);
+  --secondary-foreground: oklch(0.2417 0.024 152);
+  --accent-foreground: oklch(0.2417 0.024 152);
 
   /* Darkened from the app's oklch(0.6333 0.0309 154.9039). Same sage hue,
      same family; white-on-primary goes 3.40:1 -> 5.82:1. */
@@ -93,17 +148,21 @@
 
   /* Darkened from the app's oklch(0.551 0.0234 264.3637), which sits at
      exactly 4.51:1 on the cream background and fails at 3.88:1 on --muted.
-     This page puts secondary text on both surfaces, so it needs the headroom. */
-  --muted-foreground: oklch(0.5 0.023 264);
+     This page puts secondary text on both surfaces, so it needs the headroom.
+     Hue follows --foreground to 152 for the reason recorded there. */
+  --muted-foreground: oklch(0.5 0.02 152);
 
   /* Ink band: the dark surface the problem section and the closing CTA sit on.
-     It is the app's --foreground used as a background, which is why the two
-     read as the same ink. */
-  --ink: oklch(0.2417 0.0298 269.8827);
+     It is --foreground used as a background, which is why the two read as the
+     same ink. */
+  --ink: oklch(0.2417 0.024 152);
   --ink-foreground: oklch(0.9761 0.0041 91.4461);
-  --ink-muted: oklch(0.78 0.018 265);
+  --ink-muted: oklch(0.78 0.016 152);
   --ink-primary: oklch(0.74 0.055 155);
-  --ink-border: oklch(0.34 0.026 268);
+  --ink-border: oklch(0.34 0.02 152);
+  /* Clay lifted for the dark band, the way --ink-primary lifts sage. Same
+     job on that surface: it marks labels, not actions. */
+  --ink-clay: oklch(0.78 0.085 58);
 
   --border: oklch(0.8879 0.0086 89);
   /* Control boundary, as distinct from --border's decorative separation. The
@@ -132,46 +191,6 @@
     0px 12px 24px -8px hsl(225 27.7778% 14.1176% / 0.08);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    color-scheme: dark;
-
-    /* The app's dark surfaces are pure neutral. Here they carry a trace of the
-       brand's blue-slate (chroma 0.009) so the page does not read as dead grey
-       under a warm sage accent. Everything else is the same relationship. */
-    --background: oklch(0.185 0.008 265);
-    --foreground: oklch(0.955 0.004 91);
-    --card: oklch(0.225 0.009 265);
-    --secondary: oklch(0.272 0.009 265);
-    --secondary-foreground: oklch(0.955 0.004 91);
-    --muted: oklch(0.272 0.009 265);
-    --muted-foreground: oklch(0.745 0.014 265);
-    --accent: oklch(0.315 0.028 154);
-    --accent-foreground: oklch(0.955 0.004 91);
-    --destructive: oklch(0.7 0.17 25.3);
-
-    /* Lightened so it reads on a dark surface and can carry dark label text. */
-    --primary: oklch(0.745 0.058 155);
-    --primary-foreground: oklch(0.17 0.02 265);
-
-    /* The ink band inverts: on a dark page it lifts rather than drops. */
-    --ink: oklch(0.253 0.011 265);
-    --ink-foreground: oklch(0.955 0.004 91);
-    --ink-muted: oklch(0.745 0.014 265);
-    --ink-primary: oklch(0.745 0.058 155);
-    --ink-border: oklch(0.35 0.012 265);
-
-    --border: oklch(0.32 0.01 265);
-    --input: oklch(0.56 0.011 265);
-    --ring: oklch(0.745 0.058 155);
-
-    --shadow-sm: 0px 1px 2px 0px hsl(0 0% 0% / 0.3), 0px 1px 2px -1px hsl(0 0% 0% / 0.3);
-    --shadow-md: 0px 1px 2px 0px hsl(0 0% 0% / 0.3), 0px 2px 4px -1px hsl(0 0% 0% / 0.3);
-    --shadow-lg: 0px 1px 2px 0px hsl(0 0% 0% / 0.35), 0px 4px 6px -1px hsl(0 0% 0% / 0.35);
-    --shadow-xl: 0px 1px 2px 0px hsl(0 0% 0% / 0.4), 0px 12px 24px -8px hsl(0 0% 0% / 0.45);
-  }
-}
-
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -189,11 +208,16 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
 
+  --color-clay: var(--clay);
+  --color-clay-foreground: var(--clay-foreground);
+  --color-clay-soft: var(--clay-soft);
+
   --color-ink: var(--ink);
   --color-ink-foreground: var(--ink-foreground);
   --color-ink-muted: var(--ink-muted);
   --color-ink-primary: var(--ink-primary);
   --color-ink-border: var(--ink-border);
+  --color-ink-clay: var(--ink-clay);
 
   --font-sans: var(--font-sans);
   --font-serif: var(--font-serif);
@@ -253,47 +277,41 @@
  * values above rather than judged by eye. AA needs 4.5:1 for normal text and
  * 3:1 for large text and non-text UI.
  *
- * Light
- *   foreground / background ............................ 15.32:1
- *   foreground / card .................................. 16.41:1
- *   foreground / muted ................................. 13.16:1
- *   foreground / secondary ............................. 10.78:1
- *   foreground / accent ................................. 9.60:1
- *   muted-foreground / background ....................... 5.60:1
- *   muted-foreground / card ............................. 6.00:1
- *   muted-foreground / muted ............................ 4.81:1
+ *   foreground / background ............................ 15.17:1
+ *   foreground / card .................................. 16.25:1
+ *   foreground / muted ................................. 13.41:1
+ *   foreground / secondary ............................. 10.68:1
+ *   foreground / accent ................................. 9.51:1
+ *   muted-foreground / background ....................... 5.55:1
+ *   muted-foreground / card ............................. 5.94:1
+ *   muted-foreground / muted ............................ 4.90:1
  *   primary / background ................................ 5.43:1
  *   primary / card ...................................... 5.82:1
  *   primary-foreground / primary ........................ 5.82:1
  *   destructive / background ............................ 4.69:1
- *   ink-foreground / ink ............................... 15.32:1
- *   ink-muted / ink ..................................... 8.20:1
- *   ink-primary / ink ................................... 7.28:1
+ *   ink-foreground / ink ............................... 15.17:1
+ *   ink-muted / ink ..................................... 8.17:1
+ *   ink-primary / ink ................................... 7.21:1
  *   input / background .................................. 3.68:1
  *   input / card ........................................ 3.95:1
- *   input / muted ....................................... 3.16:1
+ *   input / muted ....................................... 3.26:1
+ *   clay / background ................................... 5.87:1
+ *   clay / card ......................................... 6.29:1
+ *   clay / muted ........................................ 5.19:1
+ *   clay / clay-soft .................................... 4.63:1
+ *   clay-foreground / clay .............................. 6.29:1
+ *   foreground / clay-soft ............................. 11.97:1
+ *   primary / muted ..................................... 4.80:1
+ *   ink-clay / ink ...................................... 7.96:1
  *
- * Dark
- *   foreground / background ............................ 16.35:1
- *   foreground / card .................................. 15.01:1
- *   foreground / muted ................................. 13.14:1
- *   muted-foreground / background ....................... 8.23:1
- *   muted-foreground / card ............................. 7.55:1
- *   muted-foreground / muted ............................ 6.61:1
- *   primary / background ................................ 8.43:1
- *   primary / card ...................................... 7.74:1
- *   primary-foreground / primary ........................ 8.66:1
- *   foreground / accent ................................ 11.20:1
- *   destructive / background ............................ 6.47:1
- *   ink-foreground / ink ............................... 13.92:1
- *   ink-muted / ink ..................................... 7.00:1
- *   ink-primary / ink ................................... 7.18:1
- *   input / background .................................. 4.00:1
- *   input / card ........................................ 3.67:1
- *   input / muted ....................................... 3.22:1
- *
- * One pairing is measured and then forbidden: --primary as text on --accent is
- * 3.41:1 in light mode. Text on the accent fill is always --accent-foreground.
+ * Three pairings are measured and then forbidden:
+ *   --primary  as text on --accent ...................... 3.41:1
+ *   --clay     as text on --accent ...................... 3.68:1
+ *   --primary  as text on --clay-soft ................... 4.29:1
+ * Text on the accent fill is always --accent-foreground; text on --clay-soft
+ * is --foreground. The last is the one to watch, because 4.29 looks fine and
+ * is not - sage and clay sit at the same lightness, so neither ever has
+ * enough contrast against a tint of the other.
  * --border is decorative separation between two surfaces, not a control
  * boundary, so its 1.31:1 is fine there; the focus ring carries the 3:1 duty
  * and uses --ring, which is --primary at 5.43:1 on the page background.

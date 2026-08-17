@@ -70,8 +70,12 @@ const jsonLd = {
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="sitemap" href="/sitemap-index.xml" />
 
-    <meta name="theme-color" content="#f8f7f4" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#111316" media="(prefers-color-scheme: dark)" />
+    {
+      /* One value, no media attribute. The page is light in every scheme, so a
+      dark-scheme theme-color would tint the browser chrome to something the
+      page below it never matches. */
+    }
+    <meta name="theme-color" content="#f8f7f4" />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={SITE.name} />

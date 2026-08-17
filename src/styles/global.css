@@ -76,39 +76,63 @@
 
 @layer components {
   /* Small tracked label above a section heading. Rendered as a <p> so it never
-     competes with the real heading order. */
+     competes with the real heading order.
+
+     Clay, not sage. See the second-hue block in theme.css: sage is reserved
+     for things you can act on, and an eyebrow is a label. Painting it in the
+     site's link colour said "click me" about static text. */
   .eyebrow {
     font-size: var(--text-xs);
     font-weight: 700;
     letter-spacing: var(--tracking-widest);
     text-transform: uppercase;
-    color: var(--primary);
+    color: var(--clay);
   }
 
   .on-ink .eyebrow {
-    color: var(--ink-primary);
+    color: var(--ink-clay);
   }
 
   /* Field-notebook rule: the faint horizontal line under a section eyebrow,
-     the one nod to ruled paper the design allows itself. */
+     the one nod to ruled paper the design allows itself. It carries the same
+     clay as the eyebrow above it, at a fraction, so the label and its rule
+     read as one mark rather than as a label and a border. */
   .rule {
     height: 1px;
-    background: linear-gradient(to right, var(--border), transparent);
+    background: linear-gradient(
+      to right,
+      color-mix(in oklab, var(--clay) 55%, transparent),
+      transparent
+    );
   }
 
   .on-ink .rule {
-    background: linear-gradient(to right, var(--ink-border), transparent);
+    background: linear-gradient(
+      to right,
+      color-mix(in oklab, var(--ink-clay) 55%, transparent),
+      transparent
+    );
   }
 
   /* Same rule under a centered heading, faded from the middle out so it does
      not read as a line that ran out of ink on one side. */
   .rule-center {
     height: 1px;
-    background: linear-gradient(to right, transparent, var(--border), transparent);
+    background: linear-gradient(
+      to right,
+      transparent,
+      color-mix(in oklab, var(--clay) 55%, transparent),
+      transparent
+    );
   }
 
   .on-ink .rule-center {
-    background: linear-gradient(to right, transparent, var(--ink-border), transparent);
+    background: linear-gradient(
+      to right,
+      transparent,
+      color-mix(in oklab, var(--ink-clay) 55%, transparent),
+      transparent
+    );
   }
 
   /* Superscript source markers, which have to stay legible on both surfaces. */

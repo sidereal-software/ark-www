@@ -22,6 +22,7 @@ across once, deliberately, and the copy is annotated where it diverges.
 | Components      | shadcn/ui, `new-york` style, Radix primitives - the ARK app's own setup                                      |
 | Styles          | Tailwind CSS v4 via `@tailwindcss/vite`                                                                      |
 | Fonts           | Fraunces and Plus Jakarta Sans, self-hosted from `@fontsource-variable`, latin subsets only                  |
+| Images          | `astro:assets` with `sharp`, emitting WebP at five widths per photograph                                     |
 | Package manager | pnpm                                                                                                         |
 | Node            | 24                                                                                                           |
 
@@ -66,7 +67,11 @@ src/
     records.ts           What ARK records, by group
     never.ts             The "what we will never do" commitments
     sources.ts           Every citation on the page, numbered
+    photos.ts            Every photograph, with its licence and credit
+  assets/photos/         The photograph files themselves, optimized at build
   components/            One component per page section, plus shared pieces
+    Photo.astro          The only way an image gets onto the site
+    PhotoBand.astro      A full-bleed photograph between two sections
     MobileNav.tsx        The only hydrated component on the site
     ui/                  shadcn/ui components, added by its CLI
   lib/utils.ts           cn(), the shadcn class merger
@@ -101,9 +106,15 @@ What it costs, gzipped, measured from `dist/`:
 | The island    | 73.1 KB  | 23.8 KB     |
 | **Total**     |          | **84.3 KB** |
 
-First-view transfer for `/` goes from roughly 88 KB to roughly 176 KB, counting
-HTML, CSS and the two preloaded fonts. That is the honest price of a Radix dialog
-and it is not small. Two things to know before changing it:
+This island roughly doubles what the page would otherwise ship in script and
+markup. That is the honest price of a Radix dialog and it is not small.
+
+Measured against `pnpm preview` at 1440px, first-view transfer for `/` is about
+**338 KB** over 9 requests, of which **182 KB is photography** - four WebP
+files, served from a five-width `srcset` so a phone fetches a much smaller cut
+than a desktop does. The images cost more than the island, and they are worth
+it: see [Photography](#photography). Two things to know before changing the
+island:
 
 - **It is `client:load` on purpose.** A navigation control sits in a sticky
   header, on screen from the first frame, and has to work when it is touched
@@ -133,9 +144,47 @@ each is commented where it happens:
    spacing base to fit dense record lists on a phone; reading matter wants room,
    so this uses Tailwind's own `0.25rem` and a larger scale with display
    leading.
-3. **Dark mode follows the operating system.** No toggle, no storage key, no
-   inline anti-flash script. The app has a theme switch because it is a
-   workspace someone sits in all day; a one-page site does not earn one.
+3. **There is no dark mode.** Not "no toggle" - no dark scheme at all. The
+   page is a warm, paper-coloured surface whatever the operating system is set
+   to, and `color-scheme: light` keeps form controls and scrollbars from
+   inverting underneath it. The sage-on-near-black variant this site used to
+   ship read as a developer tool, which is the one thing a page selling to
+   zoos, sanctuaries and rehabilitation centres cannot look like. Deleting it
+   touched four places, and the fourth is the one that bites: `button.tsx` had
+   upstream's `dark:` variants, and Tailwind resolves `dark:` against the
+   operating system whether or not any dark token exists. Grep for `dark:`
+   before adding a shadcn component here.
+
+Two further divergences are newer, and both exist to stop the page reading as
+a developer tool:
+
+4. **`--foreground` and `--ink` are rotated off the app's hue.** The app's
+   near-black is `oklch(0.2417 0.0298 269.8827)`, and hue 270 is blue-violet -
+   blue-slate under a sage accent is the house palette of every developer tool
+   on the web. The site keeps the lightness and moves the hue to 152, the
+   sage's own family, so the darkest ink reads as deep forest. Because only hue
+   moved, every measured ratio shifted by hundredths.
+5. **There is a second hue.** The app is monochrome sage, which is right for a
+   workspace and wrong for the page that sells it. `--clay` is a terracotta at
+   the same lightness as `--primary`, and `--muted` is warmed from a
+   near-neutral grey to savanna sand. Together they give the page the earth
+   register the sector actually lives in.
+
+The clay is a **system, not decoration**, and the rule is worth keeping:
+
+> **Sage means you can act on it.** Buttons, links, the focus ring.
+> **Clay means it is a label.** Eyebrows, the field-notebook rules, the
+> specimen numbering on the record cards.
+
+Before the split, eyebrows were sage - the same colour as every link on the
+page. That was a small affordance lie, painting static text in the site's one
+interactive colour. Splitting the two fixes it and buys the warmth at once.
+
+Clay and sage sit at identical lightness on purpose: they are peers, not a
+colour and its tint. The cost of that choice is recorded in the forbidden-pairs
+list at the bottom of `theme.css` - neither ever has enough contrast against a
+tint of the other, so `--primary` on `--clay-soft` is measured at 4.29:1 and
+banned. It is the one that looks fine and is not.
 
 Every text and background pair on the site was computed rather than eyeballed,
 and the full table is at the bottom of `theme.css`. If you add a pair, measure
@@ -188,6 +237,41 @@ paragraph pointing that out. A page earns trust by being specific about what the
 software does, not by narrating its own honesty, and the two read very
 differently to someone deciding whether to spend their rescue's money here.
 Build a figures section when the figures exist and are measured.
+
+## Photography
+
+Four photographs, all openly licensed, all sourced from Wikimedia Commons. They
+are what stops the page reading as a developer tool: every zoo, aquarium,
+sanctuary and rehabilitation site this one has to feel familiar beside is
+photograph-led, including Species360, the incumbent this product displaces.
+
+Every image goes through `<Photo slug="..." />`, and every slug must exist in
+`src/data/photos.ts` or the build throws - the same rule `<Footnote />` enforces
+for citations, for the same reason. An unattributed CC BY-SA photograph is a
+licence breach, not a cosmetic bug, so it must not survive to a deploy.
+
+Three of the four are CC BY-SA and **oblige us to print a credit**, which
+`Footer.astro` renders from the data file. The fourth, a US National Park
+Service work, is public domain and asks nothing. Four things to keep in mind
+before touching this:
+
+- **Do not crop a BY-SA file.** ShareAlike binds adaptations, and a crop is
+  arguably one. Framing is done with `object-position`, so the file on disk
+  stays whole and the viewport does the cropping. If a design genuinely needs a
+  cropped photograph, use one of the two public-domain files or license the crop.
+- **Credits render in the page, not in this README.** A licence condition that
+  only a developer can see has not been met.
+- **No photograph here shows an ARK customer**, because there are none. The
+  no-social-proof rule below still governs: nothing may be captioned to imply
+  the people in these frames use this product.
+- **The data file and the page stay in step.** The footer credits every entry
+  in `photos.ts`, so a photograph that is declared but no longer placed on the
+  page produces a credit for something nobody can see. Remove the last use,
+  remove the entry and the file.
+
+Replacing one means adding the file to `src/assets/photos/`, adding its entry
+to `src/data/photos.ts` with the licence exactly as Commons records it, and
+checking whether `attributionRequired` changes what the footer prints.
 
 ## Screenshots
 
